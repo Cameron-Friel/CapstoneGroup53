@@ -1,0 +1,2 @@
+main.dep: Makefile  main.tex
+main.aux:  main.tex
