@@ -1,0 +1,89 @@
+\documentclass[10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[left=0.75in, right=0.75in, top=0.75in, bottom=0.75in]{geometry}
+
+\title{53_problemstatement}
+\author{Cameron Friel, Kelli Ann Ulep, Samuel Wilson}
+\date{October 19, 2018}
+
+\begin{document}
+
+\begin{titlepage}
+   \begin{center}
+       \vspace*{1cm}
+ 
+       \textbf{Problem Statement}
+ 
+       \vspace{0.5cm}
+        Senior Software Engineering Project Fall 2018\\
+        \vspace{0.5cm}
+        Interactive 2D simulations to support Inquiry-Based Learning in Mechanical Engineering
+        
+        \vspace{0.5cm}
+ 
+       \textbf{Cameron Friel, Kelli Ann Ulep, Samuel Wilson}
+ 
+       \vspace{0.5cm}
+ 
+        Oct 19 2018
+       
+       \vspace{1cm}
+       
+       \textbf{Abstract}
+       
+    \begin{flushleft}
+This project involves solving the problem of some universities lacking resources to visually show physical and mechanical interactions for Mechanical Engineering concepts in the classroom. This impedes the learning process for Mechanical Engineers by forcing them to take an auditory approach to learning when the subject matter is difficult to understand in the first place. The project is built on the research that shows that students can achieve a better understanding of difficult concepts by learning through simulated environments that they can interact with. By implementing two-dimensional simulations based on these concepts, students will be able to visually interpret the concepts in the course. The solution being implemented is to create two-dimensional simulations using primarily client side JavaScript. The student will be able to modify certain values like the mass of an object or the angle that an object is dropped within a simulation in order to understand how interactions that occur in the real world are rationalized. 
+    \end{flushleft}
+
+   \end{center}
+
+\end{titlepage}
+
+
+
+\section{Problem Description}
+
+\subsection{Concept Warehouse}
+\paragraph{}The client runs \textit{Concept Warehouse}, an educational tool which focuses on creating interactive learning opportunities for classrooms. In order to see how well this interactive learning works, exercises first ask students to answer abstract questions relating to the subject based on prior knowledge or preconceptions. Then, students engage with online simulations to naturally learn through experimentation. Afterwards, students answer the same questions as before, hopefully with obvious improvements. The data collected from these before and after quizzes have shown that this type of learning works very well and is efficient, considering the time required for students or instructors to set-up real-world labs. Subjects, such as chemistry, have already been implemented into the Concept Warehouse website; however, mechanical physics has not.
+
+
+\subsection{Mechanical Engineering}
+\paragraph{}Mechanical Engineering students should have a solid understanding of key mechanical or physical concepts in their study. Students should be engaged in class in a way that effectively communicates challenging ideas. Students come in with pre-existing knowledge or preconceptions, engage with learning material, then they ask themselves or explain what they witnessed. With the idea of \textit{cognitive conflict}, when students observe ideas that challenge or contradict their prior ideas or beliefs, they then are pushed to think more about it. Especially when concepts are non-intuitive, they may struggle with understanding. Typically, instructors can illustrate information with educational tools such as visuals or hands-on experiments. Classes may conduct simulations or experiments like dropping a ball at certain heights to understand gravity or rolling a cylinder down an inclined surface to understand motion. However, some phenomena are not as accessible or convenient to interact with physically.
+
+
+
+\paragraph{}Equipment used to observe some concepts could be inaccessible, or the physical motions are difficult to see in person. Students may want to be able to stop an simulation at a certain frame of time to observe or plot data points, but then the experiment could be progressing too quickly to show. Even if some equipment may be accessible, it still could prove inefficient to conduct an entire experiment that covers all points of curiosity around certain phenomena. Students may have difficulty explaining or envisioning how these calculations apply to real situations. With the example of the experiment to roll a cylinder down a ramp to observe motion, the students may be interested in seeing how the system is affected with a 1000 ft tall ramp with a steep angle and a 2000 lb cylinder. To do some calculations on a whiteboard and then imagine the scenario is not enough for some. While some of these outcomes may be impossible in the physical world, students should have the option to change values and see for themselves how it applies in some form.
+
+
+
+
+\section{Proposed Solution}
+\paragraph{}To understand more challenging concepts in a more accessible manner, students can interact with a 2D computer simulation. The project aims to build at least one simulation that accurately emulates a physical or mechanical idea and allows for student interactions with the system. The simulation will run on a web browser, and students will receive links to different situations within assignments. Students can have an idea of what they think the outcome may be, and the model may or may not agree with their preconceptions. Engineering students can get a better understanding by engaging with simulated environments.
+
+\paragraph{}Since all that is required to run the simulation is a web browser, it will be very accessible. Simulations are run more efficiently as they only require the users to input values they want to use and when to start the animations. With this, students can manipulate an environment as much as they want to fulfill their curiosity. They may have an idea of what extremely large or small values in a certain system may produce, but showing the results visually allows for reinforcement of their preconceptions.
+
+\paragraph{}Systems to simulate involve physics based problems - a pendulum swinging or rotational motion. With the case of the pendulum swinging in a 2D simulation environment, students are able to possibly see an ideal environment where an experiment executes correctly. They would not need to inefficiently keep taking down and setting up a real life display with new variables, estimating the measurements for their own calculations. They can efficiently explore more parameters to apply to the environment - factors such as weight, friction, angles, mass, dimensions and so on.
+
+
+
+
+\section{Performance Metrics}
+\paragraph{}The project should deliver at least one usable, working mechanical simulation with tools that allow for interactivity with the model. The simulations should be able to run on a web browser, being compatible with popular ones (Chrome, Safari, Firefox), so it is robust and usable by almost all users. The web page should be incorporated into Concept Warehouse inquiry based learning activities. 
+
+\paragraph{}At the base level, each simulation should have an animated scenario where users are able to trigger the behavior to start or stop. After the animation runs, or while the animation is running, students receive visual feedback of what exactly is happening in the model - they see plots or graphs with calculated applicable measurements. Some simulations may not need real-time measurement feedback if the important parameters are limited. Students should also be able to adjust certain key parameters in an exploratory mode, so they can see how different numbers visually affect the system. The model should accurately emulate the real physics phenomena. When students analyze what happens in a simulation, their observation of the animation should correctly mirror how they would view the system's actions in the real world. For this, a content expert will look over the simulation and provide some insight.
+
+\paragraph{} The code or framework that is used in one simulation should be as modular and reusable as possible, so other simulations can be created off them with greater ease. Any existing technologies used and any source code created should be well documented to allow for future modifications.
+
+\paragraph{}To summarize, for the project to be complete, at least one simulation must be functional. The simulation must have:
+
+\begin{itemize}
+  \item A Start/Stop function to trigger behavior.
+  \item Real-time, graphical feedback.
+  \item Real-time, measurement feedback.
+  \item Parameter controls for important data.
+  \item Correct physics calculations.
+\end{itemize}
+
+
+
+\end{document}
