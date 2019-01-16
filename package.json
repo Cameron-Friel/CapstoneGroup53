@@ -1,0 +1,22 @@
+{
+  "name": "capstonegroup53",
+  "version": "1.0.0",
+  "description": "Interactive 2D Simulations for Inquiry-Based Learning",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Cameron-Friel/CapstoneGroup53.git"
+  },
+  "author": "cameron friel, sam wilson, and kelli ulep",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Cameron-Friel/CapstoneGroup53/issues"
+  },
+  "homepage": "https://github.com/Cameron-Friel/CapstoneGroup53#readme",
+  "dependencies": {
+    "matter-js": "^0.14.2"
+  }
+}
