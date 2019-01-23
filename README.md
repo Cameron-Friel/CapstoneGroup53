@@ -1,5 +1,7 @@
 ## CapstoneGroup53
 
+To get started `clone` the repository and then run `npm start` to install all the dependencies in the project.
+
 ### `Browserify`
 
 This project utilizes Browserify to bundle JavaScript files together.
@@ -11,20 +13,12 @@ In Browserify, modules are aquired using `require`.
 
 ### `Modules`
 
-There are four basic modules in the project. These include the EngineHandler, RenderHandler, State, and Pendulum
+There are two basic modules in the project named State and Pendulum.
 
-## EngineHandler
-
-The EngineHandler module handles simulating the 2D physics as well as building up the world.
-
-## RenderHandler
-
-The RenderHandler modules handles loading and sending frames to the canvas.
-
-## State
+## The State Module
 
 The State module handles understanding the current state of the canvas, such as whether it is paused.
 
-## Pendulum
+## The Pendulum Module
 
 The Pendulum module is in charge of keeping tack of the pendulum bodies and properties within the world.
