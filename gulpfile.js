@@ -1,6 +1,6 @@
 let gulp = require('gulp');
 let browserify = require('browserify');
-var source = require('vinyl-source-stream');
+let source = require('vinyl-source-stream');
 
 /*
   * Builds the Pendulum case 1 source files
