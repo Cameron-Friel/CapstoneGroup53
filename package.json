@@ -17,6 +17,11 @@
   },
   "homepage": "https://github.com/Cameron-Friel/CapstoneGroup53#readme",
   "dependencies": {
-    "matter-js": "^0.14.2"
+    "matter-js": "^0.14.2",
+    "vinyl-source-stream": "^2.0.0"
+  },
+  "devDependencies": {
+    "browserify": "^16.2.3",
+    "gulp": "^4.0.0"
   }
 }
