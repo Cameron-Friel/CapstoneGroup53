@@ -1,9 +1,5 @@
 'use strict';
 
-let EngineHandler = require('./EngineHandler.js');
-
-let World = Matter.World;
-
 let State = (function() {
   return {
     isPausedFlag: false,
