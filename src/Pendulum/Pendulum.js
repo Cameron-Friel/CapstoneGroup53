@@ -56,7 +56,7 @@ class Pendulum {
   */
 
   calculateAngle(firstPoint, secondPoint) {
-    return Math.abs(Math.round(Math.atan2(firstPoint.y - secondPoint.y, firstPoint.x - secondPoint.y) * 180 / Math.PI));
+    return( 90 - Math.abs(Math.round(Math.atan2(firstPoint.y - secondPoint.y, firstPoint.x - secondPoint.y) * 180 / Math.PI)));
   }
 
   /**
