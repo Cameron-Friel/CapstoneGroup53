@@ -14,6 +14,8 @@ let Constraint = Matter.Constraint;
 
 let engine = Engine.create();
 
+let pendulum = new Pendulum;
+
 let render = Render.create({
     element: document.getElementById('canvas'),
     engine: engine,
@@ -25,6 +27,8 @@ let render = Render.create({
  });
 
 createWorld(); // add bodies to canvas
+
+State.setSimulationTime(Date.now()); // sets the timer for the simulation
 
 Render.run(render); // allow for the rendering of frames of the world
 
@@ -42,22 +46,9 @@ function renderLoop() {
     Engine.update(engine, 1000 / 60); // update at 60 FPS
     requestAnimationFrame(renderLoop); // render next frame
 
-    Pendulum.setPendulumAngle(Pendulum.calculateAngle(Pendulum.string.bodies[0].position, Pendulum.pendulumWeight.position));
-    Pendulum.displayPendulumAngle();
-  }
-}
-
-/*
-  * Determines whether to continue rendering the world or not
-  * @param {boolean} isPaused - Flag to tell if the world is paused or not
-*/
-
-function determineRender(isPaused) {
-  if (isPaused) { // the world is paused
-    Render.stop(render);
-  }
-  else {
-    Render.run(render);
+    pendulum.pendulumAngle = pendulum.calculateAngle(pendulum.pendulumString.bodies[0].position, pendulum.pendulumBody.position);
+    pendulum.displayPendulumAngle();
+    State.displayRunningTime();
   }
 }
 
@@ -73,15 +64,15 @@ function createWorld() {
      Bodies.rectangle(0, 300, 50, 600, { isStatic: true })
   ]);
 
-  Pendulum.pendulumWeight = Bodies.circle(100, 100, 40, { mass: 0.04, frictionAir: 0});
+  pendulum.pendulumBody = Bodies.circle(100, 100, 40, { mass: 0.04, frictionAir: 0});
 
   let protractor = Bodies.circle(400, 50, 60, { isStatic: true});
 
-  World.add(engine.world, [Pendulum.pendulumWeight, protractor]);
+  World.add(engine.world, [pendulum.pendulumBody, protractor]);
 
-  Pendulum.string = World.add(engine.world, Constraint.create({
+  pendulum.pendulumString = World.add(engine.world, Constraint.create({
     bodyA: protractor,
-    bodyB: Pendulum.pendulumWeight,
+    bodyB: pendulum.pendulumBody,
     length: 0,
   }));
 }
@@ -92,7 +83,7 @@ function createWorld() {
 
 document.getElementById('pause-button').onclick = function() {
   State.setIsPausedFlag(State.getIsPausedFlag());
-  determineRender(State.getIsPausedFlag());
+  State.onPause(render);
 };
 
 /*
@@ -102,9 +93,10 @@ document.getElementById('pause-button').onclick = function() {
 document.getElementById('reset-button').onclick = function() {
   World.clear(engine.world);
   createWorld();
+  State.setRunningTime(0.0);
 
-  if (State.isPausedFlag === true) {
+  if (State.getIsPausedFlag() === true) {
     State.setIsPausedFlag(State.getIsPausedFlag());
-    Render.start(render);
+    Render.run(render);
   }
 };
