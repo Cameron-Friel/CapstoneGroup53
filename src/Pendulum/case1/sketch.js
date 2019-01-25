@@ -80,8 +80,20 @@ function createWorld() {
 /*
   * Pauses or unpauses the world from rendering
 */
+var pauseBtn = document.getElementById('pause-button');
 
-document.getElementById('pause-button').onclick = function() {
+pauseBtn.onclick = function() {
+  console.log("In pause button click");
+  
+  if(pauseBtn.value == 'pause') {
+    console.log("In pause button click");
+    pauseBtn.innerText = "cont.";
+    pauseBtn.value = "continue";
+  }
+  else {
+    pauseBtn.value = "pause";
+    pauseBtn.innerText = "Pause" ;
+  }
   State.setIsPausedFlag(State.getIsPausedFlag());
   State.onPause(render);
 };
