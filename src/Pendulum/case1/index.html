@@ -9,12 +9,15 @@
     <div class='container'>
       <span id='running-time' class='main-text'></span>
       <span id='pendulum-angle' class='main-text'></span>
-      <Button id='pause-button' class='main-text'>Pause</Button>
+      <Button id='pause-button' onclick="pauseGraph()" class='main-text'>Pause</Button>
       <Button id='reset-button' class='main-text'>Reset</Button>
-      <div id='canvas'></div>
-      <div class="chart-container" style="position: relative; height:20vh; width:20vw">
-        <canvas id="chart"></canvas>
+      <div id='canvas'>
+        <div class="chart-container" style="float: right; height:20vh; width:40vw">
+            <canvas id="chart"></canvas>
+        </div>
       </div>
+
+
     </div>
 </div>
   </body>
@@ -22,6 +25,10 @@
   <script src='https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.12.0/matter.js'></script>
   <script src='./bundle.js'></script>
   <script>
+  var pauseFlag = 0; // 0 means not paused
+
+  var interval;
+  var seconds = 0.0;
 var ctx = document.getElementById("chart").getContext('2d');
 var myChart = new Chart(ctx, {
   type: 'scatter',
@@ -48,6 +55,28 @@ var myChart = new Chart(ctx, {
       }
   }
 });
+var newData =
+addData(myChart, {25,document.getElementById("pendulum-angle").textContent});
+//setInterval(addData(myChart, {(seconds + .5),document.getElementById("pendulum-angle").textContent}),500);
+
+function pauseGraph(){
+  if (pauseFlag == 1) {
+    pauseFlag = 0;
+    interval = setInterval(addData(myChart, [(seconds + .5),document.getElementById("pendulum-angle").textContent]),500);
+    seconds = seconds + .5;
+  }
+  else{
+    pauseFlag = 1;
+    clearInterval(interval);
+  }
+}
+
+function addData(chart, data) {
+    chart.data.datasets.forEach((dataset) => {
+        dataset.data.push(data);
+    });
+    chart.update();
+}
 </script>
 
 </html>
