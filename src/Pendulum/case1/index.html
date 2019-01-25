@@ -13,9 +13,7 @@
 
       <!-- Animation canvas  -->
       <div id='canvas'>
-        <div class="chart-container" style="float: right; height:20vh; width:40vw">
-            <canvas id="chart"></canvas>
-        </div>
+
       </div>
     </div>
 
@@ -37,6 +35,9 @@
         <Button class="control-btns" id='pause-button' class='main-text' value='pause'>Pause</Button>
         <Button class="control-btns" id='reset-button' class='main-text'>Reset</Button>
       </div>
+      <div class="chart-container" style="float: right; height:80vh; width:50vw">
+          <canvas id="chart"></canvas>
+      </div>
 
   </body>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
@@ -54,14 +55,8 @@ var myChart = new Chart(ctx, {
       datasets: [{
           label: 'Scatter Dataset',
           data: [{
-              x: 5,
+              x: 0,
               y: 0
-          }, {
-              x: 8,
-              y: 10
-          }, {
-              x: 20,
-              y: 5
           }]
       }]
   },
@@ -70,12 +65,16 @@ var myChart = new Chart(ctx, {
           xAxes: [{
               type: 'linear',
           }]
-      }
+      },
+      responsive: true,
+      maintainAspectRatio: false
   }
 });
-var newData =
-addData(myChart, {25,document.getElementById("pendulum-angle").textContent});
-//setInterval(addData(myChart, {(seconds + .5),document.getElementById("pendulum-angle").textContent}),500);
+//var newData =
+//console.log(parseInt(document.getElementById("pendulum-angle").textContent.replace( /^\D+/g, ''), 10) );
+//addData(myChart, {x: 1, y: parseInt(document.getElementById("pendulum-angle").textContent.replace( /^\D+/g, ''), 10) } );
+//setInterval(console.log(1), 500);
+//interval = setInterval(addData(myChart, {x: (seconds + .5), y: parseInt(document.getElementById("pendulum-angle").textContent.replace( /^\D+/g, ''), 10 )}),500);
 
 function pauseGraph(){
   if (pauseFlag == 1) {
@@ -90,9 +89,9 @@ function pauseGraph(){
 }
 
 function addData(chart, data) {
-    chart.data.datasets.forEach((dataset) => {
-        dataset.data.push(data);
-    });
+  chart.data.datasets.forEach((dataset) => {
+      dataset.data.push(data);
+  });
     chart.update();
 }
 </script>
