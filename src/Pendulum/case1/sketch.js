@@ -12,6 +12,8 @@ let World = Matter.World;
 let Bodies = Matter.Bodies;
 let Constraint = Matter.Constraint;
 
+let isBlurred = false; // tracks whether the tab is active or in the background
+
 let engine = Engine.create();
 
 let pendulum = new Pendulum;
@@ -100,3 +102,13 @@ document.getElementById('reset-button').onclick = function() {
     Render.run(render);
   }
 };
+
+/**
+  * Listens for whether the current browser tab is active or not
+*/
+
+document.addEventListener('visibilitychange', function() {
+  if (!document.hidden) {
+    State.setSimulationTime(Date.now());
+  }
+});

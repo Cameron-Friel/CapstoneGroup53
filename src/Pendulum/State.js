@@ -55,9 +55,7 @@ let State = (function() {
     */
 
     setRunningTime: function(time) {
-      console.log(_runningTime);
       _runningTime = time;
-      console.log(_runningTime);
     },
 
     /**
@@ -100,10 +98,10 @@ let State = (function() {
         let quotient = Math.floor(currentTime / 60); // minutes
         let remainder = currentTime % 60; // seconds
 
-        document.getElementById('simulation-time').textContent = 'Time: ' + quotient + ' Minutes ' + remainder + ' Seconds';
+        document.getElementById('running-time').textContent = 'Time: ' + quotient + ' Minutes ' + remainder + ' Seconds';
       }
       else {
-        document.getElementById('simulation-time').textContent = 'Time: ' + currentTime + ' Seconds';
+        document.getElementById('running-time').textContent = 'Time: ' + currentTime + ' Seconds';
       }
     },
   };
