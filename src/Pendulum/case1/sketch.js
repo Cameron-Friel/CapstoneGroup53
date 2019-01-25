@@ -31,8 +31,12 @@ createWorld(); // add bodies to canvas
 State.setSimulationTime(Date.now()); // sets the timer for the simulation
 
 Render.run(render); // allow for the rendering of frames of the world
+var startBtn = document.getElementById("start-button");
+startBtn.onclick = function() {
+  renderLoop(); // renders frames to the canvas
+  State.setRunningTime(0.0);
+}
 
-renderLoop(); // renders frames to the canvas
 
 /*
   * Renders frames to send to the canvas
