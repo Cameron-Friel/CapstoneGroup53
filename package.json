@@ -17,6 +17,8 @@
   },
   "homepage": "https://github.com/Cameron-Friel/CapstoneGroup53#readme",
   "dependencies": {
-    "matter-js": "^0.14.2"
+    "chart.js": "^2.7.3",
+    "matter-js": "^0.14.2",
+    "server": "^1.0.18"
   }
 }
