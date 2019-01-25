@@ -12,8 +12,6 @@ let World = Matter.World;
 let Bodies = Matter.Bodies;
 let Constraint = Matter.Constraint;
 
-let isBlurred = false; // tracks whether the tab is active or in the background
-
 let engine = Engine.create();
 
 let pendulum = new Pendulum;
