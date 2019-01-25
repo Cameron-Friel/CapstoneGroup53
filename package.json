@@ -19,6 +19,11 @@
   "dependencies": {
     "chart.js": "^2.7.3",
     "matter-js": "^0.14.2",
-    "server": "^1.0.18"
+    "server": "^1.0.18",
+    "vinyl-source-stream": "^2.0.0"
+  },
+  "devDependencies": {
+    "browserify": "^16.2.3",
+    "gulp": "^4.0.0"
   }
 }
