@@ -3,23 +3,41 @@
   <head>
     <meta charset='utf-8'>
     <link rel='stylesheet' href='style.css'>
-    <title>Matter.js</title>
+    <title>Case 1 Pendulum</title>
   </head>
   <body>
+    <h1>Case 1</h1>
     <div class='container'>
-      <span id='running-time' class='main-text'></span>
-      <span id='pendulum-angle' class='main-text'></span>
-      <Button id='pause-button' onclick="pauseGraph()" class='main-text'>Pause</Button>
-      <Button id='reset-button' class='main-text'>Reset</Button>
+      <!-- Temporary graph representation
+      <rect id='graph-temp' width="200" height="200" style="fill:rgb(147, 201, 183);stroke-width:3;stroke:rgb(0,0,0)" /> -->
+
+      <!-- Animation canvas  -->
       <div id='canvas'>
         <div class="chart-container" style="float: right; height:20vh; width:40vw">
             <canvas id="chart"></canvas>
         </div>
       </div>
-
-
     </div>
-</div>
+
+    <!-- Live Updates -->
+    <div class = "update-group">
+        <table style='width:238px' id='live-update-table'>
+          <tr>
+            <td><span id='running-time' class='main-text'></span></td>
+            <td>
+              <span id='pendulum-angle' class='main-text'></span>
+            </td>
+          </tr>
+        </table>
+      </div>
+
+      <!-- Buttons -->
+      <div class="button-group">
+        <Button class="control-btns" id="start-button" class='main-text'>Start</Button>
+        <Button class="control-btns" id='pause-button' class='main-text' value='pause'>Pause</Button>
+        <Button class="control-btns" id='reset-button' class='main-text'>Reset</Button>
+      </div>
+
   </body>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
   <script src='https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.12.0/matter.js'></script>
