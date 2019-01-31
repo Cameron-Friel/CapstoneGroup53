@@ -84,7 +84,7 @@ var pauseBtn = document.getElementById('pause-button');
 
 pauseBtn.onclick = function() {
   console.log("In pause button click");
-  
+
   if(pauseBtn.value == 'pause') {
     console.log("In pause button click");
     pauseBtn.innerText = "cont.";
@@ -94,8 +94,20 @@ pauseBtn.onclick = function() {
     pauseBtn.value = "pause";
     pauseBtn.innerText = "Pause" ;
   }
-  State.setIsPausedFlag(State.getIsPausedFlag());
+  State.setIsPausedFlag(!State.getIsPausedFlag());
   State.onPause(render);
+};
+
+/*
+  * Starts running the simulation
+*/
+
+document.getElementById('start-button').onclick = function() {
+  if (State.getSimulationRunning() === false) { // make sure the simulation is not already running
+    State.setIsPausedFlag(false);
+    State.onPause(render);
+    State.setSimulationRunning(true);
+  }
 };
 
 /*
@@ -108,7 +120,7 @@ document.getElementById('reset-button').onclick = function() {
   State.setRunningTime(0.0);
 
   if (State.getIsPausedFlag() === true) {
-    State.setIsPausedFlag(State.getIsPausedFlag());
+    State.setIsPausedFlag(!State.getIsPausedFlag());
     Render.run(render);
   }
 };
