@@ -97,6 +97,18 @@ pauseBtn.onclick = function() {
 };
 
 /*
+  * Starts running the simulation
+*/
+
+document.getElementById('start-button').onclick = function() {
+  if (State.getSimulationRunning() === false) { // make sure the simulation is not already running
+    State.setIsPausedFlag(false);
+    State.onPause(render);
+    State.setSimulationRunning(true);
+  }
+};
+
+/*
   * Resets the world to its starting state
 */
 
@@ -106,7 +118,7 @@ document.getElementById('reset-button').onclick = function() {
   State.setRunningTime(0.0);
 
   if (State.getIsPausedFlag() === true) {
-    State.setIsPausedFlag(State.getIsPausedFlag());
+    State.setIsPausedFlag(!State.getIsPausedFlag());
     Render.run(render);
   }
 };
