@@ -83,10 +83,7 @@ function createWorld() {
 var pauseBtn = document.getElementById('pause-button');
 
 pauseBtn.onclick = function() {
-  console.log("In pause button click");
-
-  if(pauseBtn.value == 'pause') {
-    console.log("In pause button click");
+  if (pauseBtn.value == 'pause') {
     pauseBtn.innerText = "cont.";
     pauseBtn.value = "continue";
   }
@@ -94,7 +91,8 @@ pauseBtn.onclick = function() {
     pauseBtn.value = "pause";
     pauseBtn.innerText = "Pause" ;
   }
-  State.setIsPausedFlag(!State.getIsPausedFlag());
+  
+  State.setIsPausedFlag(State.getIsPausedFlag());
   State.onPause(render);
 };
 
