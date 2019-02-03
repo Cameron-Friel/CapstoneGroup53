@@ -136,9 +136,8 @@ pauseBtn.onclick = function() {
     pauseBtn.innerText = "Pause" ;
   }
 
-  State.setIsPausedFlag(State.getIsPausedFlag());
-  State.onPause(render);
-};
+  State.setIsPausedFlag(!State.getIsPausedFlag());
+  State.onPause(render);};
 
 /*
   * Starts running the simulation
