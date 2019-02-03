@@ -43,57 +43,5 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
   <script src='https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.12.0/matter.js'></script>
   <script src='./bundle.js'></script>
-  <script>
-  var pauseFlag = 0; // 0 means not paused
-
-  var interval;
-  var seconds = 0.0;
-var ctx = document.getElementById("chart").getContext('2d');
-var myChart = new Chart(ctx, {
-  type: 'scatter',
-  data: {
-      datasets: [{
-          label: 'Scatter Dataset',
-          data: [{
-              x: 0,
-              y: 0
-          }]
-      }]
-  },
-  options: {
-      scales: {
-          xAxes: [{
-              type: 'linear',
-          }]
-      },
-      responsive: true,
-      maintainAspectRatio: false
-  }
-});
-//var newData =
-//console.log(parseInt(document.getElementById("pendulum-angle").textContent.replace( /^\D+/g, ''), 10) );
-//addData(myChart, {x: 1, y: parseInt(document.getElementById("pendulum-angle").textContent.replace( /^\D+/g, ''), 10) } );
-//setInterval(console.log(1), 500);
-//interval = setInterval(addData(myChart, {x: (seconds + .5), y: parseInt(document.getElementById("pendulum-angle").textContent.replace( /^\D+/g, ''), 10 )}),500);
-
-function pauseGraph(){
-  if (pauseFlag == 1) {
-    pauseFlag = 0;
-    interval = setInterval(addData(myChart, [(seconds + .5),document.getElementById("pendulum-angle").textContent]),500);
-    seconds = seconds + .5;
-  }
-  else{
-    pauseFlag = 1;
-    clearInterval(interval);
-  }
-}
-
-function addData(chart, data) {
-  chart.data.datasets.forEach((dataset) => {
-      dataset.data.push(data);
-  });
-    chart.update();
-}
-</script>
 
 </html>

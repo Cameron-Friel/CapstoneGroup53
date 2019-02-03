@@ -26,6 +26,12 @@ let render = Render.create({
     }
  });
 
+
+
+ /*
+ *  Create world
+ */
+
 createWorld(); // add bodies to canvas
 
 State.setSimulationTime(Date.now()); // sets the timer for the simulation
@@ -33,6 +39,42 @@ State.setSimulationTime(Date.now()); // sets the timer for the simulation
 Render.run(render); // allow for the rendering of frames of the world
 
 renderLoop(); // renders frames to the canvas
+
+/*
+* Add chart
+*/
+
+var interval;
+var seconds = 0.0;
+var ctx = document.getElementById("chart").getContext('2d');
+
+var myChart = new Chart(ctx, {
+type: 'line',
+data: {
+    datasets: [{
+        label: 'Change in angle',
+        data: [{
+        }]
+    }]
+},
+options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    showLines: true,
+    scales: {
+                xAxes: [{
+                    type: 'linear',
+                    position: 'bottom',
+                    scaleLabel: {
+                      labelString: 'Time (ms)',
+                      display: true
+                    }
+                }],
+
+      }
+    }
+});
+
 
 /*
   * Renders frames to send to the canvas
@@ -49,6 +91,8 @@ function renderLoop() {
     pendulum.pendulumAngle = pendulum.calculateAngle(pendulum.pendulumString.bodies[0].position, pendulum.pendulumBody.position);
     pendulum.displayPendulumAngle();
     State.displayRunningTime();
+
+    addData(myChart, {x: engine.timing.timestamp, y: pendulum.pendulumAngle});
   }
 }
 
@@ -91,7 +135,7 @@ pauseBtn.onclick = function() {
     pauseBtn.value = "pause";
     pauseBtn.innerText = "Pause" ;
   }
-  
+
   State.setIsPausedFlag(State.getIsPausedFlag());
   State.onPause(render);
 };
@@ -132,3 +176,14 @@ document.addEventListener('visibilitychange', function() {
     State.setSimulationTime(Date.now());
   }
 });
+
+/*
+* Adds data points to the chart.
+*/
+
+function addData(chart, data) {
+  chart.data.datasets.forEach((dataset) => {
+      dataset.data.push(data);
+  });
+    chart.update();
+}
