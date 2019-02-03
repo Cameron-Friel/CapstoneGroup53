@@ -2,18 +2,19 @@
 
 let State = (function() {
   let Render = Matter.Render;
-  let _isPausedFlag = false;
+  let _simulationRunning = false;
+  let _isPausedFlag = true;
   let _simulationTime = 0;
   let _runningTime = 0;
 
   return {
     /**
       * Updates the value of _isPausedFlag
-      * @param {boolean} bool - the current value of the isPausedFlag variable
+      * @param {boolean} bool - the value to set the _isPausedFlag
     */
 
     setIsPausedFlag: function(bool) {
-      _isPausedFlag = !bool;
+      _isPausedFlag = bool;
     },
 
     /**
@@ -23,6 +24,24 @@ let State = (function() {
 
     getIsPausedFlag: function() {
       return _isPausedFlag;
+    },
+
+    /**
+      * Updates the value of _simulationRunning
+      * @param {boolean} bool - the value to set _simulationRunning to
+    */
+
+    setSimulationRunning: function(bool) {
+      _simulationRunning = bool;
+    },
+
+    /**
+      * Returns whether the simulation is running or not
+      * @returns {bool} _simulationRunning
+    */
+
+    getSimulationRunning: function() {
+      return _simulationRunning;
     },
 
     /**
