@@ -160,6 +160,7 @@ document.getElementById('reset-button').onclick = function() {
   World.clear(engine.world);
   createWorld();
   State.setRunningTime(0.0);
+  resetChartData(myChart);
 
   if (State.getIsPausedFlag() === true) {
     State.setIsPausedFlag(!State.getIsPausedFlag());
@@ -186,4 +187,21 @@ function addData(chart, data) {
       dataset.data.push(data);
   });
     chart.update();
+}
+
+/*
+  * Resets the chart data back to an empty state
+*/
+
+function resetChartData(chart) {
+  let data = {
+      datasets: [{
+          label: 'Change in angle',
+          data: [{
+          }]
+      }]
+  };
+
+  chart.config.data = data;
+  chart.update();
 }
