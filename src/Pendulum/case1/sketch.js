@@ -160,12 +160,13 @@ document.getElementById('reset-button').onclick = function() {
   World.clear(engine.world);
   createWorld();
   State.setRunningTime(0.0);
+  State.displayRunningTime();
+  pendulum.displayPendulumAngle();
+  State.setSimulationRunning(false);
 
-  if (State.getIsPausedFlag() === true) {
-    State.setIsPausedFlag(!State.getIsPausedFlag());
-    pauseBtn.value = "pause";
-    pauseBtn.innerText = "Pause" ;
-    Render.run(render);
+  if (State.getIsPausedFlag() === false) {
+    State.setIsPausedFlag(true);
+    State.onPause(render);
   }
 };
 
