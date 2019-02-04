@@ -136,7 +136,7 @@ pauseBtn.onclick = function() {
     pauseBtn.innerText = "Pause" ;
   }
 
-  State.setIsPausedFlag(State.getIsPausedFlag());
+  State.setIsPausedFlag(!State.getIsPausedFlag());
   State.onPause(render);
 };
 
