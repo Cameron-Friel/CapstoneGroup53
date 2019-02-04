@@ -127,7 +127,7 @@ function createWorld() {
 var pauseBtn = document.getElementById('pause-button');
 
 pauseBtn.onclick = function() {
-  if (pauseBtn.value == 'pause') {
+  if (pauseBtn.value == "pause") {
     pauseBtn.innerText = "cont.";
     pauseBtn.value = "continue";
   }
