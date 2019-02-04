@@ -34,8 +34,6 @@ let render = Render.create({
 
 createWorld(); // add bodies to canvas
 
-State.setSimulationTime(Date.now()); // sets the timer for the simulation
-
 Render.run(render); // allow for the rendering of frames of the world
 
 renderLoop(); // renders frames to the canvas
@@ -90,7 +88,7 @@ function renderLoop() {
 
     pendulum.pendulumAngle = pendulum.calculateAngle(pendulum.pendulumString.bodies[0].position, pendulum.pendulumBody.position);
     pendulum.displayPendulumAngle();
-    State.displayRunningTime();
+    State.displayRunningTime(engine);
 
     addData(myChart, {x: engine.timing.timestamp, y: pendulum.pendulumAngle});
   }
@@ -159,23 +157,13 @@ document.getElementById('start-button').onclick = function() {
 document.getElementById('reset-button').onclick = function() {
   World.clear(engine.world);
   createWorld();
-  State.setRunningTime(0.0);
+  engine.timing.timestamp = 0;
 
   if (State.getIsPausedFlag() === true) {
     State.setIsPausedFlag(!State.getIsPausedFlag());
     Render.run(render);
   }
 };
-
-/**
-  * Listens for whether the current browser tab is active or not
-*/
-
-document.addEventListener('visibilitychange', function() {
-  if (!document.hidden) {
-    State.setSimulationTime(Date.now());
-  }
-});
 
 /*
 * Adds data points to the chart.
