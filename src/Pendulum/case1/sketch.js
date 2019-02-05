@@ -158,9 +158,8 @@ document.getElementById('reset-button').onclick = function() {
   World.clear(engine.world);
   createWorld();
   engine.timing.timestamp = 0;
-  State.setRunningTime(0.0);
   resetChartData(myChart);
-  State.displayRunningTime();
+  State.displayRunningTime(engine);
   pendulum.displayPendulumAngle();
   State.setSimulationRunning(false);
 
