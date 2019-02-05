@@ -131,7 +131,7 @@ pauseBtn.onclick = function() {
   }
   else {
     pauseBtn.value = "pause";
-    pauseBtn.innerText = "Pause" ;
+    pauseBtn.innerText = "Pause";
   }
 
   State.setIsPausedFlag(!State.getIsPausedFlag());
@@ -166,6 +166,10 @@ document.getElementById('reset-button').onclick = function() {
   if (State.getIsPausedFlag() === false) {
     State.setIsPausedFlag(true);
     State.onPause(render);
+  }
+  else {
+    pauseBtn.value = "pause";
+    pauseBtn.innerText = "Pause" ;
   }
 };
 
