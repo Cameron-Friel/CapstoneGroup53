@@ -68,8 +68,6 @@ function renderLoop() {
     pendulum.pendulumAngle = pendulum.calculateAngle(pendulum.pendulumString.bodies[0].position, pendulum.pendulumBody.position);
     pendulum.displayPendulumAngle();
     State.displayRunningTime(engine);
-
-    //Graph.addGraphData({ x: engine.timing.timestamp, y: pendulum.pendulumAngle });
   }
 }
 
