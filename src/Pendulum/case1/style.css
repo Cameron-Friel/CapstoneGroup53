@@ -4,10 +4,11 @@
   justify-content: space-evenly;
   flex: 1;
   text-align: center;
+  flex-wrap: nowrap
 }
 
 body {
-  background-color: rgb(224, 224, 224);
+  background-color: rgb(243, 240, 240);
   font-family:  Helvetica, Arial, sans-serif
 }
 
@@ -37,26 +38,6 @@ h1 {
   float: left;
 }
 
-@media(max-width : 922px) {
-  canvas {
-    display: flex;
-    align-items: center;
-    max-width: 90%;
-    max-height: 60%;
-    margin-left: 20px;
-    margin-right: 20px;
-  }
-}
-
-.chart-container {
-  /* margin: 0px; */
-  margin: auto;
-  text-align: center;
-  float:left;
-  position: relative;
-  top: 50px;
-}
-
 
 table {
   border: 1px solid rgb(185, 185, 185);
@@ -78,23 +59,80 @@ th, td {
   border-color: #dcdcdc;
   padding: 10px 10px;
   /* float: left; */
-  top: 10px;
+  top: 18px;
   max-width: 600px;
   position: relative;
 }
 
-@media(max-width : 922px) {
+.chart-container {
+  /* margin: 0px; */
+  margin: auto;
+  align-content: center;
+  position: relative;
+  top: 50px;
+  float: left; 
+  height:40vh; 
+  width:25vw;
+}
+
+@media screen and (max-width : 992px) {
+  #canvas > canvas {
+    display: flex;
+    align-items: center;
+    max-width: 95%;
+    max-height: 60%;
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+
   #live-update-table {
     margin-left: 20px;
     margin-right: 20px;
+    top: 0px;
   }
-
+  
   .chart-container {
     position: relative;
     align-items: center;
+    float: left;
+    width: 90vw;
+    height: 40vh;
+  }
+
+  h1 {
+    font-size: 20px;
   }
 }
 
+
+@media screen and (max-width : 768px) {
+  #canvas > canvas {
+    margin: 10px;
+  }
+  #live-update-table {
+    margin-left: 20px;
+    margin-right: 20px;
+    top: 0px;
+  }
+
+  /* .table-button-container {
+    position: inline-block;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-around;
+    align-items: center;
+  } */
+  
+  /* .chart-container {
+    position: relative;
+    align-items: center;
+    float: left;
+    width: 90vw;
+    height: 40vh;
+    
+  } */
+}
 
 .button-group {
   position: relative;
