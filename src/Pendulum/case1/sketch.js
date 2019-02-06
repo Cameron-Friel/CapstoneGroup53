@@ -49,6 +49,8 @@ renderLoop(); // renders frames to the canvas
 
 Graph.createGraph(ctx, graphData); // add graph
 
+Graph.startPlotInterval(engine, pendulum);
+
 /*
   * Renders frames to send to the canvas
 */
@@ -65,7 +67,7 @@ function renderLoop() {
     pendulum.displayPendulumAngle();
     State.displayRunningTime(engine);
 
-    Graph.addGraphData({ x: engine.timing.timestamp, y: pendulum.pendulumAngle });
+    //Graph.addGraphData({ x: engine.timing.timestamp, y: pendulum.pendulumAngle });
   }
 }
 

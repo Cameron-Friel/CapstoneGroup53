@@ -2,6 +2,7 @@
 
 let Graph = (function() {
   let _graph = null;
+  let _plotInterval = null;
 
   return {
     /**
@@ -55,6 +56,16 @@ let Graph = (function() {
   resetGraphData: function(data) {
     _graph.config.data = data;
     _graph.update();
+  },
+
+  startPlotInterval: function(engine, pendulum) {
+    let _plotInterval = setInterval(function() {
+      Graph.addGraphData({ x: engine.timing.timestamp, y: pendulum.pendulumAngle })
+    }, 100);
+  },
+
+  stopPlotInterval: function() {
+    clearInterval(_plotInterval);
   },
 };
 })();
