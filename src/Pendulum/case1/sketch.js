@@ -2,6 +2,7 @@
 
 let State = require('../State.js');
 let Pendulum = require('../Pendulum.js');
+let Graph = require('../Graph.js');
 
 const CANVAS_WIDTH = 800;
 const CANVAS_HEIGHT = 600;
@@ -26,11 +27,19 @@ let render = Render.create({
     }
  });
 
+let ctx = document.getElementById("chart").getContext('2d');
 
+ let graphData = {
+   datasets: [{
+     label: 'Change in angle',
+     data: [{
+     }]
+  }]
+ };
 
- /*
- *  Create world
- */
+/**
+  * Create world
+*/
 
 createWorld(); // add bodies to canvas
 
@@ -38,41 +47,7 @@ Render.run(render); // allow for the rendering of frames of the world
 
 renderLoop(); // renders frames to the canvas
 
-/*
-* Add chart
-*/
-
-var interval;
-var seconds = 0.0;
-var ctx = document.getElementById("chart").getContext('2d');
-
-var myChart = new Chart(ctx, {
-type: 'line',
-data: {
-    datasets: [{
-        label: 'Change in angle',
-        data: [{
-        }]
-    }]
-},
-options: {
-    responsive: true,
-    maintainAspectRatio: false,
-    showLines: true,
-    scales: {
-                xAxes: [{
-                    type: 'linear',
-                    position: 'bottom',
-                    scaleLabel: {
-                      labelString: 'Time (ms)',
-                      display: true
-                    }
-                }],
-
-      }
-    }
-});
-
+Graph.createGraph(ctx, graphData); // add graph
 
 /*
   * Renders frames to send to the canvas
@@ -90,7 +65,7 @@ function renderLoop() {
     pendulum.displayPendulumAngle();
     State.displayRunningTime(engine);
 
-    addData(myChart, {x: engine.timing.timestamp, y: pendulum.pendulumAngle});
+    Graph.addGraphData({ x: engine.timing.timestamp, y: pendulum.pendulumAngle });
   }
 }
 
@@ -158,7 +133,7 @@ document.getElementById('reset-button').onclick = function() {
   World.clear(engine.world);
   createWorld();
   engine.timing.timestamp = 0;
-  resetChartData(myChart);
+  Graph.resetGraphData(graphData);
   State.displayRunningTime(engine);
   pendulum.displayPendulumAngle();
   State.setSimulationRunning(false);
@@ -172,31 +147,3 @@ document.getElementById('reset-button').onclick = function() {
     pauseBtn.innerText = "Pause" ;
   }
 };
-
-/*
-* Adds data points to the chart.
-*/
-
-function addData(chart, data) {
-  chart.data.datasets.forEach((dataset) => {
-      dataset.data.push(data);
-  });
-    chart.update();
-}
-
-/*
-  * Resets the chart data back to an empty state
-*/
-
-function resetChartData(chart) {
-  let data = {
-      datasets: [{
-          label: 'Change in angle',
-          data: [{
-          }]
-      }]
-  };
-
-  chart.config.data = data;
-  chart.update();
-}
