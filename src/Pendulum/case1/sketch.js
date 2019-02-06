@@ -29,13 +29,13 @@ let render = Render.create({
 
 let ctx = document.getElementById("chart").getContext('2d');
 
- let graphData = {
-   datasets: [{
-     label: 'Change in angle',
-     data: [{
-     }]
-  }]
- };
+let graphData = {
+      datasets: [{
+          label: 'Change in angle',
+          data: [{
+          }]
+      }]
+  };
 
 /**
   * Create world

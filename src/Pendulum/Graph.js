@@ -1,7 +1,7 @@
 'use strict';
 
 let Graph = (function() {
-  let _graph = null;
+  let _graph = {};
 
   return {
     /**
@@ -11,10 +11,12 @@ let Graph = (function() {
     */
 
     createGraph: function(reference, data) {
+      let tempData = JSON.parse(JSON.stringify(data));
+
       _graph = new Chart(reference, {
       type: 'line',
       data: {
-        datasets: data.datasets,
+        datasets: tempData.datasets,
       },
       options: {
         responsive: true,
@@ -49,11 +51,13 @@ let Graph = (function() {
 
   /**
     * Resets the chart data back to an empty state
-    * @param {} data - The graph data
+    * @param {} newData - The graph data
   */
 
   resetGraphData: function(data) {
-    _graph.config.data = data;
+    let tempData = JSON.parse(JSON.stringify(data));
+
+    _graph.config.data = tempData;
     _graph.update();
   },
 };
