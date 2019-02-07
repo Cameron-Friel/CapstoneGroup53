@@ -9,33 +9,30 @@
   <body>
     <h1>Case 1</h1>
     <div class='container'>
-      <!-- Temporary graph representation
-      <rect id='graph-temp' width="200" height="200" style="fill:rgb(147, 201, 183);stroke-width:3;stroke:rgb(0,0,0)" /> -->
-
       <!-- Animation canvas  -->
-      <div id='canvas'>
-
-      </div>
-    </div>
-
-    <div class = 'table-container'>
+      <div id='canvas'></div>
       <!-- Live Updates -->
-      <table id='live-update-table'>
-        <tr>
-          <td><span id='running-time' class='main-text'></span></td>
-          <td>
-            <span id='pendulum-angle' class='main-text'></span>
-          </td>
-        </tr>
-      </table>
-    </div>
-  
+      <div class = 'table-container'>
+        <table id='live-update-table'>
+          <tr>
+            <td><span id='running-time' class='main-text'></span></td>
+            <td>
+              <span id='pendulum-angle' class='main-text'></span>
+            </td>
+          </tr>
+        </table>
+      </div>
+
       <!-- Buttons -->
-      <div class="button-group">
+      <!-- <div class="button-group"> -->
         <Button class="control-btns" id="start-button" class='main-text'>Start</Button>
         <Button class="control-btns" id='pause-button' class='main-text' value='pause'>Pause</Button>
         <Button class="control-btns" id='reset-button' class='main-text'>Reset</Button>
-      </div>
+      <!-- </div> -->
+      
+    </div>
+
+  
 
     <!-- Chart -->
     <div class="chart-container">

@@ -1,10 +1,10 @@
 .container {
-  /* flex-direction: inline-block; */
-  flex-direction: column-reverse;
+  flex-direction: inline-block;
+  flex-direction: row;
   justify-content: space-evenly;
   flex: 1;
   text-align: center;
-  flex-wrap: nowrap
+  flex-wrap: wrap;
 }
 
 body {
@@ -33,7 +33,7 @@ h1 {
   align-items: center;
   max-width: 90%;
   max-height: 60%;
-  margin: 20px 50px 2px 50px;
+  margin: 20px 33px 1px 20px;
   float: left;
 }
 
@@ -73,34 +73,6 @@ th, td {
   width:25vw;
 }
 
-@media screen and (max-width : 992px) {
-  #canvas > canvas {
-    display: flex;
-    align-items: center;
-    max-width: 95%;
-    max-height: 60%;
-    margin-left: 10px;
-    margin-right: 10px;
-  }
-
-  #live-update-table {
-    margin-left: 20px;
-    margin-right: 20px;
-    top: 0px;
-  }
-  
-  .chart-container {
-    position: relative;
-    align-items: center;
-    float: left;
-    width: 90vw;
-    height: 40vh;
-  }
-
-  h1 {
-    font-size: 20px;
-  }
-}
 
 .button-group {
   position: relative;
@@ -121,11 +93,74 @@ th, td {
   border-radius: 8px;
   box-shadow: 5px 2px 9px rgba(0, 0, 0, 0.18);
   position: relative;
-  top: 10px;
+  top: 20px;
 }
 
 .control-btns:focus {
   outline: none;
+}
+
+#pause-button {
+  background-color: rgb(211, 211, 211);
+}
+
+#pause-button:hover {
+  background-color: rgb(197, 197, 59);
+}
+
+#start-button {
+  background-color: rgb(17, 175, 48);
+}
+
+#start-button:hover {
+  background-color: rgb(62, 224, 92);
+}
+
+#reset-button {
+  background-color: rgb(173, 62, 62);
+}
+
+#reset-button:hover {
+  background-color: rgb(134, 49, 49);
+}
+
+/* Laptop screens 1176 */
+/* Only the chart is messed up at this width */
+@media screen and (max-width : 1176px) {
+  .chart-container {
+    width: 70vw;
+  }
+
+
+}
+
+
+/* Medium Screens */
+@media screen and (max-width : 992px) {
+  #canvas > canvas {
+    display: flex;
+    align-items: center;
+    max-width: 95%;
+    max-height: 60%;
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+
+  #live-update-table {
+    top: 0px;
+  }
+  
+  .chart-container {
+    position: relative;
+    align-items: center;
+    float: left;
+    width: 90vw;
+    height: 40vh;
+  }
+
+  h1 {
+    font-size: 20px;
+  }
 }
 
 /* Tablet  */
@@ -146,8 +181,6 @@ th, td {
     position: relative;
     left: 50%;
   }
-
-
 }
 
 
@@ -193,29 +226,5 @@ th, td {
 }
 
 
-
-#pause-button {
-  background-color: rgb(175, 175, 175);
-}
-
-#pause-button:hover {
-  background-color: rgb(88, 88, 88);
-}
-
-#start-button {
-  background-color: rgb(17, 175, 48);
-}
-
-#start-button:hover {
-  background-color: rgb(62, 224, 92);
-}
-
-#reset-button {
-  background-color: rgb(251, 255, 0);
-}
-
-#reset-button:hover {
-  background-color: rgb(197, 197, 59);
-}
 
 
