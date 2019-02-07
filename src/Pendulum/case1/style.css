@@ -9,17 +9,16 @@
 
 body {
   background-color: rgb(243, 240, 240);
-  font-family:  Helvetica, Arial, sans-serif
+  font-family:  "Trebuchet MS", Helvetica, sans-serif;	  
 }
 
 .main-text {
+  font-family:  "Trebuchet MS", Helvetica, sans-serif;	    
   margin: 10px;
   font-size: 14px;
-  font-family: sans-serif;
 }
 
 h1 {
-  font-family: sans-serif;
   margin: 0;
   padding: 10px 20px;
   font-size: 15px;
@@ -41,6 +40,7 @@ h1 {
 
 table {
   border: 1px solid rgb(185, 185, 185);
+  width: 238px;
 }
 
 th, td {
@@ -58,14 +58,12 @@ th, td {
   background-repeat: repeat-x;
   border-color: #dcdcdc;
   padding: 10px 10px;
-  /* float: left; */
   top: 18px;
   max-width: 600px;
   position: relative;
 }
 
 .chart-container {
-  /* margin: 0px; */
   margin: auto;
   align-content: center;
   position: relative;
@@ -104,44 +102,15 @@ th, td {
   }
 }
 
-
-@media screen and (max-width : 768px) {
-  #canvas > canvas {
-    margin: 10px;
-  }
-  #live-update-table {
-    margin-left: 20px;
-    margin-right: 20px;
-    top: 0px;
-  }
-
-  /* .table-button-container {
-    position: inline-block;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: space-around;
-    align-items: center;
-  } */
-  
-  /* .chart-container {
-    position: relative;
-    align-items: center;
-    float: left;
-    width: 90vw;
-    height: 40vh;
-    
-  } */
-}
-
 .button-group {
   position: relative;
   display: block;
-  /* float: left; */
-  top: 10px
+  float: left;
+  top: 10px;
 }
 
 .control-btns {
+  font-family:  "Trebuchet MS", Helvetica, sans-serif;  
   border: none;
   color: black;
   padding: 10px 10px;
@@ -157,6 +126,70 @@ th, td {
 
 .control-btns:focus {
   outline: none;
+}
+
+/* Tablet  */
+@media screen and (max-width : 768px) {
+  #canvas > canvas {
+    margin: 10px;
+  }
+
+  .table-container {
+    position: relative;
+    display: block;
+    float: right;
+    top: 2px;
+    left: -50%;
+  }
+  
+  .table-container > table {
+    position: relative;
+    left: 50%;
+  }
+
+
+}
+
+
+/* Mobile for table & buttons*/
+@media screen and (max-width: 485px) {
+  .main-text {
+    font-size: 20px;
+  }
+
+  #live-update-table {
+    width: 340px;
+  }
+
+  .table-container {
+    position: relative;
+    display: block;
+    float: right;
+    top: 2px;
+    left: -50%;
+  }
+  
+  .table-container > table {
+    position: relative;
+    left: 50%;
+  }
+
+  .control-btns {
+    font-size: 17px;
+  }
+
+  .button-group {
+    position: relative;
+    display: block;
+    float: right;
+    top: 10px;
+    left: -50%;
+  }
+  
+  .button-group > .control-btns {
+    position: relative;
+    left: 50%;
+  }
 }
 
 

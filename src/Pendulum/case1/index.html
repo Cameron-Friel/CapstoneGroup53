@@ -18,18 +18,17 @@
       </div>
     </div>
 
-    <div class = 'table-button-container'>
+    <div class = 'table-container'>
       <!-- Live Updates -->
-      <div class = "update-group">
-          <table style='width:238px' id='live-update-table'>
-            <tr>
-              <td><span id='running-time' class='main-text'></span></td>
-              <td>
-                <span id='pendulum-angle' class='main-text'></span>
-              </td>
-            </tr>
-          </table>
-      </div>
+      <table id='live-update-table'>
+        <tr>
+          <td><span id='running-time' class='main-text'></span></td>
+          <td>
+            <span id='pendulum-angle' class='main-text'></span>
+          </td>
+        </tr>
+      </table>
+    </div>
   
       <!-- Buttons -->
       <div class="button-group">
@@ -37,7 +36,6 @@
         <Button class="control-btns" id='pause-button' class='main-text' value='pause'>Pause</Button>
         <Button class="control-btns" id='reset-button' class='main-text'>Reset</Button>
       </div>
-    </div>
 
     <!-- Chart -->
     <div class="chart-container">
