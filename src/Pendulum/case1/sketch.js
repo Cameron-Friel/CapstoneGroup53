@@ -29,13 +29,16 @@ let render = Render.create({
 
 let ctx = document.getElementById("chart").getContext('2d');
 
-let graphData = {
-      datasets: [{
-          label: 'Change in angle',
-          data: [{
-          }]
-      }]
-  };
+let plotInterval = null;
+
+ let graphData = {
+   datasets: [{
+     label: 'Change in angle',
+     data: [{
+     }]
+  }]
+ };
+
 
 /**
   * Create world
@@ -64,8 +67,6 @@ function renderLoop() {
     pendulum.pendulumAngle = pendulum.calculateAngle(pendulum.pendulumString.bodies[0].position, pendulum.pendulumBody.position);
     pendulum.displayPendulumAngle();
     State.displayRunningTime(engine);
-
-    Graph.addGraphData({ x: engine.timing.timestamp, y: pendulum.pendulumAngle });
   }
 }
 
@@ -94,6 +95,24 @@ function createWorld() {
   }));
 }
 
+/**
+  * Sends a request to plot a coordinate every 100ms
+*/
+
+function runPlotInterval() {
+  plotInterval = setInterval(function() {
+    Graph.addGraphData({ x: engine.timing.timestamp.toFixed(3), y: pendulum.pendulumAngle });
+  }, 100);
+}
+
+/**
+  * Stops the plot interval from running
+*/
+
+function stopPlotInterval() {
+  clearInterval(plotInterval);
+}
+
 /*
   * Pauses or unpauses the world from rendering
 */
@@ -103,10 +122,12 @@ pauseBtn.onclick = function() {
   if (pauseBtn.value == "pause") {
     pauseBtn.innerText = "cont.";
     pauseBtn.value = "continue";
+    stopPlotInterval();
   }
   else {
     pauseBtn.value = "pause";
     pauseBtn.innerText = "Pause";
+    runPlotInterval();
   }
 
   State.setIsPausedFlag(!State.getIsPausedFlag());
@@ -122,6 +143,7 @@ document.getElementById('start-button').onclick = function() {
     State.setIsPausedFlag(false);
     State.onPause(render);
     State.setSimulationRunning(true);
+    runPlotInterval();
   }
 };
 
@@ -130,14 +152,6 @@ document.getElementById('start-button').onclick = function() {
 */
 
 document.getElementById('reset-button').onclick = function() {
-  World.clear(engine.world);
-  createWorld();
-  engine.timing.timestamp = 0;
-  Graph.resetGraphData(graphData);
-  State.displayRunningTime(engine);
-  pendulum.displayPendulumAngle();
-  State.setSimulationRunning(false);
-
   if (State.getIsPausedFlag() === false) {
     State.setIsPausedFlag(true);
     State.onPause(render);
@@ -146,4 +160,13 @@ document.getElementById('reset-button').onclick = function() {
     pauseBtn.value = "pause";
     pauseBtn.innerText = "Pause" ;
   }
+
+  World.clear(engine.world);
+  createWorld();
+  engine.timing.timestamp = 0;
+  Graph.resetGraphData(graphData);
+  stopPlotInterval();
+  State.displayRunningTime(engine);
+  pendulum.displayPendulumAngle();
+  State.setSimulationRunning(false);
 };
