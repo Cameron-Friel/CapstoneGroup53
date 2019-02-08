@@ -2,6 +2,7 @@
 
 let State = require('../State.js');
 let Pendulum = require('../Pendulum.js');
+let Graph = require('../Graph.js');
 
 const CANVAS_WIDTH = 800;
 const CANVAS_HEIGHT = 600;
@@ -29,11 +30,22 @@ let render = Render.create({
     }
  });
 
+let ctx = document.getElementById("chart").getContext('2d');
+
+let plotInterval = null;
+
+ let graphData = {
+   datasets: [{
+     label: 'Change in angle',
+     data: [{
+     }]
+  }]
+ };
 
 
- /*
- *  Create world
- */
+/**
+  * Create world
+*/
 
 createWorld(); // add bodies to canvas
 
@@ -41,41 +53,7 @@ Render.run(render); // allow for the rendering of frames of the world
 
 renderLoop(); // renders frames to the canvas
 
-/*
-* Add chart
-*/
-
-var interval;
-var seconds = 0.0;
-var ctx = document.getElementById("chart").getContext('2d');
-
-var myChart = new Chart(ctx, {
-type: 'line',
-data: {
-    datasets: [{
-        label: 'Change in angle',
-        data: [{
-        }]
-    }]
-},
-options: {
-    responsive: true,
-    maintainAspectRatio: false,
-    showLines: true,
-    scales: {
-                xAxes: [{
-                    type: 'linear',
-                    position: 'bottom',
-                    scaleLabel: {
-                      labelString: 'Time (ms)',
-                      display: true
-                    }
-                }],
-
-      }
-    }
-});
-
+Graph.createGraph(ctx, graphData); // add graph
 
 /*
   * Renders frames to send to the canvas
@@ -93,8 +71,6 @@ function renderLoop() {
     pendulum.pendulumHeight = pendulum.calculatePenulumHeight(pendulum.pendulumStringLength / PTM, pendulum.pendulumAngle);
     pendulum.displayPendulumHeight();
     State.displayRunningTime(engine);
-
-    addData(myChart, {x: engine.timing.timestamp, y: pendulum.pendulumAngle});
   }
 }
 
@@ -125,6 +101,24 @@ function createWorld() {
   pendulum.pendulumStringLength = pendulum.calculateStringLength(protractor.position, pendulum.pendulumBody.position);
 }
 
+/**
+  * Sends a request to plot a coordinate every 100ms
+*/
+
+function runPlotInterval() {
+  plotInterval = setInterval(function() {
+    Graph.addGraphData({ x: engine.timing.timestamp.toFixed(3), y: pendulum.pendulumAngle });
+  }, 100);
+}
+
+/**
+  * Stops the plot interval from running
+*/
+
+function stopPlotInterval() {
+  clearInterval(plotInterval);
+}
+
 /*
   * Pauses or unpauses the world from rendering
 */
@@ -134,10 +128,12 @@ pauseBtn.onclick = function() {
   if (pauseBtn.value == "pause") {
     pauseBtn.innerText = "cont.";
     pauseBtn.value = "continue";
+    stopPlotInterval();
   }
   else {
     pauseBtn.value = "pause";
     pauseBtn.innerText = "Pause";
+    runPlotInterval();
   }
 
   State.setIsPausedFlag(!State.getIsPausedFlag());
@@ -154,6 +150,7 @@ document.getElementById('start-button').onclick = function() {
     State.onPause(render);
     State.setSimulationRunning(true);
     Body.applyForce(pendulum.pendulumBody, {x: pendulum.pendulumBody.position.x, y: pendulum.pendulumBody.position.y}, {x: 0.0017, y: 0});
+    runPlotInterval();
   }
 };
 
@@ -178,32 +175,5 @@ document.getElementById('reset-button').onclick = function() {
     pauseBtn.value = "pause";
     pauseBtn.innerText = "Pause" ;
   }
+
 };
-
-/*
-* Adds data points to the chart.
-*/
-
-function addData(chart, data) {
-  chart.data.datasets.forEach((dataset) => {
-      dataset.data.push(data);
-  });
-    chart.update();
-}
-
-/*
-  * Resets the chart data back to an empty state
-*/
-
-function resetChartData(chart) {
-  let data = {
-      datasets: [{
-          label: 'Change in angle',
-          data: [{
-          }]
-      }]
-  };
-
-  chart.config.data = data;
-  chart.update();
-}

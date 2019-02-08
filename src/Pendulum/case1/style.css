@@ -1,24 +1,23 @@
 .container {
-  /* flex-direction: inline-block; */
-  flex-direction: column-reverse;
+  flex-direction: row;
   justify-content: space-evenly;
   flex: 1;
   text-align: center;
+  flex-wrap: wrap;
 }
 
 body {
-  background-color: rgb(224, 224, 224);
-  font-family:  Helvetica, Arial, sans-serif
+  background-color: rgb(243, 240, 240);
+  font-family:  "Trebuchet MS", Helvetica, sans-serif;	  
 }
 
 .main-text {
+  font-family:  "Trebuchet MS", Helvetica, sans-serif;	    
   margin: 10px;
   font-size: 14px;
-  font-family: sans-serif;
 }
 
 h1 {
-  font-family: sans-serif;
   margin: 0;
   padding: 10px 20px;
   font-size: 15px;
@@ -33,33 +32,8 @@ h1 {
   align-items: center;
   max-width: 90%;
   max-height: 60%;
-  margin: 20px 50px 2px 50px;
+  margin: 20px 33px 1px 20px;
   float: left;
-}
-
-@media(max-width : 922px) {
-  canvas {
-    display: flex;
-    align-items: center;
-    max-width: 90%;
-    max-height: 60%;
-    margin-left: 20px;
-    margin-right: 20px;
-  }
-}
-
-.chart-container {
-  /* margin: 0px; */
-  margin: auto;
-  text-align: center;
-  float:left;
-  position: relative;
-  top: 50px;
-}
-
-
-table {
-  border: 1px solid rgb(185, 185, 185);
 }
 
 th, td {
@@ -77,33 +51,24 @@ th, td {
   background-repeat: repeat-x;
   border-color: #dcdcdc;
   padding: 10px 10px;
-  /* float: left; */
-  top: 10px;
+  top: 18px;
+  min-width: 230px;
   max-width: 600px;
   position: relative;
 }
 
-@media(max-width : 922px) {
-  #live-update-table {
-    margin-left: 20px;
-    margin-right: 20px;
-  }
-
-  .chart-container {
-    position: relative;
-    align-items: center;
-  }
-}
-
-
-.button-group {
+.chart-container {
+  margin: auto;
+  align-content: center;
   position: relative;
-  display: block;
-  /* float: left; */
-  top: 10px
+  top: 50px;
+  float: left; 
+  height:40vh; 
+  width:25vw;
 }
 
 .control-btns {
+  font-family:  "Trebuchet MS", Helvetica, sans-serif;  
   border: none;
   color: black;
   padding: 10px 10px;
@@ -114,21 +79,19 @@ th, td {
   border-radius: 8px;
   box-shadow: 5px 2px 9px rgba(0, 0, 0, 0.18);
   position: relative;
-  top: 10px;
+  top: 20px;
 }
 
 .control-btns:focus {
   outline: none;
 }
 
-
-
 #pause-button {
-  background-color: rgb(175, 175, 175);
+  background-color: rgb(211, 211, 211);
 }
 
 #pause-button:hover {
-  background-color: rgb(88, 88, 88);
+  background-color: rgb(197, 197, 59);
 }
 
 #start-button {
@@ -140,11 +103,98 @@ th, td {
 }
 
 #reset-button {
-  background-color: rgb(251, 255, 0);
+  background-color: rgb(173, 62, 62);
 }
 
 #reset-button:hover {
-  background-color: rgb(197, 197, 59);
+  background-color: rgb(134, 49, 49);
 }
+
+/* Laptop screens 1176 */
+/* Only the chart is messed up at this width */
+@media screen and (max-width : 1176px) {
+  .chart-container {
+    width: 70vw;
+  }
+
+
+}
+
+
+/* Medium Screens */
+@media screen and (max-width : 992px) {
+  #canvas > canvas {
+    display: flex;
+    align-items: center;
+    max-width: 95%;
+    max-height: 60%;
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+
+  #live-update-table {
+    top: 0px;
+  }
+  
+  .chart-container {
+    position: relative;
+    align-items: center;
+    float: left;
+    width: 90vw;
+    height: 40vh;
+  }
+
+  h1 {
+    font-size: 20px;
+  }
+}
+
+/* Tablet  */
+@media screen and (max-width : 768px) and (min-width: 486px) {
+  #live-update-table {
+    width: 340px;
+  }
+}
+
+
+/* Mobile for table & buttons*/
+@media screen and (max-width: 485px) {
+  .main-text {
+    font-size: 15px;
+  }
+
+  #live-update-table {
+    width: 330px;
+  }
+
+  .table-container {
+    position: relative;
+    display: block;
+    float: right;
+    top: 2px;
+    left: -50%;
+  }
+  
+  .table-container > table {
+    position: relative;
+    left: 50%;
+  }
+  
+  .button-group {
+    position: relative;
+    display: block;
+    float: right;
+    top: 10px;
+    left: -50%;
+  }
+  
+  .button-group > .control-btns {
+    font-size: 15px;
+    position: relative;
+    left: 50%;
+  }
+}
+
+
 
 
