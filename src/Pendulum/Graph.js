@@ -51,7 +51,7 @@ let Graph = (function() {
 
   /**
     * Resets the chart data back to an empty state
-    * @param {} data - The graph data
+    * @param {} newData - The graph data
   */
 
   resetGraphData: function(data) {
