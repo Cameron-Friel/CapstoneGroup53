@@ -56,7 +56,31 @@ class Pendulum {
   */
 
   calculateAngle(firstPoint, secondPoint) {
-    return( 90 - Math.abs(Math.round(Math.atan2(firstPoint.y - secondPoint.y, firstPoint.x - secondPoint.y) * 180 / Math.PI)));
+    let angle = Math.round(Math.abs(Math.atan2(firstPoint.y - secondPoint.y, firstPoint.x - secondPoint.x) * 180 / Math.PI));
+
+    return Math.abs(angle - 90);
+  }
+
+  /**
+    * Calculates the length of the pendulum's string
+    * @param {Vector} firstPoint - the first coordinate given as (x, y) as its datamembers
+    * @param {Vector} secondPoint - the second coordinate given as (x, y) as its datamembers
+    * @returns {Int} length
+  */
+
+  calculateStringLength(firstPoint, secondPoint) {
+    return Math.hypot(firstPoint.x - secondPoint.x, firstPoint.y - secondPoint.y);
+  }
+
+  /**
+    * Calculates the height of the pendulum in meters
+    * @param {Int} length - the length of the pendulum
+    * @param {Int} angle - the angle of the pendulum
+    * @returns {Int} height - the height of the pendulum
+  */
+
+  calculatePenulumHeight(length, angle) {
+    return length * (1 - Math.cos(angle * Math.PI / 180));
   }
 
   /**
@@ -65,6 +89,14 @@ class Pendulum {
 
   displayPendulumAngle() {
     document.getElementById('pendulum-angle').textContent = 'Angle: ' + this.pendulumAngle;
+  }
+
+  /**
+    * Updates the height of the pendulum to the user
+  */
+
+  displayPendulumHeight() {
+    document.getElementById('pendulum-height').textContent = 'Height: ' + this.pendulumHeight.toFixed(3) + 'm';
   }
 
   /**
@@ -101,6 +133,24 @@ class Pendulum {
 
   get pendulumHeight() {
     return this._pendulumHeight;
+  }
+
+  /**
+    * Updates the value of the length of the string
+    * @param {Int} length - the length of the string
+  */
+
+  set pendulumStringLength(length) {
+    this.pendulumString.length = length;
+  }
+
+  /**
+    * Returns the length of the pendulum's string
+    * @returns {Int}
+  */
+
+  get pendulumStringLength() {
+    return this.pendulumString.length;
   }
 }
 

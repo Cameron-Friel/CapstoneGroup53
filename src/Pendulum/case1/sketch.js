@@ -6,10 +6,13 @@ let Pendulum = require('../Pendulum.js');
 const CANVAS_WIDTH = 800;
 const CANVAS_HEIGHT = 600;
 
+const PTM = 634.773; // converts pixels to meters for calculations
+
 let Engine = Matter.Engine;
 let Render = Matter.Render;
 let World = Matter.World;
 let Bodies = Matter.Bodies;
+let Body = Matter.Body;
 let Constraint = Matter.Constraint;
 
 let engine = Engine.create();
@@ -87,7 +90,8 @@ function renderLoop() {
     requestAnimationFrame(renderLoop); // render next frame
 
     pendulum.pendulumAngle = pendulum.calculateAngle(pendulum.pendulumString.bodies[0].position, pendulum.pendulumBody.position);
-    pendulum.displayPendulumAngle();
+    pendulum.pendulumHeight = pendulum.calculatePenulumHeight(pendulum.pendulumStringLength / PTM, pendulum.pendulumAngle);
+    pendulum.displayPendulumHeight();
     State.displayRunningTime(engine);
 
     addData(myChart, {x: engine.timing.timestamp, y: pendulum.pendulumAngle});
@@ -106,7 +110,7 @@ function createWorld() {
      Bodies.rectangle(0, 300, 50, 600, { isStatic: true })
   ]);
 
-  pendulum.pendulumBody = Bodies.circle(100, 100, 40, { mass: 0.04, frictionAir: 0});
+  pendulum.pendulumBody = Bodies.circle(100, 170, 40, { mass: 0.04, frictionAir: 0, interia: Infinity });
 
   let protractor = Bodies.circle(400, 50, 60, { isStatic: true});
 
@@ -117,6 +121,8 @@ function createWorld() {
     bodyB: pendulum.pendulumBody,
     length: 0,
   }));
+
+  pendulum.pendulumStringLength = pendulum.calculateStringLength(protractor.position, pendulum.pendulumBody.position);
 }
 
 /*
@@ -147,6 +153,7 @@ document.getElementById('start-button').onclick = function() {
     State.setIsPausedFlag(false);
     State.onPause(render);
     State.setSimulationRunning(true);
+    Body.applyForce(pendulum.pendulumBody, {x: pendulum.pendulumBody.position.x, y: pendulum.pendulumBody.position.y}, {x: 0.0017, y: 0});
   }
 };
 
@@ -160,7 +167,7 @@ document.getElementById('reset-button').onclick = function() {
   engine.timing.timestamp = 0;
   resetChartData(myChart);
   State.displayRunningTime(engine);
-  pendulum.displayPendulumAngle();
+  pendulum.displayPendulumHeight();
   State.setSimulationRunning(false);
 
   if (State.getIsPausedFlag() === false) {
