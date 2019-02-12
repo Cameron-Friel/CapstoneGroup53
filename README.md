@@ -1,15 +1,12 @@
 ## CapstoneGroup53
 
-To get started `clone` the repository and then run `npm start` to install all the dependencies in the project.
+To get started `clone` the repository and then run `npm install` to install all the dependencies in the project.
 
-### `Browserify`
+### `Building with Gulp`
 
-This project utilizes Browserify to bundle JavaScript files together.
-Before opening a simulation, run ```browserify sketch.js -o bundle.js``` in order to bundle the JavaScript files together.
+This project utilizes Gulp to help automate build tasks. In order to package a case, you need to enter `gulp build --case [folder name]` into the command line in order to build a case into the build folder located in the root of the project. You can then navigate to the generated build folder and enter `start index.html` into the command line to view the specific case in the browser. 
 
 ## Access to Modules
-
-In Browserify, modules are aquired using `require`.
 
 ### `Modules`
 
