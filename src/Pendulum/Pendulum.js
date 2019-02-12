@@ -152,6 +152,10 @@ class Pendulum {
   get pendulumStringLength() {
     return this.pendulumString.length;
   }
+
+  get mass() {
+    return this.pendulumBody.mass;
+  }
 }
 
 module.exports = Pendulum;
