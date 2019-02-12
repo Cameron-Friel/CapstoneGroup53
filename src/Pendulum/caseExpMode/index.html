@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang='en' dir='ltr'>
+  <head>
+    <meta charset='utf-8'>
+    <link rel='stylesheet' href='style.css'>
+    <title>Case 2 Pendulum</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  </head>
+  <body>
+    <h1>Case 2</h1>
+    <div class='container'>
+      <!-- Animation canvas  -->
+      <div id='canvas'></div>
+      <!-- Live Updates -->
+      <div class = 'table-container'>
+        <table id='live-update-table'>
+          <tr>
+            <td><span id='running-time' class='main-text'></span></td>
+            <td>
+              <span id='pendulum-height' class='main-text'></span>
+            </td>
+          </tr>
+        </table>
+      </div>
+
+      <!-- Buttons -->
+      <div class="button-group">
+        <Button class="control-btns" id="start-button" class='main-text'>Start</Button>
+        <Button class="control-btns" id='pause-button' class='main-text' value='pause'>Pause</Button>
+        <Button class="control-btns" id='reset-button' class='main-text'>Reset</Button>
+      </div>
+    </div>
+
+    <!-- Chart -->
+    <div class="chart-container">
+        <canvas id="chart"></canvas>
+    </div>
+
+  </body>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.12.0/matter.js'></script>
+  <script src='./bundle.js'></script>
+
+</html>

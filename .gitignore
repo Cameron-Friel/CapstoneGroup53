@@ -7,3 +7,7 @@
 .DS_Store
 /src/Pendulum/case1/bundle.js
 /src/Pendulum/case2/bundle.js
+/src/Pendulum/case3/bundle.js
+/src/Pendulum/case4/bundle.js
+/src/Pendulum/case5/bundle.js
+/src/Pendulum/caseExpMode/bundle.js
