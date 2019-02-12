@@ -60,6 +60,7 @@ Graph.createGraph(ctx, graphData); // add graph
 */
 
 function renderLoop() {
+
   if (State.getIsPausedFlag()) { // the world is paused
     requestAnimationFrame(renderLoop); // render next frame
   }
@@ -71,6 +72,11 @@ function renderLoop() {
     pendulum.pendulumHeight = pendulum.calculatePenulumHeight(pendulum.pendulumStringLength / PTM, pendulum.pendulumAngle);
     pendulum.displayPendulumHeight();
     State.displayRunningTime(engine);
+  }
+  // Stop when speed is below 0.2
+  if(pendulum.pendulumBody.speed <= 0.2){
+    State.setIsPausedFlag(true);
+    State.onPause(render);
   }
 }
 
