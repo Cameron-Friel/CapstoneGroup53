@@ -37,7 +37,7 @@ let plotInterval = null;
 
  let graphData = {
    datasets: [{
-     label: 'Change in angle',
+     label: 'Change in height',
      data: [{
      }]
   }]
