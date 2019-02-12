@@ -19,6 +19,7 @@ let Constraint = Matter.Constraint;
 let engine = Engine.create();
 
 let pendulum = new Pendulum;
+let restingPendulum = new Pendulum;
 
 let render = Render.create({
     element: document.getElementById('canvas'),
@@ -90,8 +91,6 @@ function createWorld() {
 
   let protractor = Bodies.circle(400, 50, 60, { isStatic: true});
 
-  World.add(engine.world, [pendulum.pendulumBody, protractor]);
-
   pendulum.pendulumString = World.add(engine.world, Constraint.create({
     bodyA: protractor,
     bodyB: pendulum.pendulumBody,
@@ -99,6 +98,16 @@ function createWorld() {
   }));
 
   pendulum.pendulumStringLength = pendulum.calculateStringLength(protractor.position, pendulum.pendulumBody.position);
+
+  restingPendulum.pendulumBody = Bodies.circle(400, pendulum.pendulumStringLength + 50, 40, { mass: 0.04, frictionAir: 0, interia: Infinity });
+
+  restingPendulum.pendulumString = World.add(engine.world, Constraint.create({
+      bodyA: protractor,
+      bodyB: restingPendulum.pendulumBody,
+      length: 0,
+    }));
+
+    World.add(engine.world, [pendulum.pendulumBody, restingPendulum.pendulumBody, protractor]);
 }
 
 /**
