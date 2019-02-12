@@ -28,7 +28,7 @@ gulp.task('build', async () => {
     gulp.src(`./src/Pendulum/${folder}/**/*.html`).pipe(gulp.dest('./build'), {mode: 0777});
   }
   else {
-    console.log('Error: The folder to build was not specified. Enter the command gulp build-case --case [Your Case].');
+    console.log('Error: The folder to build was not specified. Enter the command gulp build --case [Your Case].');
   }
 });
 
