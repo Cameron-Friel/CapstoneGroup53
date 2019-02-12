@@ -101,9 +101,6 @@ function createWorld() {
 
   restingPendulum.pendulumBody = Bodies.circle(400, pendulum.pendulumStringLength + 50, 40, { mass: 0.04, frictionAir: 0, interia: Infinity });
 
-  console.log(restingPendulum.calculateStringLength(protractor.position, restingPendulum.pendulumBody.position));
-  console.log(pendulum.pendulumStringLength);
-
   restingPendulum.pendulumString = World.add(engine.world, Constraint.create({
       bodyA: protractor,
       bodyB: restingPendulum.pendulumBody,
