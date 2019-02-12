@@ -162,10 +162,13 @@ document.getElementById('reset-button').onclick = function() {
   World.clear(engine.world);
   createWorld();
   engine.timing.timestamp = 0;
-  resetChartData(myChart);
+  Graph.resetGraphData(graphData);
+  stopPlotInterval();
   State.displayRunningTime(engine);
-  pendulum.displayPendulumHeight();
   State.setSimulationRunning(false);
+  pendulum.pendulumAngle = pendulum.calculateAngle(pendulum.pendulumString.bodies[0].position, pendulum.pendulumBody.position);
+  pendulum.pendulumHeight = pendulum.calculatePenulumHeight(pendulum.pendulumStringLength / PTM, pendulum.pendulumAngle);
+  pendulum.displayPendulumHeight();
 
   if (State.getIsPausedFlag() === false) {
     State.setIsPausedFlag(true);
@@ -175,5 +178,4 @@ document.getElementById('reset-button').onclick = function() {
     pauseBtn.value = "pause";
     pauseBtn.innerText = "Pause" ;
   }
-
 };
