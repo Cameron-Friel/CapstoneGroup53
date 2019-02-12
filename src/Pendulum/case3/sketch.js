@@ -73,6 +73,11 @@ function renderLoop() {
     pendulum.displayPendulumHeight();
     State.displayRunningTime(engine);
   }
+
+  if(pendulum.pendulumBody.speed <= 0.3){
+    State.setIsPausedFlag(true);
+    State.onPause(render);
+  }
 }
 
 /*
@@ -87,7 +92,7 @@ function createWorld() {
      Bodies.rectangle(0, 300, 50, 600, { isStatic: true })
   ]);
 
-  pendulum.pendulumBody = Bodies.circle(100, 170, 40, { mass: 0.04, frictionAir: 0, interia: Infinity });
+  pendulum.pendulumBody = Bodies.circle(100, 170, 40, { mass: 0.08, frictionAir: 0, interia: Infinity });
 
   let protractor = Bodies.circle(400, 50, 60, { isStatic: true});
 
@@ -116,7 +121,7 @@ function createWorld() {
 
 function runPlotInterval() {
   plotInterval = setInterval(function() {
-    Graph.addGraphData({ x: engine.timing.timestamp.toFixed(3), y: pendulum.pendulumAngle });
+    Graph.addGraphData({ x: engine.timing.timestamp.toFixed(3), y: pendulum.pendulumHeight });
   }, 100);
 }
 
