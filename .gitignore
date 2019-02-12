@@ -5,3 +5,5 @@
 
 # misc
 .DS_Store
+/src/Pendulum/case1/bundle.js
+/src/Pendulum/case2/bundle.js
