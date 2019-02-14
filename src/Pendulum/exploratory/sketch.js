@@ -48,7 +48,7 @@ noUiSlider.create(angleSlider, {
   }
 });
 
-// reset 
+// reset
 function refreshSimulation() {
   World.clear(engine.world);
   createWorld();
@@ -71,7 +71,7 @@ function refreshSimulation() {
   }
 }
 
-// whenever length slider changed handler 
+// whenever length slider changed handler
 lengthSlider.noUiSlider.on('change', function () {
   if(State.getSimulationRunning() == false) {
     refreshSimulation();
@@ -86,7 +86,7 @@ massSlider.noUiSlider.on('change', function() {
 
 angleSlider.noUiSlider.on('change', function () {
   if(State.getSimulationRunning() == false) {
-    var angleVal = parseInt(angleSlider.noUiSlider.get(), 10);    
+    var angleVal = parseInt(angleSlider.noUiSlider.get(), 10);
     refreshSimulation();
     pendulum.pendulumAngle = angleVal;
   }
@@ -101,6 +101,7 @@ let World = Matter.World;
 let Bodies = Matter.Bodies;
 let Body = Matter.Body;
 let Constraint = Matter.Constraint;
+let Events = Matter.Events;
 
 let engine = Engine.create();
 
@@ -152,11 +153,6 @@ function renderLoop() {
   else {
     Engine.update(engine, 1000 / 60); // update at 60 FPS
     requestAnimationFrame(renderLoop); // render next frame
-
-    pendulum.pendulumAngle = pendulum.calculateAngle(pendulum.pendulumString.bodies[0].position, pendulum.pendulumBody.position);
-    pendulum.pendulumHeight = pendulum.calculatePenulumHeight(pendulum.pendulumStringLength / PTM, pendulum.pendulumAngle);
-    pendulum.displayPendulumHeight();
-    State.displayRunningTime(engine);
   }
 }
 
@@ -173,26 +169,26 @@ function createWorld() {
      Bodies.rectangle(0, 300, 50, 600, { isStatic: true })
   ]);
 
-  var massVal = parseInt(massSlider.noUiSlider.get(), 10) / 1000;  
+  var massVal = parseInt(massSlider.noUiSlider.get(), 10) / 1000;
   var angleVal = parseInt(angleSlider.noUiSlider.get(), 10);
   var lengthVal = parseFloat(lengthSlider.noUiSlider.get(), 10);
 
   var xCoordProtractor = 400;
   var yCoordProtractor = 50;
-  
+
   var xCoordBody = 400 - ((lengthVal * PTM) * Math.sin(angleVal * Math.PI / 180));
   var yCoordBody = (lengthVal * PTM) * Math.cos(angleVal * Math.PI / 180) + yCoordProtractor;
-  
-  pendulum.pendulumBody = Bodies.circle(xCoordBody, yCoordBody, 30, { 
-    mass: massVal, 
-    frictionAir: 0, 
+
+  pendulum.pendulumBody = Bodies.circle(xCoordBody, yCoordBody, 30, {
+    mass: massVal,
+    frictionAir: 0,
     interia: Infinity });
 
-  // set the angle 
+  // set the angle
   let protractor = Bodies.circle(xCoordProtractor, yCoordProtractor, 20, { isStatic: true});
 
   World.add(engine.world, [pendulum.pendulumBody, protractor]);
-  
+
   pendulum.pendulumString = World.add(engine.world, Constraint.create({
     bodyA: protractor,
     bodyB: pendulum.pendulumBody,
@@ -281,10 +277,10 @@ document.getElementById('reset-button').onclick = function() {
   }
 };
 
-
-
-
-
-
-
-
+// Updates UI before each update of the simulation
+Events.on(engine, 'beforeUpdate', function(event) {
+  pendulum.pendulumAngle = pendulum.calculateAngle(pendulum.pendulumString.bodies[0].position, pendulum.pendulumBody.position);
+  pendulum.pendulumHeight = pendulum.calculatePenulumHeight(pendulum.pendulumStringLength / PTM, pendulum.pendulumAngle);
+  pendulum.displayPendulumHeight();
+  State.displayRunningTime(engine);
+});
