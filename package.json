@@ -19,6 +19,7 @@
   "dependencies": {
     "chart.js": "^2.7.3",
     "matter-js": "^0.14.2",
+    "nouislider": "^13.1.0",
     "server": "^1.0.18",
     "vinyl-source-stream": "^2.0.0"
   },
