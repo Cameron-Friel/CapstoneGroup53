@@ -10,6 +10,91 @@ const CANVAS_HEIGHT = 600;
 
 const PTM = 634.773; // converts pixels to meters for calculations
 
+// Input slider set up
+var lengthSlider = document.getElementById("length-slider");
+var massSlider = document.getElementById("mass-slider");
+var angleSlider = document.getElementById("angle-slider");
+
+noUiSlider.create(lengthSlider, {
+  start: [0.3],
+  step: 0.1,
+  connect: true,
+  tooltips: true,
+  range: {
+    'min' : [0.1],
+    'max' : [0.7]
+  }
+});
+
+noUiSlider.create(massSlider, {
+  start: [20],
+  step: 5,
+  connect: true,
+  tooltips: true,
+  range: {
+    'min' : [1],
+    'max' : [200]
+  }
+});
+
+noUiSlider.create(angleSlider, {
+  start: [60],
+  step: 5,
+  connect: true,
+  tooltips: true,
+  range: {
+    'min' : [0],
+    'max' : [90]
+  }
+});
+
+// reset 
+function refreshSimulation() {
+  World.clear(engine.world);
+  createWorld();
+  engine.timing.timestamp = 0;
+  Graph.resetGraphData(graphData);
+  stopPlotInterval();
+  State.displayRunningTime(engine);
+  State.setSimulationRunning(false);
+  pendulum.pendulumAngle = pendulum.calculateAngle(pendulum.pendulumString.bodies[0].position, pendulum.pendulumBody.position);
+  pendulum.pendulumHeight = pendulum.calculatePenulumHeight(pendulum.pendulumStringLength / PTM, pendulum.pendulumAngle);
+  pendulum.displayPendulumHeight();
+
+  if (State.getIsPausedFlag() === false) {
+    State.setIsPausedFlag(true);
+    State.onPause(render);
+  }
+  else {
+    pauseBtn.value = "pause";
+    pauseBtn.innerText = "Pause" ;
+  }
+}
+
+// whenever length slider changed handler 
+lengthSlider.noUiSlider.on('change', function () {
+  if(State.getSimulationRunning() == false) {
+    refreshSimulation();
+  }
+});
+
+massSlider.noUiSlider.on('change', function() {
+  if(State.getSimulationRunning() == false) {
+    refreshSimulation();
+  }
+});
+
+angleSlider.noUiSlider.on('change', function () {
+  if(State.getSimulationRunning() == false) {
+    var angleVal = parseInt(angleSlider.noUiSlider.get(), 10);    
+    refreshSimulation();
+    pendulum.pendulumAngle = angleVal;
+  }
+});
+
+
+
+
 let Engine = Matter.Engine;
 let Render = Matter.Render;
 let World = Matter.World;
@@ -88,16 +173,30 @@ function createWorld() {
      Bodies.rectangle(0, 300, 50, 600, { isStatic: true })
   ]);
 
-  pendulum.pendulumBody = Bodies.circle(100, 170, 40, { mass: 0.04, frictionAir: 0, interia: Infinity });
+  var massVal = parseInt(massSlider.noUiSlider.get(), 10) / 1000;  
+  var angleVal = parseInt(angleSlider.noUiSlider.get(), 10);
+  var lengthVal = parseFloat(lengthSlider.noUiSlider.get(), 10);
 
-  let protractor = Bodies.circle(400, 50, 20, { isStatic: true});
+  var xCoordProtractor = 400;
+  var yCoordProtractor = 50;
+  
+  var xCoordBody = 400 - ((lengthVal * PTM) * Math.sin(angleVal * Math.PI / 180));
+  var yCoordBody = (lengthVal * PTM) * Math.cos(angleVal * Math.PI / 180) + yCoordProtractor;
+  
+  pendulum.pendulumBody = Bodies.circle(xCoordBody, yCoordBody, 30, { 
+    mass: massVal, 
+    frictionAir: 0, 
+    interia: Infinity });
+
+  // set the angle 
+  let protractor = Bodies.circle(xCoordProtractor, yCoordProtractor, 20, { isStatic: true});
 
   World.add(engine.world, [pendulum.pendulumBody, protractor]);
-
+  
   pendulum.pendulumString = World.add(engine.world, Constraint.create({
     bodyA: protractor,
     bodyB: pendulum.pendulumBody,
-    length: 0,
+    length: 0
   }));
 
   pendulum.pendulumStringLength = pendulum.calculateStringLength(protractor.position, pendulum.pendulumBody.position);
@@ -151,7 +250,7 @@ document.getElementById('start-button').onclick = function() {
     State.setIsPausedFlag(false);
     State.onPause(render);
     State.setSimulationRunning(true);
-    Body.applyForce(pendulum.pendulumBody, {x: pendulum.pendulumBody.position.x, y: pendulum.pendulumBody.position.y}, {x: 0.0017, y: 0});
+    //Body.applyForce(pendulum.pendulumBody, {x: pendulum.pendulumBody.position.x, y: pendulum.pendulumBody.position.y}, {x: 0.0017, y: 0});
     runPlotInterval();
   }
 };
@@ -184,65 +283,6 @@ document.getElementById('reset-button').onclick = function() {
 
 
 
-// Input slider temporary code 
-//TODO: refactor create all in a loop :) 
-var lengthSlider = document.getElementById("length-slider");
-var massSlider = document.getElementById("mass-slider");
-var angleSlider = document.getElementById("angle-slider");
-
-noUiSlider.create(lengthSlider, {
-  start: [0.1],
-  step: 0.2,
-  connect: true,
-  tooltips: true,
-  range: {
-    'min' : [0.1],
-    'max' : [2]
-  }
-});
-
-noUiSlider.create(massSlider, {
-  start: [20],
-  step: 5,
-  connect: true,
-  tooltips: true,
-  range: {
-    'min' : [1],
-    'max' : [200]
-  }
-});
-
-noUiSlider.create(angleSlider, {
-  start: [60],
-  step: 5,
-  connect: true,
-  tooltips: true,
-  range: {
-    'min' : [1],
-    'max' : [90]
-  }
-});
-
-// How to get the input 
-//var angleSliderVal = parseInt(angleSlider.noUiSlider.get(), 10);
-//pendulum.pendulumAngle(angleSliderVal);
-
-// whenever length slider changed handler 
-lengthSlider.noUiSlider.on('change', function () {
-  var lengthVal = parseInt(lengthSlider.noUiSlider.get(), 10);
-  pendulum.pendulumStringLength = lengthVal;
-  console.log(pendulum.pendulumStringLength);
-});
-
-massSlider.noUiSlider.on('change', function() {
-  var massVal = parseInt(massSlider.noUiSlider.get(), 10);
-  Body.setMass(pendulum.pendulumBody, massVal);
-});
-
-angleSlider.noUiSlider.on('change', function () {
-  var angleVal = parseInt(angleSlider.noUiSlider.get(), 10);
-  pendulum.pendulumAngle(angleVal);
-});
 
 
 
