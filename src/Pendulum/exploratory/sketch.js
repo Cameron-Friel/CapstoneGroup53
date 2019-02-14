@@ -17,12 +17,12 @@ var angleSlider = document.getElementById("angle-slider");
 
 noUiSlider.create(lengthSlider, {
   start: [0.3],
-  step: 0.1,
+  step: 0.05,
   connect: true,
   tooltips: true,
   range: {
     'min' : [0.1],
-    'max' : [0.7]
+    'max' : [0.5]
   }
 });
 
