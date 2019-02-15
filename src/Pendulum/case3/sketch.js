@@ -15,6 +15,7 @@ let World = Matter.World;
 let Bodies = Matter.Bodies;
 let Body = Matter.Body;
 let Constraint = Matter.Constraint;
+let Events = Matter.Events;
 
 let engine = Engine.create();
 
@@ -67,16 +68,6 @@ function renderLoop() {
   else {
     Engine.update(engine, 1000 / 60); // update at 60 FPS
     requestAnimationFrame(renderLoop); // render next frame
-
-    pendulum.pendulumAngle = pendulum.calculateAngle(pendulum.pendulumString.bodies[0].position, pendulum.pendulumBody.position);
-    pendulum.pendulumHeight = pendulum.calculatePenulumHeight(pendulum.pendulumStringLength / PTM, pendulum.pendulumAngle);
-    pendulum.displayPendulumHeight();
-    State.displayRunningTime(engine);
-  }
-
-  if(pendulum.pendulumBody.speed <= 0.3){
-    State.setIsPausedFlag(true);
-    State.onPause(render);
   }
 }
 
@@ -193,3 +184,17 @@ document.getElementById('reset-button').onclick = function() {
     pauseBtn.innerText = "Pause" ;
   }
 };
+
+// Updates UI before each update of the simulation
+Events.on(engine, 'beforeUpdate', function(event) {
+  pendulum.pendulumAngle = pendulum.calculateAngle(pendulum.pendulumString.bodies[0].position, pendulum.pendulumBody.position);
+  pendulum.pendulumHeight = pendulum.calculatePenulumHeight(pendulum.pendulumStringLength / PTM, pendulum.pendulumAngle);
+  pendulum.displayPendulumHeight();
+  State.displayRunningTime(engine);
+
+  // Stop when speed is below 0.2
+  if (pendulum.pendulumBody.speed <= 0.3 && pendulum.pendulumBody.speed !== 0){
+    State.setIsPausedFlag(true);
+    State.onPause(render);
+  }
+});
