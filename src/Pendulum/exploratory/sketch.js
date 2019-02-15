@@ -148,6 +148,12 @@ angle2Slider.noUiSlider.on('change', function () {
   }
 });
 
+corSlider.noUiSlider.on('change', function () {
+  if(State.getSimulationRunning() == false) {
+    refreshSimulation();
+  }
+});
+
 /*
  * Changes the number of pendulums 
 */
@@ -293,11 +299,14 @@ function createWorld() {
   var angleVal2 = parseInt(angle2Slider.noUiSlider.get(), 10);
   var xCoordBody2 = calcXCoord(lengthVal, angleVal2);
   var yCoordBody2 = calcYCoord(lengthVal, angleVal2, yCoordProtractor);
+  var restVal = parseFloat(corSlider.noUiSlider.get());
 
   pendulum2.pendulumBody = Bodies.circle(xCoordBody2, yCoordBody2, 30, {
      mass: massVal2, 
      frictionAir: 0, 
      interia: Infinity,
+     friction: 0,
+     restitution: restVal,   // matter should take the max rest val of 2 objects
      render: {
       fillStyle: "rgb(64, 173, 111)"
     }
