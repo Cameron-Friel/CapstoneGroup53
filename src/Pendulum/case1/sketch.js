@@ -92,9 +92,9 @@ function createWorld() {
      Bodies.rectangle(0, 300, 50, 600, { isStatic: true })
   ]);
 
-  pendulum.pendulumBody = Bodies.circle(100, 170, 40, { mass: 0.04, frictionAir: 0, interia: Infinity });
+  pendulum.pendulumBody = Bodies.circle(100, 170, 20, { mass: 0.04, frictionAir: 0, interia: Infinity });
 
-  let protractor = Bodies.circle(400, 50, 60, { isStatic: true});
+  let protractor = Bodies.circle(400, 50, 10, { isStatic: true});
 
   World.add(engine.world, [pendulum.pendulumBody, protractor]);
 
