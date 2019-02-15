@@ -273,7 +273,10 @@ function createWorld() {
   pendulum.pendulumBody = Bodies.circle(xCoordBody, yCoordBody, 30, {
     mass: massVal,
     frictionAir: 0,
-    interia: Infinity });
+    interia: Infinity,
+    render: {
+      fillStyle: "rgb(97, 181, 255)"
+    }});
 
   let protractor = Bodies.circle(xCoordProtractor, yCoordProtractor, 20, { isStatic: true});
 
@@ -294,13 +297,16 @@ function createWorld() {
   pendulum2.pendulumBody = Bodies.circle(xCoordBody2, yCoordBody2, 30, {
      mass: massVal2, 
      frictionAir: 0, 
-     interia: Infinity 
+     interia: Infinity,
+     render: {
+      fillStyle: "rgb(64, 173, 111)"
+    }
     });
 
   // add first pendulum and protractor
   World.add(engine.world, [pendulum.pendulumBody, protractor]);
 
-  // add the second pendulum if selected
+  // add the second pendulum if selected in the dropdown
   if(numWeightsDropdown.value == "2") {
     World.add(engine.world, [pendulum2.pendulumBody]);
     pendulum2.pendulumString = World.add(engine.world, Constraint.create({
