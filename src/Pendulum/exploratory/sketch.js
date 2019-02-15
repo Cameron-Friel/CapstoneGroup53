@@ -43,11 +43,11 @@ noUiSlider.create(massSlider, {
 
 noUiSlider.create(angleSlider, {
   start: [60],
-  step: 5,
+  step: 1,
   connect: true,
   tooltips: true,
   range: {
-    'min' : [0],
+    'min' : [-90],
     'max' : [90]
   }
 });
@@ -65,11 +65,11 @@ noUiSlider.create(mass2Slider, {
 
 noUiSlider.create(angle2Slider, {
   start: [0],
-  step: 5,
+  step: 1,
   connect: true,
   tooltips: true,
   range: {
-    'min' : [0],
+    'min' : [-90],
     'max' : [90]
   }
 });
@@ -253,8 +253,18 @@ function renderLoop() {
 /**
  * Calculate coordinates based on pendulum length and angle
  */
+// function calcXCoord(length, angle) {
+//   return 400 - ((length * PTM) * Math.sin(angle * Math.PI / 180));
+// }
+
 function calcXCoord(length, angle) {
-  return 400 - ((length * PTM) * Math.sin(angle * Math.PI / 180));
+  if (Math.sign(angle) == -1) {
+    var posAngle = Math.abs(angle);
+    return 400 - ((length * PTM) * Math.sin(posAngle * Math.PI / 180));
+  }
+  else {
+    return 400 + ((length * PTM) * Math.sin(angle * Math.PI / 180));
+  }
 }
 
 function calcYCoord(length, angle, yProc) {
@@ -288,6 +298,7 @@ function createWorld() {
   pendulum.pendulumBody = Bodies.circle(xCoordBody, yCoordBody, 30, {
     mass: massVal,
     frictionAir: 0,
+    friction: 0,
     interia: Infinity,
     render: {
       fillStyle: "rgb(97, 181, 255)"
@@ -340,9 +351,8 @@ function createWorld() {
  * add a second pendulum to the world
  * TODO: implement this function to build on top of createWorld
  */
-function addSecondPendulum() {
-  console.log("in addSecondPendulum");
-  /* do stuff here to add to world */
+function rmSecondPendulum() {
+  /* do stuff here to rm from  world */
 }
 
 /**
@@ -350,7 +360,6 @@ function addSecondPendulum() {
  * TODO: implement this function to remove
  */
 function addSecondPendulum() {
-  console.log("in addSecondPendulum");
   /* do stuff here to add to world */
 }
 
