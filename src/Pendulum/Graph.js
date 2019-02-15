@@ -41,10 +41,8 @@ let Graph = (function() {
     * @param {} data - The graph data
   */
 
-  addGraphData: function(data) {
-    _graph.data.datasets.forEach((dataset) => {
-        dataset.data.push(data);
-    });
+  addGraphData: function(data, dataset) {
+    _graph.data.datasets[dataset].data.push(data);
 
     _graph.update();
   },

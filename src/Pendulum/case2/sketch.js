@@ -35,12 +35,26 @@ let render = Render.create({
 let ctx = document.getElementById("chart").getContext('2d');
 
 let plotInterval = null;
+let plotInterval2 = null;
 
  let graphData = {
-   datasets: [{
-     label: 'Change in height',
+   datasets:  [{
+     label: 'Change in height a',
+     borderColor: 'rgba(0, 0, 255, 0.1)',
+     backgroundColor: 'rgba(0, 0, 255, 0.1)',
      data: [{
+       x: 0,
+       y: 0.255
      }]
+  },
+  {
+    label: 'Change in height b',
+    borderColor: 'rgba(255, 0, 0, 0.1)',
+    backgroundColor: 'rgba(255, 0, 0, 0.1)',
+    data: [{
+      x: 0,
+      y: 0
+    }]
   }]
  };
 
@@ -83,9 +97,9 @@ function createWorld() {
      Bodies.rectangle(0, 300, 50, 600, { isStatic: true })
   ]);
 
-  pendulum.pendulumBody = Bodies.circle(100, 170, 40, { mass: 0.04, frictionAir: 0, interia: Infinity });
+  pendulum.pendulumBody = Bodies.circle(100, 170, 30, { mass: 0.04, frictionAir: 0, interia: Infinity, render: {fillStyle: 'blue'} });
 
-  let protractor = Bodies.circle(400, 50, 60, { isStatic: true});
+  let protractor = Bodies.circle(400, 50, 10, { isStatic: true});
 
   pendulum.pendulumString = World.add(engine.world, Constraint.create({
     bodyA: protractor,
@@ -95,7 +109,7 @@ function createWorld() {
 
   pendulum.pendulumStringLength = pendulum.calculateStringLength(protractor.position, pendulum.pendulumBody.position);
 
-  restingPendulum.pendulumBody = Bodies.circle(400, pendulum.pendulumStringLength + 50, 40, { mass: 0.04, frictionAir: 0, interia: Infinity });
+  restingPendulum.pendulumBody = Bodies.circle(400, pendulum.pendulumStringLength + 50, 30, { mass: 0.04, frictionAir: 0, interia: Infinity, render: {fillStyle: 'red'} });
 
   restingPendulum.pendulumString = World.add(engine.world, Constraint.create({
       bodyA: protractor,
@@ -112,7 +126,10 @@ function createWorld() {
 
 function runPlotInterval() {
   plotInterval = setInterval(function() {
-    Graph.addGraphData({ x: engine.timing.timestamp.toFixed(3), y: pendulum.pendulumHeight });
+    Graph.addGraphData({ x: engine.timing.timestamp.toFixed(3), y: pendulum.pendulumHeight }, 0);
+  }, 100);
+  plotInterval2 = setInterval(function() {
+    Graph.addGraphData({ x: engine.timing.timestamp.toFixed(3), y: restingPendulum.pendulumHeight }, 1);
   }, 100);
 }
 
@@ -122,6 +139,7 @@ function runPlotInterval() {
 
 function stopPlotInterval() {
   clearInterval(plotInterval);
+  clearInterval(plotInterval2);
 }
 
 /*
@@ -173,6 +191,8 @@ document.getElementById('reset-button').onclick = function() {
   State.setSimulationRunning(false);
   pendulum.pendulumAngle = pendulum.calculateAngle(pendulum.pendulumString.bodies[0].position, pendulum.pendulumBody.position);
   pendulum.pendulumHeight = pendulum.calculatePenulumHeight(pendulum.pendulumStringLength / PTM, pendulum.pendulumAngle);
+  restingPendulum.pendulumAngle = pendulum.calculateAngle(restingPendulum.pendulumString.bodies[0].position, restingPendulum.pendulumBody.position);
+  restingPendulum.pendulumHeight = pendulum.calculatePenulumHeight(restingPendulum.pendulumStringLength / PTM, restingPendulum.pendulumAngle);
   pendulum.displayPendulumHeight();
 
   if (State.getIsPausedFlag() === false) {
@@ -189,6 +209,8 @@ document.getElementById('reset-button').onclick = function() {
 Events.on(engine, 'beforeUpdate', function(event) {
   pendulum.pendulumAngle = pendulum.calculateAngle(pendulum.pendulumString.bodies[0].position, pendulum.pendulumBody.position);
   pendulum.pendulumHeight = pendulum.calculatePenulumHeight(pendulum.pendulumStringLength / PTM, pendulum.pendulumAngle);
+  restingPendulum.pendulumAngle = pendulum.calculateAngle(restingPendulum.pendulumString.bodies[0].position, restingPendulum.pendulumBody.position);
+  restingPendulum.pendulumHeight = pendulum.calculatePenulumHeight(restingPendulum.pendulumStringLength / PTM, restingPendulum.pendulumAngle);
   pendulum.displayPendulumHeight();
   State.displayRunningTime(engine);
 
@@ -196,5 +218,6 @@ Events.on(engine, 'beforeUpdate', function(event) {
   if (pendulum.pendulumBody.speed <= 0.4 && pendulum.pendulumBody.speed !== 0){
     State.setIsPausedFlag(true);
     State.onPause(render);
+    stopPlotInterval();
   }
 });

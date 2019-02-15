@@ -39,6 +39,8 @@ let plotInterval = null;
    datasets: [{
      label: 'Change in height',
      data: [{
+       x: 0,
+       y: 0.255
      }]
   }]
  };
@@ -83,7 +85,7 @@ function createWorld() {
      Bodies.rectangle(0, 300, 50, 600, { isStatic: true })
   ]);
 
-  pendulum.pendulumBody = Bodies.circle(100, 170, 20, { mass: 0.04, frictionAir: 0, interia: Infinity });
+  pendulum.pendulumBody = Bodies.circle(100, 170, 30, { mass: 0.04, frictionAir: 0, interia: Infinity });
 
   let protractor = Bodies.circle(400, 50, 10, { isStatic: true});
 
@@ -104,7 +106,7 @@ function createWorld() {
 
 function runPlotInterval() {
   plotInterval = setInterval(function() {
-    Graph.addGraphData({ x: engine.timing.timestamp.toFixed(3), y: pendulum.pendulumHeight });
+    Graph.addGraphData({ x: engine.timing.timestamp.toFixed(3), y: pendulum.pendulumHeight },0);
   }, 100);
 }
 
@@ -188,5 +190,6 @@ Events.on(engine, 'beforeUpdate', function(event) {
   if (pendulum.pendulumBody.speed <= 0.2 && pendulum.pendulumBody.speed !== 0){
     State.setIsPausedFlag(true);
     State.onPause(render);
+    stopPlotInterval();
   }
 });
