@@ -151,8 +151,8 @@ th, td {
   margin: 10px;
 }
 
-.pendulum-2-input {
-  display: none;
+.pendulum-2-input .noUi-connects{
+  background-color: rgb(46, 252, 138);
 }
 
 /* Laptop screens 1176 */
