@@ -155,12 +155,12 @@ corSlider.noUiSlider.on('change', function () {
 });
 
 /*
- * Changes the number of pendulums 
+ * Changes the number of pendulums
 */
 var numWeightsDropdown = document.getElementById('num-weights');
 numWeightsDropdown.onchange = function() {
   refreshSimulation();
-  
+
   var numWeights = numWeightsDropdown.value;
   if (numWeights == "1") {
     // disable sliders
@@ -169,7 +169,7 @@ numWeightsDropdown.onchange = function() {
     corSlider.setAttribute('disabled', true);
   }
   else if(numWeights == "2") {
-    // reenable sliders 
+    // reenable sliders
     mass2Slider.removeAttribute('disabled');
     angle2Slider.removeAttribute('disabled');
     corSlider.removeAttribute('disabled');
@@ -206,13 +206,22 @@ let ctx = document.getElementById("chart").getContext('2d');
 
 let plotInterval = null;
 
- let graphData = {
-   datasets: [{
-     label: 'Change in angle',
-     data: [{
-     }]
-  }]
- };
+let graphData = {
+  datasets: [{
+    label: 'Change in height a',
+    borderColor: "rgba(97, 181, 255, 0.5)",
+    backgroundColor: "rgba(97, 181, 255, 0.3)",
+    data: [{
+    }]
+ },
+ {
+   label: 'Change in height b',
+   borderColor: "rgba(64, 173, 111, 0.5)",
+   backgroundColor: "rgba(64, 173, 111, 0.3)",
+   data: [{
+   }]
+ }]
+};
 
 
 /**
@@ -249,7 +258,7 @@ function calcXCoord(length, angle) {
 }
 
 function calcYCoord(length, angle, yProc) {
-  return (length * PTM) * Math.cos(angle * Math.PI / 180) + yProc;  
+  return (length * PTM) * Math.cos(angle * Math.PI / 180) + yProc;
 }
 
 
@@ -302,8 +311,8 @@ function createWorld() {
   var restVal = parseFloat(corSlider.noUiSlider.get());
 
   pendulum2.pendulumBody = Bodies.circle(xCoordBody2, yCoordBody2, 30, {
-     mass: massVal2, 
-     frictionAir: 0, 
+     mass: massVal2,
+     frictionAir: 0,
      interia: Infinity,
      friction: 0,
      restitution: restVal,   // matter should take the max rest val of 2 objects
@@ -324,11 +333,11 @@ function createWorld() {
       length: 0,
     }));
   }
-  
+
 }
 
 /**
- * add a second pendulum to the world 
+ * add a second pendulum to the world
  * TODO: implement this function to build on top of createWorld
  */
 function addSecondPendulum() {
@@ -337,7 +346,7 @@ function addSecondPendulum() {
 }
 
 /**
- * remove a second pendulum to the world 
+ * remove a second pendulum to the world
  * TODO: implement this function to remove
  */
 function addSecondPendulum() {
@@ -351,7 +360,10 @@ function addSecondPendulum() {
 
 function runPlotInterval() {
   plotInterval = setInterval(function() {
-    Graph.addGraphData({ x: engine.timing.timestamp.toFixed(3), y: pendulum.pendulumAngle });
+    Graph.addGraphData({ x: engine.timing.timestamp.toFixed(3), y: pendulum.pendulumHeight.toFixed(3) }, 0);
+    if (document.getElementById('num-weights').value == 2) {
+      Graph.addGraphData({ x: engine.timing.timestamp.toFixed(3), y: pendulum2.pendulumHeight.toFixed(3) }, 1);
+    }
   }, 100);
 }
 
@@ -428,6 +440,11 @@ document.getElementById('reset-button').onclick = function() {
 Events.on(engine, 'beforeUpdate', function(event) {
   pendulum.pendulumAngle = pendulum.calculateAngle(pendulum.pendulumString.bodies[0].position, pendulum.pendulumBody.position);
   pendulum.pendulumHeight = pendulum.calculatePenulumHeight(pendulum.pendulumStringLength / PTM, pendulum.pendulumAngle);
+
+  if (document.getElementById('num-weights').value == 2) {
+    pendulum2.pendulumAngle = pendulum2.calculateAngle(pendulum2.pendulumString.bodies[0].position, pendulum2.pendulumBody.position);
+    pendulum2.pendulumHeight = pendulum2.calculatePenulumHeight(pendulum2.pendulumStringLength / PTM, pendulum2.pendulumAngle);
+  }
   pendulum.displayPendulumHeight();
   State.displayRunningTime(engine);
 });

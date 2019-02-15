@@ -126,8 +126,8 @@ function createWorld() {
 
 function runPlotInterval() {
   plotInterval = setInterval(function() {
-    Graph.addGraphData({ x: engine.timing.timestamp.toFixed(3), y: pendulum.pendulumHeight }, 0);
-    Graph.addGraphData({ x: engine.timing.timestamp.toFixed(3), y: restingPendulum.pendulumHeight }, 1);
+    Graph.addGraphData({ x: engine.timing.timestamp.toFixed(3), y: pendulum.pendulumHeight.toFixed(3) }, 0);
+    Graph.addGraphData({ x: engine.timing.timestamp.toFixed(3), y: restingPendulum.pendulumHeight.toFixed(3) }, 1);
   }, 100);
 }
 
@@ -170,7 +170,8 @@ document.getElementById('start-button').onclick = function() {
     State.setIsPausedFlag(false);
     State.onPause(render);
     State.setSimulationRunning(true);
-    //Body.applyForce(pendulum.pendulumBody, {x: pendulum.pendulumBody.position.x, y: pendulum.pendulumBody.position.y}, {x: 0.0017, y: 0});
+    Body.applyForce(pendulum.pendulumBody, {x: pendulum.pendulumBody.position.x, y: pendulum.pendulumBody.position.y}, {x: 0.0003, y: 0});
+    Body.applyForce(restingPendulum.pendulumBody, {x: restingPendulum.pendulumBody.position.x, y: restingPendulum.pendulumBody.position.y}, {x: -0.0003, y: 0});
     runPlotInterval();
   }
 };

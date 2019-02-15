@@ -126,8 +126,8 @@ function createWorld() {
 
 function runPlotInterval() {
   plotInterval = setInterval(function() {
-    Graph.addGraphData({ x: engine.timing.timestamp.toFixed(3), y: pendulum.pendulumHeight }, 0);
-    Graph.addGraphData({ x: engine.timing.timestamp.toFixed(3), y: restingPendulum.pendulumHeight }, 1);
+    Graph.addGraphData({ x: engine.timing.timestamp.toFixed(3), y: pendulum.pendulumHeight.toFixed(3) }, 0);
+    Graph.addGraphData({ x: engine.timing.timestamp.toFixed(3), y: restingPendulum.pendulumHeight.toFixed(3) }, 1);
   }, 100);
 }
 
