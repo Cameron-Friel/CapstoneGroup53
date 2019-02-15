@@ -26,6 +26,9 @@ h1 {
   color: #fff;
 }
 
+#canvas {
+  order: 1;
+}
 
 #canvas > canvas {
   display: flex;
@@ -110,14 +113,54 @@ th, td {
   background-color: rgb(134, 49, 49);
 }
 
+/* Input slider */
+
+#input-table {
+  margin: 20px;
+  width: 20em;
+}
+
+.input-label {
+  width: 1em;
+  font-size: 15px;
+}
+
+.input-slide {
+  position: relative;
+  flex-shrink: 1;
+  order: 2;
+  display: block;
+  margin: 20px;
+}
+
+.noUi-connects {
+  background-color: rgb(97, 181, 255);
+}
+
+.noUi-tooltip {
+  font-size: 12px;
+}
+
+#num-weights-row {
+  margin-bottom: 10px
+}
+
+#num-weights{
+  font-size: 15px;
+  padding: 5px;
+  margin: 10px;
+}
+
+.pendulum-2-input {
+  display: none;
+}
+
 /* Laptop screens 1176 */
 /* Only the chart is messed up at this width */
 @media screen and (max-width : 1176px) {
   .chart-container {
     width: 70vw;
   }
-
-
 }
 
 
