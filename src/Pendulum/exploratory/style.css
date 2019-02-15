@@ -117,7 +117,12 @@ th, td {
 
 #input-table {
   margin: 20px;
-  width: 20em;
+  width: 30em;
+  flex: 1;
+  order: 2;
+  align-items: center;
+  align-self: center;
+  position: relative;
 }
 
 .input-label {
@@ -153,6 +158,10 @@ th, td {
 
 .pendulum-2-input .noUi-connects{
   background-color: rgb(46, 252, 138);
+}
+
+#length-slider .noUi-connects {
+  background-color:  rgb(252, 124, 124)
 }
 
 /* Laptop screens 1176 */
