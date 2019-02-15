@@ -15,6 +15,10 @@ var lengthSlider = document.getElementById("length-slider");
 var massSlider = document.getElementById("mass-slider");
 var angleSlider = document.getElementById("angle-slider");
 
+var mass2Slider = document.getElementById("mass-2-slider");
+var angle2Slider = document.getElementById("angle-2-slider");
+var corSlider = document.getElementById("cor-slider");
+
 noUiSlider.create(lengthSlider, {
   start: [0.3],
   step: 0.05,
@@ -47,6 +51,44 @@ noUiSlider.create(angleSlider, {
     'max' : [90]
   }
 });
+
+noUiSlider.create(mass2Slider, {
+  start: [20],
+  step: 5,
+  connect: true,
+  tooltips: true,
+  range: {
+    'min' : [1],
+    'max' : [200]
+  }
+});
+
+noUiSlider.create(angle2Slider, {
+  start: [0],
+  step: 5,
+  connect: true,
+  tooltips: true,
+  range: {
+    'min' : [0],
+    'max' : [90]
+  }
+});
+
+noUiSlider.create(corSlider, {
+  start: [0.1],
+  step: 0.1,
+  connect: true,
+  tooltips: true,
+  range: {
+    'min' : [0],
+    'max' : [1]
+  }
+});
+
+// on start - disable the second set of sliders
+mass2Slider.setAttribute('disabled', true);
+angle2Slider.setAttribute('disabled', true);
+corSlider.setAttribute('disabled', true);
 
 // reset
 function refreshSimulation() {
@@ -92,6 +134,42 @@ angleSlider.noUiSlider.on('change', function () {
   }
 });
 
+mass2Slider.noUiSlider.on('change', function() {
+  if(State.getSimulationRunning() == false) {
+    refreshSimulation();
+  }
+});
+
+angle2Slider.noUiSlider.on('change', function () {
+  if(State.getSimulationRunning() == false) {
+    var angleVal = parseInt(angleSlider.noUiSlider.get(), 10);
+    refreshSimulation();
+    pendulum.pendulumAngle = angleVal;
+  }
+});
+
+/*
+ * Changes the number of pendulums 
+*/
+var numWeightsDropdown = document.getElementById('num-weights');
+numWeightsDropdown.onchange = function() {
+  refreshSimulation();
+  
+  var numWeights = numWeightsDropdown.value;
+  if (numWeights == "1") {
+    // disable sliders
+    mass2Slider.setAttribute('disabled', true);
+    angle2Slider.setAttribute('disabled', true);
+    corSlider.setAttribute('disabled', true);
+  }
+  else if(numWeights == "2") {
+    // reenable sliders 
+    mass2Slider.removeAttribute('disabled');
+    angle2Slider.removeAttribute('disabled');
+    corSlider.removeAttribute('disabled');
+  }
+};
+
 
 
 
@@ -106,6 +184,7 @@ let Events = Matter.Events;
 let engine = Engine.create();
 
 let pendulum = new Pendulum;
+let pendulum2 = new Pendulum;
 
 let render = Render.create({
     element: document.getElementById('canvas'),
@@ -156,6 +235,18 @@ function renderLoop() {
   }
 }
 
+/**
+ * Calculate coordinates based on pendulum length and angle
+ */
+function calcXCoord(length, angle) {
+  return 400 - ((length * PTM) * Math.sin(angle * Math.PI / 180));
+}
+
+function calcYCoord(length, angle, yProc) {
+  return (length * PTM) * Math.cos(angle * Math.PI / 180) + yProc;  
+}
+
+
 
 /*
   * Sets up initial bodies of the world
@@ -168,26 +259,23 @@ function createWorld() {
      Bodies.rectangle(800, 300, 50, 600, { isStatic: true }),
      Bodies.rectangle(0, 300, 50, 600, { isStatic: true })
   ]);
-
-  var massVal = parseInt(massSlider.noUiSlider.get(), 10) / 1000;
-  var angleVal = parseInt(angleSlider.noUiSlider.get(), 10);
-  var lengthVal = parseFloat(lengthSlider.noUiSlider.get(), 10);
-
   var xCoordProtractor = 400;
   var yCoordProtractor = 50;
 
-  var xCoordBody = 400 - ((lengthVal * PTM) * Math.sin(angleVal * Math.PI / 180));
-  var yCoordBody = (lengthVal * PTM) * Math.cos(angleVal * Math.PI / 180) + yCoordProtractor;
+  var lengthVal = parseFloat(lengthSlider.noUiSlider.get(), 10);
+
+  // first pendulum
+  var massVal = parseInt(massSlider.noUiSlider.get(), 10) / 1000; // convert to kg
+  var angleVal = parseInt(angleSlider.noUiSlider.get(), 10);
+  var xCoordBody = calcXCoord(lengthVal, angleVal);
+  var yCoordBody = calcYCoord(lengthVal, angleVal, yCoordProtractor);
 
   pendulum.pendulumBody = Bodies.circle(xCoordBody, yCoordBody, 30, {
     mass: massVal,
     frictionAir: 0,
     interia: Infinity });
 
-  // set the angle
   let protractor = Bodies.circle(xCoordProtractor, yCoordProtractor, 20, { isStatic: true});
-
-  World.add(engine.world, [pendulum.pendulumBody, protractor]);
 
   pendulum.pendulumString = World.add(engine.world, Constraint.create({
     bodyA: protractor,
@@ -196,6 +284,50 @@ function createWorld() {
   }));
 
   pendulum.pendulumStringLength = pendulum.calculateStringLength(protractor.position, pendulum.pendulumBody.position);
+
+  // second pendulum
+  var massVal2 = parseInt(mass2Slider.noUiSlider.get(), 10) / 1000; // convert to kg
+  var angleVal2 = parseInt(angle2Slider.noUiSlider.get(), 10);
+  var xCoordBody2 = calcXCoord(lengthVal, angleVal2);
+  var yCoordBody2 = calcYCoord(lengthVal, angleVal2, yCoordProtractor);
+
+  pendulum2.pendulumBody = Bodies.circle(xCoordBody2, yCoordBody2, 30, {
+     mass: massVal2, 
+     frictionAir: 0, 
+     interia: Infinity 
+    });
+
+  // add first pendulum and protractor
+  World.add(engine.world, [pendulum.pendulumBody, protractor]);
+
+  // add the second pendulum if selected
+  if(numWeightsDropdown.value == "2") {
+    World.add(engine.world, [pendulum2.pendulumBody]);
+    pendulum2.pendulumString = World.add(engine.world, Constraint.create({
+      bodyA: protractor,
+      bodyB: pendulum2.pendulumBody,
+      length: 0,
+    }));
+  }
+  
+}
+
+/**
+ * add a second pendulum to the world 
+ * TODO: implement this function to build on top of createWorld
+ */
+function addSecondPendulum() {
+  console.log("in addSecondPendulum");
+  /* do stuff here to add to world */
+}
+
+/**
+ * remove a second pendulum to the world 
+ * TODO: implement this function to remove
+ */
+function addSecondPendulum() {
+  console.log("in addSecondPendulum");
+  /* do stuff here to add to world */
 }
 
 /**
