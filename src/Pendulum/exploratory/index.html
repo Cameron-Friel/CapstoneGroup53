@@ -6,74 +6,75 @@
     <title>Exploratory Test</title>
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/13.0.0/nouislider.css">
-    
+
   </head>
+  
   <body>
     <h1>Exploratory Mode Test</h1>
     <div class='container'>
       <!-- Animation canvas  -->
-      <div id='canvas'></div>
-      
-      
+      <div>
+        <div id='canvas'></div>
+      </div>
+
       <!-- Input sliders -->
-      <table id='input-table'>
-        <tr id="num-weights-row">
-          <td class='input-label'>Num Weights</td>                  
-          <td>
-            <select id="num-weights">
-              <option value="1">1</option>
-              <option value="2">2</option>
-            </select>
-          </td>
-        </tr>
-        <tr>  
-          <td class='input-label'>Length (m)</td>      
-          <td><div class='input-slide' id='length-slider'></div></td>
-        </tr>
-        <tr>    
-          <td class='input-label'>Mass (g)</td>    
-          <td><div class='input-slide' id='mass-slider'></div></td>
-        </tr>
-        <tr>    
-          <td class='input-label'>Angle (deg)</td>    
-          <td><div class='input-slide' id='angle-slider'></div></td>
-        </tr>
-        <!-- Input sliders for a second pendulum -->
-        <tr class='pendulum-2-input'>    
-          <td class='input-label '>Mass (g)</td>    
-          <td><div class='input-slide' id='mass-2-slider'></div></td>
-        </tr>
-        <tr class='pendulum-2-input'>    
-          <td class='input-label '>Angle (deg) </td>    
-          <td><div class='input-slide' id='angle-2-slider'></div></td>
-        </tr>
-        <tr class='pendulum-2-input'>    
-            <td class='input-label '>Coef of Restitution</td>    
-            <td><div class='input-slide' id='cor-slider'></div></td>
-        </tr>
-      </table>
-      
-      <!-- Live Updates -->
-      <div class = 'table-container'>
-        <table id='live-update-table'>
-          <tr>
-            <td><span id='running-time' class='main-text'></span></td>
+      <div>
+        <table id='input-table'>
+          <tr id="num-weights-row">
+            <td class='input-label'>Num Weights</td>
             <td>
-              <span id='pendulum-height' class='main-text'></span>
+              <select id="num-weights">
+                <option value="1">1</option>
+                <option value="2">2</option>
+              </select>
             </td>
           </tr>
+          <tr>
+            <td class='input-label'>Length (m)</td>
+            <td><div class='input-slide' id='length-slider'></div></td>
+          </tr>
+          <tr>
+            <td class='input-label'>Mass (g)</td>
+            <td><div class='input-slide' id='mass-slider'></div></td>
+          </tr>
+          <tr>
+            <td class='input-label'>Angle (deg)</td>
+            <td><div class='input-slide' id='angle-slider'></div></td>
+          </tr>
+          <!-- Input sliders for a second pendulum -->
+          <tr class='pendulum-2-input'>
+            <td class='input-label '>Mass (g)</td>
+            <td><div class='input-slide' id='mass-2-slider'></div></td>
+          </tr>
+          <tr class='pendulum-2-input'>
+            <td class='input-label '>Angle (deg) </td>
+            <td><div class='input-slide' id='angle-2-slider'></div></td>
+          </tr>
+          <tr class='pendulum-2-input'>
+              <td class='input-label '>Coef of Restitution</td>
+              <td><div class='input-slide' id='cor-slider'></div></td>
+          </tr>
         </table>
-      </div>
 
- 
+        <!-- Live Updates -->
+        <div class = 'table-container'>
+          <table id='live-update-table'>
+            <tr>
+              <td><span id='running-time' class='main-text'></span></td>
+              <td>
+                <span id='pendulum-height' class='main-text'></span>
+              </td>
+            </tr>
+          </table>
+        </div>
 
-      <!-- Buttons -->
-      <div class="button-group">
-        <Button class="control-btns" id="start-button" class='main-text'>Start</Button>
-        <Button class="control-btns" id='pause-button' class='main-text' value='pause'>Pause</Button>
-        <Button class="control-btns" id='reset-button' class='main-text'>Reset</Button>
+        <!-- Buttons -->
+        <div class="button-group">
+          <Button class="control-btns" id="start-button" class='main-text'>Start</Button>
+          <Button class="control-btns" id='pause-button' class='main-text' value='pause'>Pause</Button>
+          <Button class="control-btns" id='reset-button' class='main-text'>Reset</Button>
+        </div>
       </div>
-      
     </div>   <!-- end container -->
 
 
@@ -81,8 +82,8 @@
     <div class="chart-container">
         <canvas id="chart"></canvas>
     </div>
-
   </body>
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
   <script src='https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.12.0/matter.js'></script>
   <script src='./bundle.js'></script>
