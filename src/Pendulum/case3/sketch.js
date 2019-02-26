@@ -91,20 +91,24 @@ function renderLoop() {
 
 function createWorld() {
   World.add(engine.world, [
-     Bodies.rectangle(400, 0, 800, 50, { isStatic: true }),
-     Bodies.rectangle(400, 600, 800, 50, { isStatic: true }),
-     Bodies.rectangle(800, 300, 50, 600, { isStatic: true }),
-     Bodies.rectangle(0, 300, 50, 600, { isStatic: true })
+     Bodies.rectangle(400, 0, 800, 50, { isStatic: true, render: {fillStyle: 'grey'}}),
+     Bodies.rectangle(400, 600, 800, 50, { isStatic: true, render: {fillStyle: 'grey'}}),
+     Bodies.rectangle(800, 300, 50, 600, { isStatic: true, render: {fillStyle: 'grey'}}),
+     Bodies.rectangle(0, 300, 50, 600, { isStatic: true, render: {fillStyle: 'grey'}})
   ]);
 
   pendulum.pendulumBody = Bodies.circle(100, 170, 30, { mass: 0.08, frictionAir: 0, interia: Infinity, render: {fillStyle: 'blue'} });
 
-  let protractor = Bodies.circle(400, 50, 10, { isStatic: true});
+  let protractor = Bodies.circle(400, 50, 10, { isStatic: true, render: {fillStyle: 'grey'}});
 
   pendulum.pendulumString = World.add(engine.world, Constraint.create({
     bodyA: protractor,
     bodyB: pendulum.pendulumBody,
     length: 0,
+    render: {
+      strokeStyle: 'blue',
+      lineWidth: 6
+    }
   }));
 
   pendulum.pendulumStringLength = pendulum.calculateStringLength(protractor.position, pendulum.pendulumBody.position);
@@ -115,6 +119,10 @@ function createWorld() {
       bodyA: protractor,
       bodyB: restingPendulum.pendulumBody,
       length: 0,
+      render: {
+        strokeStyle: 'red',
+        lineWidth: 6
+      }
     }));
 
     World.add(engine.world, [pendulum.pendulumBody, restingPendulum.pendulumBody, protractor]);
