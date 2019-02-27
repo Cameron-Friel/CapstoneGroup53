@@ -306,9 +306,10 @@ function createWorld() {
 
   pendulum.pendulumBody = Bodies.circle(xCoordBody, yCoordBody, 30, {
     mass: massVal,
-    frictionAir: 0,
+    frictionAir: 0.00001,
     friction: 0,
     interia: Infinity,
+    frictionStatic: 0.0,
     render: {
       fillStyle: "rgb(97, 181, 255)"
     }});
@@ -319,6 +320,8 @@ function createWorld() {
     bodyA: protractor,
     bodyB: pendulum.pendulumBody,
     length: 0,
+    stiffness: 1,
+    damping: 0.0,
     render: {
       strokeStyle: 'rgb(97, 181, 255)',
       lineWidth: 6

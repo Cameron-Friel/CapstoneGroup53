@@ -91,9 +91,9 @@ var Axes = require('../geometry/Axes');
             sleepThreshold: 60,
             density: 0.001,
             restitution: 0,
-            friction: 0.1,
-            frictionStatic: 0.5,
-            frictionAir: 0.01,
+            friction: 0,
+            frictionStatic: 0.0,
+            frictionAir: 0.00,
             collisionFilter: {
                 category: 0x0001,
                 mask: 0xFFFFFFFF,
@@ -565,14 +565,15 @@ var Axes = require('../geometry/Axes');
     Body.update = function(body, deltaTime, timeScale, correction) {
         var deltaTimeSquared = Math.pow(deltaTime * timeScale * body.timeScale, 2);
 
-        // from the previous step
-        var frictionAir = 1 - body.frictionAir * timeScale * body.timeScale,
+        //from the previous step
+        var frictionAir = 1.0 - body.frictionAir * timeScale * body.timeScale,
             velocityPrevX = body.position.x - body.positionPrev.x,
             velocityPrevY = body.position.y - body.positionPrev.y;
+        
 
         // update velocity with Verlet integration
-        body.velocity.x = (velocityPrevX * frictionAir * correction) + (body.force.x / body.mass) * deltaTimeSquared;
-        body.velocity.y = (velocityPrevY * frictionAir * correction) + (body.force.y / body.mass) * deltaTimeSquared;
+        body.velocity.x = (velocityPrevX * 1.00199) + (body.force.x / body.mass) * deltaTimeSquared;
+        body.velocity.y = (velocityPrevY * 1.00199) + (body.force.y / body.mass) * deltaTimeSquared;
 
         body.positionPrev.x = body.position.x;
         body.positionPrev.y = body.position.y;
@@ -580,7 +581,8 @@ var Axes = require('../geometry/Axes');
         body.position.y += body.velocity.y;
 
         // update angular velocity with Verlet integration
-        body.angularVelocity = ((body.angle - body.anglePrev) * frictionAir * correction) + (body.torque / body.inertia) * deltaTimeSquared;
+        body.angularVelocity = ((body.angle - body.anglePrev)) * (body.torque / body.inertia) * deltaTimeSquared;
+        
         body.anglePrev = body.angle;
         body.angle += body.angularVelocity;
 
