@@ -7,6 +7,9 @@ let Graph = require('../Graph.js');
 const CANVAS_WIDTH = 800;
 const CANVAS_HEIGHT = 600;
 
+const PENDUMDULUM_HEIGHT_ID = 'pendulum-height';
+const RESTING_PENDUMDULUM_HEIGHT_ID = 'resting-pendulum-height';
+
 const PTM = 634.773; // converts pixels to meters for calculations
 
 let Engine = Matter.Engine;
@@ -200,7 +203,8 @@ document.getElementById('reset-button').onclick = function() {
   pendulum.pendulumHeight = pendulum.calculatePenulumHeight(pendulum.pendulumStringLength / PTM, pendulum.pendulumAngle);
   restingPendulum.pendulumAngle = pendulum.calculateAngle(restingPendulum.pendulumString.bodies[0].position, restingPendulum.pendulumBody.position);
   restingPendulum.pendulumHeight = pendulum.calculatePenulumHeight(restingPendulum.pendulumStringLength / PTM, restingPendulum.pendulumAngle);
-  pendulum.displayPendulumHeight();
+  pendulum.displayPendulumHeight(PENDUMDULUM_HEIGHT_ID);
+  restingPendulum.displayPendulumHeight(RESTING_PENDUMDULUM_HEIGHT_ID);
 
   if (State.getIsPausedFlag() === false) {
     State.setIsPausedFlag(true);
@@ -218,7 +222,8 @@ Events.on(engine, 'beforeUpdate', function(event) {
   pendulum.pendulumHeight = pendulum.calculatePenulumHeight(pendulum.pendulumStringLength / PTM, pendulum.pendulumAngle);
   restingPendulum.pendulumAngle = pendulum.calculateAngle(restingPendulum.pendulumString.bodies[0].position, restingPendulum.pendulumBody.position);
   restingPendulum.pendulumHeight = pendulum.calculatePenulumHeight(restingPendulum.pendulumStringLength / PTM, restingPendulum.pendulumAngle);
-  pendulum.displayPendulumHeight();
+  pendulum.displayPendulumHeight(PENDUMDULUM_HEIGHT_ID);
+  restingPendulum.displayPendulumHeight(RESTING_PENDUMDULUM_HEIGHT_ID);
   State.displayRunningTime(engine);
 
   // Stop when speed is below 0.2

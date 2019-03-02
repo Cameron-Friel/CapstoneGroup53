@@ -93,10 +93,11 @@ class Pendulum {
 
   /**
     * Updates the height of the pendulum to the user
+    * @param {String} id - a DOM id
   */
 
-  displayPendulumHeight() {
-    document.getElementById('pendulum-height').textContent = 'Height: ' + this.pendulumHeight.toFixed(3) + 'm';
+  displayPendulumHeight(id) {
+    document.getElementById(id).textContent = this.pendulumHeight.toFixed(3) + 'm';
   }
 
   /**
