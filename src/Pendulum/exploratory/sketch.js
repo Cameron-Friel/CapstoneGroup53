@@ -472,11 +472,11 @@ Events.on(engine, 'beforeUpdate', function(event) {
 
 document.addEventListener('visibilitychange', function() {
   if (!document.hidden) {
-    runPlotInterval();
-    State.setIsPausedFlag(false);
+    if (State.getIsPausedFlag() === false) {
+      runPlotInterval();
+    }
   }
   else {
     stopPlotInterval();
-    State.setIsPausedFlag(true);
   }
 });
