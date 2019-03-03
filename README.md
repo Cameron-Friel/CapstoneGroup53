@@ -1,4 +1,7 @@
-## CapstoneGroup53
+## Interactive 2D Simulations for Inquiry-Based Learning Capstone Team 53
+
+### `Alpha build`
+The simulations for the alpha build can be found at ``web.engr.oregonstate.edu/~wilsosam``.
 
 To get started `clone` the repository and then run `npm install` to install all the dependencies in the project.
 
