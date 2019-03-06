@@ -201,3 +201,18 @@ Events.on(engine, 'beforeUpdate', function(event) {
     stopPlotInterval();
   }
 });
+
+/**
+  * Listens for whether the current browser tab is active or not
+*/
+
+document.addEventListener('visibilitychange', function() {
+  if (!document.hidden) {
+    if (State.getIsPausedFlag() === false) {
+      runPlotInterval();
+    }
+  }
+  else {
+    stopPlotInterval();
+  }
+});

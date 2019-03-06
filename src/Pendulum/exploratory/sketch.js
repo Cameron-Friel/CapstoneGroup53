@@ -481,3 +481,18 @@ Events.on(engine, 'beforeUpdate', function(event) {
   pendulum.displayPendulumHeight(PENDUMDULUM_HEIGHT_ID);
   State.displayRunningTime(engine);
 });
+
+/**
+  * Listens for whether the current browser tab is active or not
+*/
+
+document.addEventListener('visibilitychange', function() {
+  if (!document.hidden) {
+    if (State.getIsPausedFlag() === false) {
+      runPlotInterval();
+    }
+  }
+  else {
+    stopPlotInterval();
+  }
+});
