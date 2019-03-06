@@ -132,19 +132,21 @@ function stopPlotInterval() {
 var pauseBtn = document.getElementById('pause-button');
 
 pauseBtn.onclick = function() {
-  if (pauseBtn.value == "pause") {
-    pauseBtn.innerText = "cont.";
-    pauseBtn.value = "continue";
-    stopPlotInterval();
-  }
-  else {
-    pauseBtn.value = "pause";
-    pauseBtn.innerText = "Pause";
-    runPlotInterval();
-  }
+  if (State.getSimulationRunning() === true) { // only allow pause and continue when the simulation is running
+    if (pauseBtn.value == "pause") {
+      pauseBtn.innerText = "cont.";
+      pauseBtn.value = "continue";
+      stopPlotInterval();
+    }
+    else {
+      pauseBtn.value = "pause";
+      pauseBtn.innerText = "Pause";
+      runPlotInterval();
+    }
 
-  State.setIsPausedFlag(!State.getIsPausedFlag());
-  State.onPause(render);
+    State.setIsPausedFlag(!State.getIsPausedFlag());
+    State.onPause(render);
+  }
 };
 
 /*
@@ -199,6 +201,7 @@ Events.on(engine, 'beforeUpdate', function(event) {
     State.setIsPausedFlag(true);
     State.onPause(render);
     stopPlotInterval();
+    State.setSimulationRunning(false);
   }
 });
 
