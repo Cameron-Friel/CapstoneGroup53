@@ -10,32 +10,33 @@
     <h1>Case 3</h1>
     <div class='container'>
       <!-- Animation canvas  -->
-      <div id='canvas'></div>
+      <div>
+        <div id='canvas'></div>
+      </div>
+
       <!-- Live Updates -->
-      <div class = 'table-container'>
-        <table id='live-update-table'>
-          <tr>
-            <td><span id='running-time' class='main-text'></span></td>
-            <td>
-              <span id='pendulum-height' class='main-text'></span>
-            </td>
-          </tr>
-        </table>
-      </div>
+      <div>
+        <div class = 'table-container'>
+          <div id='live-update-table'>
+            <div class='main-text'>Time: <span id='running-time'>0.000s</span></div>
+            <div class='main-text'>Height of a: <span id='pendulum-height'>0.255m</span></div>
+            <div class='main-text'>Height of b: <span id='resting-pendulum-height'>0.000m</span></div>
+          </div>
+        </div>
 
-      <!-- Buttons -->
-      <div class="button-group">
-        <Button class="control-btns" id="start-button" class='main-text'>Start</Button>
-        <Button class="control-btns" id='pause-button' class='main-text' value='pause'>Pause</Button>
-        <Button class="control-btns" id='reset-button' class='main-text'>Reset</Button>
+        <!-- Buttons -->
+        <div class="button-group">
+          <Button class="control-btns" id="start-button" class='main-text'>Start</Button>
+          <Button class="control-btns" id='pause-button' class='main-text' value='pause'>Pause</Button>
+          <Button class="control-btns" id='reset-button' class='main-text'>Reset</Button>
+        </div>
+
+        <!-- Chart -->
+        <div class="chart-container">
+          <canvas id="chart"></canvas>
+        </div>
       </div>
     </div>
-
-    <!-- Chart -->
-    <div class="chart-container">
-        <canvas id="chart"></canvas>
-    </div>
-
   </body>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
   <script src='https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.12.0/matter.js'></script>

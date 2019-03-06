@@ -45,8 +45,10 @@ th, td {
 }
 
 #live-update-table {
-  display: inline-block;
-  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  flex: 1;
+  justify-content: center;
   border: 1px solid rgb(185, 185, 185);
   border-spacing: 0;
   border-collapse: collapse;
@@ -54,17 +56,17 @@ th, td {
   background-repeat: repeat-x;
   border-color: #dcdcdc;
   padding: 10px 10px;
+  top: 18px;
   min-width: 230px;
   max-width: 600px;
   position: relative;
 }
 
 .chart-container {
-  margin: auto;
   align-content: center;
+  display: inline-block;
   position: relative;
   top: 50px;
-  float: left;
   height:40vh;
   width:25vw;
 }

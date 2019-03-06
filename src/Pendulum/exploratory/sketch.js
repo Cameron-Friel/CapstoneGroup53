@@ -8,6 +8,9 @@ let noUiSlider = require('nouislider');
 const CANVAS_WIDTH = 800;
 const CANVAS_HEIGHT = 600;
 
+const PENDUMDULUM_HEIGHT_ID = 'pendulum-height';
+const SECOND_PENDUMDULUM_HEIGHT_ID = 'second-pendulum-height';
+
 const PTM = 634.773; // converts pixels to meters for calculations
 
 // Input slider set up
@@ -101,7 +104,13 @@ function refreshSimulation() {
   State.setSimulationRunning(false);
   pendulum.pendulumAngle = pendulum.calculateAngle(pendulum.pendulumString.bodies[0].position, pendulum.pendulumBody.position);
   pendulum.pendulumHeight = pendulum.calculatePenulumHeight(pendulum.pendulumStringLength / PTM, pendulum.pendulumAngle);
-  pendulum.displayPendulumHeight();
+  pendulum.displayPendulumHeight(PENDUMDULUM_HEIGHT_ID);
+
+  if (document.getElementById('num-weights').value == 2) {
+    pendulum2.pendulumAngle = pendulum2.calculateAngle(pendulum2.pendulumString.bodies[0].position, pendulum2.pendulumBody.position);
+    pendulum2.pendulumHeight = pendulum2.calculatePenulumHeight(pendulum2.pendulumStringLength / PTM, pendulum2.pendulumAngle);
+    pendulum2.displayPendulumHeight(SECOND_PENDUMDULUM_HEIGHT_ID);
+  }
 
   if (State.getIsPausedFlag() === false) {
     State.setIsPausedFlag(true);
@@ -441,7 +450,13 @@ document.getElementById('reset-button').onclick = function() {
   State.setSimulationRunning(false);
   pendulum.pendulumAngle = pendulum.calculateAngle(pendulum.pendulumString.bodies[0].position, pendulum.pendulumBody.position);
   pendulum.pendulumHeight = pendulum.calculatePenulumHeight(pendulum.pendulumStringLength / PTM, pendulum.pendulumAngle);
-  pendulum.displayPendulumHeight();
+  pendulum.displayPendulumHeight(PENDUMDULUM_HEIGHT_ID);
+
+  if (document.getElementById('num-weights').value == 2) {
+    pendulum2.pendulumAngle = pendulum2.calculateAngle(pendulum2.pendulumString.bodies[0].position, pendulum2.pendulumBody.position);
+    pendulum2.pendulumHeight = pendulum2.calculatePenulumHeight(pendulum2.pendulumStringLength / PTM, pendulum2.pendulumAngle);
+    pendulum2.displayPendulumHeight(SECOND_PENDUMDULUM_HEIGHT_ID);
+  }
 
   if (State.getIsPausedFlag() === false) {
     State.setIsPausedFlag(true);
@@ -461,7 +476,8 @@ Events.on(engine, 'beforeUpdate', function(event) {
   if (document.getElementById('num-weights').value == 2) {
     pendulum2.pendulumAngle = pendulum2.calculateAngle(pendulum2.pendulumString.bodies[0].position, pendulum2.pendulumBody.position);
     pendulum2.pendulumHeight = pendulum2.calculatePenulumHeight(pendulum2.pendulumStringLength / PTM, pendulum2.pendulumAngle);
+    pendulum2.displayPendulumHeight(SECOND_PENDUMDULUM_HEIGHT_ID);
   }
-  pendulum.displayPendulumHeight();
+  pendulum.displayPendulumHeight(PENDUMDULUM_HEIGHT_ID);
   State.displayRunningTime(engine);
 });

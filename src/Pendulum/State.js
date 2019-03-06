@@ -67,10 +67,10 @@ let State = (function() {
         let quotient = Math.floor(currentTime / 60); // minutes
         let remainder = (currentTime % 60).toFixed(3); // seconds
 
-        document.getElementById('running-time').textContent = 'Time: ' + quotient + 'm ' + remainder + 's';
+        document.getElementById('running-time').textContent = quotient + 'm ' + remainder + 's';
       }
       else {
-        document.getElementById('running-time').textContent = 'Time: ' + currentTime + 's';
+        document.getElementById('running-time').textContent = currentTime + 's';
       }
     },
   };

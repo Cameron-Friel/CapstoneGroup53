@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/13.0.0/nouislider.css">
 
   </head>
-  
+
   <body>
     <h1>Exploratory Mode Test</h1>
     <div class='container'>
@@ -58,14 +58,11 @@
 
         <!-- Live Updates -->
         <div class = 'table-container'>
-          <table id='live-update-table'>
-            <tr>
-              <td><span id='running-time' class='main-text'></span></td>
-              <td>
-                <span id='pendulum-height' class='main-text'></span>
-              </td>
-            </tr>
-          </table>
+          <div id='live-update-table'>
+            <div class='main-text'>Time: <span id='running-time'>0.000s</span></div>
+            <div class='main-text'>Height of a: <span id='pendulum-height'>0.255m</span></div>
+            <div class='main-text'>Height of b: <span id='second-pendulum-height'>0.000m</span></div>
+          </div>
         </div>
 
         <!-- Buttons -->
