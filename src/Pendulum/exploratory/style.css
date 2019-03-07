@@ -4,6 +4,8 @@
   flex: 1;
   text-align: center;
   flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-evenly;
 }
 
 body {
@@ -34,7 +36,7 @@ h1 {
   display: flex;
   align-items: center;
   max-width: 90%;
-  max-height: 60%;
+  max-height: 85%;
   margin: 20px 33px 1px 20px;
   float: left;
 }
@@ -56,10 +58,20 @@ th, td {
   background-repeat: repeat-x;
   border-color: #dcdcdc;
   padding: 10px 10px;
-  top: 18px;
+  top: 0px;
   min-width: 230px;
-  max-width: 600px;
+  max-width: 100%;
   position: relative;
+  margin-left: 19px;
+  margin-right: 60px;
+}
+
+#pendulum-height {
+  color: rgb(63, 134, 192);
+}
+
+#second-pendulum-height {
+  color: rgb(29, 150, 81);
 }
 
 .chart-container {
@@ -69,6 +81,7 @@ th, td {
   top: 50px;
   height:40vh;
   width:25vw;
+  margin-bottom: 61px;
 }
 
 .control-btns {
@@ -83,7 +96,7 @@ th, td {
   border-radius: 8px;
   box-shadow: 5px 2px 9px rgba(0, 0, 0, 0.18);
   position: relative;
-  top: 20px;
+  top: 0px;
 }
 
 .control-btns:focus {
@@ -160,6 +173,11 @@ th, td {
   background-color:  rgb(252, 124, 124)
 }
 
+/* control visibility  */
+.hide-container {
+  display: none;
+}
+
 /* Laptop screens 1176 */
 /* Only the chart is messed up at this width */
 @media screen and (max-width : 1176px) {
@@ -175,13 +193,14 @@ th, td {
     display: flex;
     align-items: center;
     max-width: 95%;
-    max-height: 60%;
+    max-height: 90%;
     margin-left: 10px;
     margin-right: 10px;
   }
 
   #live-update-table {
     top: 0px;
+    margin: 0px;
   }
 
   .chart-container {
@@ -200,7 +219,7 @@ th, td {
 /* Tablet  */
 @media screen and (max-width : 768px) and (min-width: 486px) {
   #live-update-table {
-    width: 340px;
+    width: 97%;
   }
 }
 
@@ -212,14 +231,14 @@ th, td {
   }
 
   #live-update-table {
-    width: 330px;
+    width: 92%;
+    padding: 2px;
   }
 
   .table-container {
     position: relative;
-    display: block;
+    display: flex;
     float: right;
-    left: -50%;
   }
 
   .table-container > table {
