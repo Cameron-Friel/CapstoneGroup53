@@ -91,9 +91,11 @@ noUiSlider.create(corSlider, {
 });
 
 // on start - disable the second set of sliders
-mass2Slider.setAttribute('disabled', true);
-angle2Slider.setAttribute('disabled', true);
-corSlider.setAttribute('disabled', true);
+if(document.getElementById('num-weights').value == 1) {
+  mass2Slider.setAttribute('disabled', true);
+  angle2Slider.setAttribute('disabled', true);
+  corSlider.setAttribute('disabled', true);
+}
 
 // reset
 function refreshSimulation() {
@@ -269,13 +271,13 @@ function renderLoop() {
 //   return 400 - ((length * PTM) * Math.sin(angle * Math.PI / 180));
 // }
 
-function calcXCoord(length, angle) {
+function calcXCoord(length, angle, xProc) {
   if (Math.sign(angle) == -1) {
     var posAngle = Math.abs(angle);
-    return 400 - ((length * PTM) * Math.sin(posAngle * Math.PI / 180));
+    return xProc - ((length * PTM) * Math.sin(posAngle * Math.PI / 180));
   }
   else {
-    return 400 + ((length * PTM) * Math.sin(angle * Math.PI / 180));
+    return xProc + ((length * PTM) * Math.sin(angle * Math.PI / 180));
   }
 }
 
@@ -296,18 +298,22 @@ function createWorld() {
      Bodies.rectangle(800, 400, 50, 800, { isStatic: true, render: {fillStyle: 'grey'}}),
      Bodies.rectangle(0, 400, 50, 800, { isStatic: true, render: {fillStyle: 'grey'}}) 
   ]);
-  var xCoordProtractor = 400;
-  var yCoordProtractor = 50;
-
+  // both pendulums
   var lengthVal = parseFloat(lengthSlider.noUiSlider.get(), 10);
+  var weightRadius = 30;
+
+  //protractors
+  var xCoordProtractor1 = CANVAS_WIDTH / 2 + weightRadius;
+  var xCoordProtractor2 = CANVAS_WIDTH / 2 - weightRadius;
+  var yCoordProtractor = 50;
 
   // first pendulum
   var massVal = parseInt(massSlider.noUiSlider.get(), 10) / 1000; // convert to kg
   var angleVal = parseInt(angleSlider.noUiSlider.get(), 10);
-  var xCoordBody = calcXCoord(lengthVal, angleVal);
+  var xCoordBody = calcXCoord(lengthVal, angleVal, xCoordProtractor1);
   var yCoordBody = calcYCoord(lengthVal, angleVal, yCoordProtractor);
 
-  pendulum.pendulumBody = Bodies.circle(xCoordBody, yCoordBody, 30, {
+  pendulum.pendulumBody = Bodies.circle(xCoordBody, yCoordBody, weightRadius, {
     mass: massVal,
     frictionAir: 0.00001,
     friction: 0,
@@ -318,10 +324,12 @@ function createWorld() {
       strokeStyle: "rgb(97, 181, 255)"
     }});
 
-  let protractor = Bodies.circle(xCoordProtractor, yCoordProtractor, 10, { isStatic: true, render: {fillStyle: 'grey'}});
+  let protractor1 = Bodies.circle(xCoordProtractor1, yCoordProtractor, 10, { isStatic: true, render: {fillStyle: 'grey'}});
+  let protractor2 = Bodies.circle(xCoordProtractor2, yCoordProtractor, 10, { isStatic: true, render: {fillStyle: 'grey'}});
+  
 
   pendulum.pendulumString = World.add(engine.world, Constraint.create({
-    bodyA: protractor,
+    bodyA: protractor1,
     bodyB: pendulum.pendulumBody,
     length: 0,
     stiffness: 1,
@@ -332,16 +340,19 @@ function createWorld() {
     }
   }));
 
-  pendulum.pendulumStringLength = pendulum.calculateStringLength(protractor.position, pendulum.pendulumBody.position);
+  pendulum.pendulumStringLength = pendulum.calculateStringLength(protractor1.position, pendulum.pendulumBody.position);
+
+  // add first pendulum and protractor1
+  World.add(engine.world, [pendulum.pendulumBody, protractor1]);
 
   // second pendulum
   var massVal2 = parseInt(mass2Slider.noUiSlider.get(), 10) / 1000; // convert to kg
   var angleVal2 = parseInt(angle2Slider.noUiSlider.get(), 10);
-  var xCoordBody2 = calcXCoord(lengthVal, angleVal2);
+  var xCoordBody2 = calcXCoord(lengthVal, angleVal2, xCoordProtractor2);
   var yCoordBody2 = calcYCoord(lengthVal, angleVal2, yCoordProtractor);
   var restVal = parseFloat(corSlider.noUiSlider.get());
 
-  pendulum2.pendulumBody = Bodies.circle(xCoordBody2, yCoordBody2, 30, {
+  pendulum2.pendulumBody = Bodies.circle(xCoordBody2, yCoordBody2, weightRadius, {
      mass: massVal2,
      frictionAir: 0,
      interia: Infinity,
@@ -353,14 +364,12 @@ function createWorld() {
     }
     });
 
-  // add first pendulum and protractor
-  World.add(engine.world, [pendulum.pendulumBody, protractor]);
 
   // add the second pendulum if selected in the dropdown
   if(numWeightsDropdown.value == "2") {
-    World.add(engine.world, [pendulum2.pendulumBody]);
+    World.add(engine.world, [pendulum2.pendulumBody, protractor2]);
     pendulum2.pendulumString = World.add(engine.world, Constraint.create({
-      bodyA: protractor,
+      bodyA: protractor2,
       bodyB: pendulum2.pendulumBody,
       length: 0,
       render: {
@@ -368,6 +377,8 @@ function createWorld() {
         lineWidth: 6
       }
     }));
+    pendulum2.pendulumStringLength = pendulum2.calculateStringLength(protractor2.position, pendulum2.pendulumBody.position);
+    
   }
 
 }
