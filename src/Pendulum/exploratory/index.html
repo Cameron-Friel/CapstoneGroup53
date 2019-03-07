@@ -12,13 +12,31 @@
   <body>
     <h1>Exploratory Mode Test</h1>
     <div class='container'>
-      <!-- Animation canvas  -->
-      <div>
+
+      <div>  <!-- Left side of screen -->
+        <!-- Animation canvas  -->
         <div id='canvas'></div>
-      </div>
+
+        <!-- Live Updates -->
+        <div class = 'table-container'>
+          <div id='live-update-table'>
+            <div class='main-text'>Time: <span id='running-time'>0.000s</span></div>
+            <div class='main-text'>Height of a: <span id='pendulum-height'>0.255m</span></div>
+            <div class='main-text'>Height of b: <span id='second-pendulum-height'>0.000m</span></div>
+          </div>
+        </div>
+
+        <!-- Buttons -->
+        <div class="button-group">
+            <Button class="control-btns" id="start-button" class='main-text'>Start</Button>
+            <Button class="control-btns" id='pause-button' class='main-text' value='pause'>Pause</Button>
+            <Button class="control-btns" id='reset-button' class='main-text'>Reset</Button>
+        </div>
+
+      </div> <!-- End left side -->
 
       <!-- Input sliders -->
-      <div>
+      <!-- <div> -->
         <table id='input-table'>
           <tr id="num-weights-row">
             <td class='input-label'>Num Weights</td>
@@ -56,29 +74,22 @@
           </tr>
         </table>
 
-        <!-- Live Updates -->
-        <div class = 'table-container'>
-          <div id='live-update-table'>
-            <div class='main-text'>Time: <span id='running-time'>0.000s</span></div>
-            <div class='main-text'>Height of a: <span id='pendulum-height'>0.255m</span></div>
-            <div class='main-text'>Height of b: <span id='second-pendulum-height'>0.000m</span></div>
-          </div>
+            
+        <!-- Chart -->
+          <div id="chart-container" class="chart-container hide-container">
+            <canvas id="chart"></canvas>
         </div>
 
-        <!-- Buttons -->
-        <div class="button-group">
-          <Button class="control-btns" id="start-button" class='main-text'>Start</Button>
-          <Button class="control-btns" id='pause-button' class='main-text' value='pause'>Pause</Button>
-          <Button class="control-btns" id='reset-button' class='main-text'>Reset</Button>
+        <div>
+
+
+          
+
         </div>
-      </div>
+      <!-- </div> -->
     </div>   <!-- end container -->
 
 
-    <!-- Chart -->
-    <div class="chart-container">
-        <canvas id="chart"></canvas>
-    </div>
   </body>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>

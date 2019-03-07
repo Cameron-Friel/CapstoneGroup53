@@ -6,7 +6,7 @@ let Graph = require('../Graph.js');
 let noUiSlider = require('nouislider');
 
 const CANVAS_WIDTH = 800;
-const CANVAS_HEIGHT = 600;
+const CANVAS_HEIGHT = 450;
 
 const PENDUMDULUM_HEIGHT_ID = 'pendulum-height';
 const SECOND_PENDUMDULUM_HEIGHT_ID = 'second-pendulum-height';
@@ -287,11 +287,11 @@ function calcYCoord(length, angle, yProc) {
 */
 
 function createWorld() {
-  World.add(engine.world, [
-     Bodies.rectangle(400, 0, 800, 50, { isStatic: true, render: {fillStyle: 'grey'}}),
-     Bodies.rectangle(400, 600, 800, 50, { isStatic: true, render: {fillStyle: 'grey'}}),
+  World.add(engine.world, [  // x y w h 
+     Bodies.rectangle(400, 0, 800, 50, { isStatic: true, render: {fillStyle: 'grey'}}) ,   //top 
+     Bodies.rectangle(400, CANVAS_HEIGHT, 800, 50, { isStatic: true, render: {fillStyle: 'grey'}}) /*, // bottom 
      Bodies.rectangle(800, 300, 50, 600, { isStatic: true, render: {fillStyle: 'grey'}}),
-     Bodies.rectangle(0, 300, 50, 600, { isStatic: true, render: {fillStyle: 'grey'}})
+     Bodies.rectangle(0, 300, 50, 600, { isStatic: true, render: {fillStyle: 'grey'}}) */
   ]);
   var xCoordProtractor = 400;
   var yCoordProtractor = 50;
@@ -433,6 +433,12 @@ document.getElementById('start-button').onclick = function() {
     State.setSimulationRunning(true);
     //Body.applyForce(pendulum.pendulumBody, {x: pendulum.pendulumBody.position.x, y: pendulum.pendulumBody.position.y}, {x: 0.0017, y: 0});
     runPlotInterval();
+
+    var sliders = document.getElementById("input-table");
+    sliders.classList.add('hide-container');
+
+    var graph = document.getElementById("chart-container");
+    graph.classList.remove('hide-container');
   }
 };
 
@@ -451,6 +457,13 @@ document.getElementById('reset-button').onclick = function() {
   pendulum.pendulumAngle = pendulum.calculateAngle(pendulum.pendulumString.bodies[0].position, pendulum.pendulumBody.position);
   pendulum.pendulumHeight = pendulum.calculatePenulumHeight(pendulum.pendulumStringLength / PTM, pendulum.pendulumAngle);
   pendulum.displayPendulumHeight(PENDUMDULUM_HEIGHT_ID);
+
+  // replace graph with sliders
+  var sliders = document.getElementById("input-table");
+  sliders.classList.remove('hide-container');
+
+  var graph = document.getElementById("chart-container");
+  graph.classList.add('hide-container');
 
   if (document.getElementById('num-weights').value == 2) {
     pendulum2.pendulumAngle = pendulum2.calculateAngle(pendulum2.pendulumString.bodies[0].position, pendulum2.pendulumBody.position);
