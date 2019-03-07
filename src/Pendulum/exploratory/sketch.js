@@ -10,6 +10,8 @@ const CANVAS_HEIGHT = 450;
 
 const PENDUMDULUM_HEIGHT_ID = 'pendulum-height';
 const SECOND_PENDUMDULUM_HEIGHT_ID = 'second-pendulum-height';
+const VELOCITY_A_ID = 'velocity-a';
+const VELOCITY_B_ID = 'velocity-b';
 
 const PTM = 634.773; // converts pixels to meters for calculations
 
@@ -105,6 +107,7 @@ function refreshSimulation() {
   pendulum.pendulumAngle = pendulum.calculateAngle(pendulum.pendulumString.bodies[0].position, pendulum.pendulumBody.position);
   pendulum.pendulumHeight = pendulum.calculatePenulumHeight(pendulum.pendulumStringLength / PTM, pendulum.pendulumAngle);
   pendulum.displayPendulumHeight(PENDUMDULUM_HEIGHT_ID);
+  
 
   if (document.getElementById('num-weights').value == 2) {
     pendulum2.pendulumAngle = pendulum2.calculateAngle(pendulum2.pendulumString.bodies[0].position, pendulum2.pendulumBody.position);
@@ -457,6 +460,7 @@ document.getElementById('reset-button').onclick = function() {
   pendulum.pendulumAngle = pendulum.calculateAngle(pendulum.pendulumString.bodies[0].position, pendulum.pendulumBody.position);
   pendulum.pendulumHeight = pendulum.calculatePenulumHeight(pendulum.pendulumStringLength / PTM, pendulum.pendulumAngle);
   pendulum.displayPendulumHeight(PENDUMDULUM_HEIGHT_ID);
+  pendulum.displayVelocity(VELOCITY_A_ID);  
 
   // replace graph with sliders
   var sliders = document.getElementById("input-table");
@@ -469,6 +473,8 @@ document.getElementById('reset-button').onclick = function() {
     pendulum2.pendulumAngle = pendulum2.calculateAngle(pendulum2.pendulumString.bodies[0].position, pendulum2.pendulumBody.position);
     pendulum2.pendulumHeight = pendulum2.calculatePenulumHeight(pendulum2.pendulumStringLength / PTM, pendulum2.pendulumAngle);
     pendulum2.displayPendulumHeight(SECOND_PENDUMDULUM_HEIGHT_ID);
+    pendulum2.displayVelocity(VELOCITY_B_ID);    
+    
   }
 
   if (State.getIsPausedFlag() === false) {
@@ -490,8 +496,10 @@ Events.on(engine, 'beforeUpdate', function(event) {
     pendulum2.pendulumAngle = pendulum2.calculateAngle(pendulum2.pendulumString.bodies[0].position, pendulum2.pendulumBody.position);
     pendulum2.pendulumHeight = pendulum2.calculatePenulumHeight(pendulum2.pendulumStringLength / PTM, pendulum2.pendulumAngle);
     pendulum2.displayPendulumHeight(SECOND_PENDUMDULUM_HEIGHT_ID);
+    pendulum2.displayVelocity(VELOCITY_B_ID);    
   }
   pendulum.displayPendulumHeight(PENDUMDULUM_HEIGHT_ID);
+  pendulum.displayVelocity(VELOCITY_A_ID);
   State.displayRunningTime(engine);
 });
 
