@@ -24,6 +24,9 @@ var mass2Slider = document.getElementById("mass-2-slider");
 var angle2Slider = document.getElementById("angle-2-slider");
 var corSlider = document.getElementById("cor-slider");
 
+var numWeightsDropdown = document.getElementById('num-weights');
+
+
 noUiSlider.create(lengthSlider, {
   start: [0.3],
   step: 0.05,
@@ -97,101 +100,12 @@ if(document.getElementById('num-weights').value == 1) {
   corSlider.setAttribute('disabled', true);
 }
 
-// reset
-function refreshSimulation() {
-  World.clear(engine.world);
-  createWorld();
-  engine.timing.timestamp = 0;
-  Graph.resetGraphData(graphData);
-  stopPlotInterval();
-  State.displayRunningTime(engine);
-  State.setSimulationRunning(false);
-  pendulum.pendulumAngle = pendulum.calculateAngle(pendulum.pendulumString.bodies[0].position, pendulum.pendulumBody.position);
-  pendulum.pendulumHeight = pendulum.calculatePenulumHeight(pendulum.pendulumStringLength / PTM, pendulum.pendulumAngle);
-  pendulum.displayPendulumHeight(PENDUMDULUM_HEIGHT_ID);
-  
-
-  if (document.getElementById('num-weights').value == 2) {
-    pendulum2.pendulumAngle = pendulum2.calculateAngle(pendulum2.pendulumString.bodies[0].position, pendulum2.pendulumBody.position);
-    pendulum2.pendulumHeight = pendulum2.calculatePenulumHeight(pendulum2.pendulumStringLength / PTM, pendulum2.pendulumAngle);
-    pendulum2.displayPendulumHeight(SECOND_PENDUMDULUM_HEIGHT_ID);
-  }
-
-  if (State.getIsPausedFlag() === false) {
-    State.setIsPausedFlag(true);
-    State.onPause(render);
-  }
-  else {
-    pauseBtn.value = "pause";
-    pauseBtn.innerText = "Pause" ;
-  }
-}
-
-// whenever length slider changed handler
-lengthSlider.noUiSlider.on('change', function () {
-  if(State.getSimulationRunning() == false) {
-    refreshSimulation();
-  }
-});
-
-massSlider.noUiSlider.on('change', function() {
-  if(State.getSimulationRunning() == false) {
-    refreshSimulation();
-  }
-});
-
-angleSlider.noUiSlider.on('change', function () {
-  if(State.getSimulationRunning() == false) {
-    var angleVal = parseInt(angleSlider.noUiSlider.get(), 10);
-    refreshSimulation();
-    pendulum.pendulumAngle = angleVal;
-  }
-});
-
-mass2Slider.noUiSlider.on('change', function() {
-  if(State.getSimulationRunning() == false) {
-    refreshSimulation();
-  }
-});
-
-angle2Slider.noUiSlider.on('change', function () {
-  if(State.getSimulationRunning() == false) {
-    var angleVal = parseInt(angleSlider.noUiSlider.get(), 10);
-    refreshSimulation();
-    pendulum.pendulumAngle = angleVal;
-  }
-});
-
-corSlider.noUiSlider.on('change', function () {
-  if(State.getSimulationRunning() == false) {
-    refreshSimulation();
-  }
-});
-
-/*
- * Changes the number of pendulums
-*/
-var numWeightsDropdown = document.getElementById('num-weights');
-numWeightsDropdown.onchange = function() {
-  refreshSimulation();
-
-  var numWeights = numWeightsDropdown.value;
-  if (numWeights == "1") {
-    // disable sliders
-    mass2Slider.setAttribute('disabled', true);
-    angle2Slider.setAttribute('disabled', true);
-    corSlider.setAttribute('disabled', true);
-  }
-  else if(numWeights == "2") {
-    // reenable sliders
-    mass2Slider.removeAttribute('disabled');
-    angle2Slider.removeAttribute('disabled');
-    corSlider.removeAttribute('disabled');
-  }
-};
 
 
 
+/**
+ * Creating pendulum world 
+ */
 
 let Engine = Matter.Engine;
 let Render = Matter.Render;
@@ -528,3 +442,101 @@ document.addEventListener('visibilitychange', function() {
     stopPlotInterval();
   }
 });
+
+
+/**
+ * Slider listeners
+ */
+
+
+// reset
+function refreshSimulation() {
+  World.clear(engine.world);
+  createWorld();
+  engine.timing.timestamp = 0;
+  Graph.resetGraphData(graphData);
+  stopPlotInterval();
+  State.displayRunningTime(engine);
+  State.setSimulationRunning(false);
+  pendulum.pendulumAngle = pendulum.calculateAngle(pendulum.pendulumString.bodies[0].position, pendulum.pendulumBody.position);
+  pendulum.pendulumHeight = pendulum.calculatePenulumHeight(pendulum.pendulumStringLength / PTM, pendulum.pendulumAngle);
+  pendulum.displayPendulumHeight(PENDUMDULUM_HEIGHT_ID);
+  
+
+  if (document.getElementById('num-weights').value == 2) {
+    pendulum2.pendulumAngle = pendulum2.calculateAngle(pendulum2.pendulumString.bodies[0].position, pendulum2.pendulumBody.position);
+    pendulum2.pendulumHeight = pendulum2.calculatePenulumHeight(pendulum2.pendulumStringLength / PTM, pendulum2.pendulumAngle);
+    pendulum2.displayPendulumHeight(SECOND_PENDUMDULUM_HEIGHT_ID);
+  }
+
+  if (State.getIsPausedFlag() === false) {
+    State.setIsPausedFlag(true);
+    State.onPause(render);
+  }
+  else {
+    pauseBtn.value = "pause";
+    pauseBtn.innerText = "Pause" ;
+  }
+}
+
+// whenever length slider changed handler
+lengthSlider.noUiSlider.on('update', function () {
+  if(State.getSimulationRunning() == false) {
+    refreshSimulation();
+  }
+});
+
+massSlider.noUiSlider.on('update', function() {
+  if(State.getSimulationRunning() == false) {
+    refreshSimulation();
+  }
+});
+
+angleSlider.noUiSlider.on('update', function () {
+  if(State.getSimulationRunning() == false) {
+    var angleVal = parseInt(angleSlider.noUiSlider.get(), 10);
+    refreshSimulation();
+    pendulum.pendulumAngle = angleVal;
+  }
+});
+
+mass2Slider.noUiSlider.on('update', function() {
+  if(State.getSimulationRunning() == false) {
+    refreshSimulation();
+  }
+});
+
+angle2Slider.noUiSlider.on('update', function () {
+  if(State.getSimulationRunning() == false) {
+    var angleVal = parseInt(angleSlider.noUiSlider.get(), 10);
+    refreshSimulation();
+    pendulum.pendulumAngle = angleVal;
+  }
+});
+
+corSlider.noUiSlider.on('update', function () {
+  if(State.getSimulationRunning() == false) {
+    refreshSimulation();
+  }
+});
+
+/*
+ * Changes the number of pendulums
+*/
+numWeightsDropdown.onchange = function() {
+  refreshSimulation();
+
+  var numWeights = numWeightsDropdown.value;
+  if (numWeights == "1") {
+    // disable sliders
+    mass2Slider.setAttribute('disabled', true);
+    angle2Slider.setAttribute('disabled', true);
+    corSlider.setAttribute('disabled', true);
+  }
+  else if(numWeights == "2") {
+    // reenable sliders
+    mass2Slider.removeAttribute('disabled');
+    angle2Slider.removeAttribute('disabled');
+    corSlider.removeAttribute('disabled');
+  }
+};
