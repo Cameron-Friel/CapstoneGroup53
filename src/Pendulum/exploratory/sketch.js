@@ -29,7 +29,7 @@ var numWeightsDropdown = document.getElementById('num-weights');
 
 noUiSlider.create(lengthSlider, {
   start: [0.3],
-  step: 0.05,
+  step: 0.01,
   connect: true,
   tooltips: true,
   range: {
@@ -40,7 +40,7 @@ noUiSlider.create(lengthSlider, {
 
 noUiSlider.create(massSlider, {
   start: [20],
-  step: 5,
+  step: 1,
   connect: true,
   tooltips: true,
   range: {
@@ -62,7 +62,7 @@ noUiSlider.create(angleSlider, {
 
 noUiSlider.create(mass2Slider, {
   start: [20],
-  step: 5,
+  step: 1,
   connect: true,
   tooltips: true,
   range: {
@@ -449,7 +449,9 @@ document.addEventListener('visibilitychange', function() {
  */
 
 
-// reset
+/**
+ * Called whenever slider value is changed 
+ */
 function refreshSimulation() {
   World.clear(engine.world);
   createWorld();
