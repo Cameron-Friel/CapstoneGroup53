@@ -311,7 +311,8 @@ function createWorld() {
     interia: Infinity,
     frictionStatic: 0.0,
     render: {
-      fillStyle: "rgb(97, 181, 255)"
+      fillStyle: "rgb(97, 181, 255)",
+      strokeStyle: "rgb(97, 181, 255)"
     }});
 
   let protractor = Bodies.circle(xCoordProtractor, yCoordProtractor, 10, { isStatic: true, render: {fillStyle: 'grey'}});
@@ -344,7 +345,8 @@ function createWorld() {
      friction: 0,
      restitution: restVal,   // matter should take the max rest val of 2 objects
      render: {
-      fillStyle: "rgb(64, 173, 111)"
+      fillStyle: "rgb(64, 173, 111)",
+      strokeStyle: "rgb(64, 173, 111)"
     }
     });
 
