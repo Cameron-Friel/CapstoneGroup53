@@ -92,6 +92,15 @@ class Pendulum {
   }
 
   /**
+   * Updates velocity of angle
+   * @param {String} id
+   */
+
+   displayVelocity(id) {
+      document.getElementById(id).textContent = this.pendulumBody.speed.toFixed(3) + 'm/s';
+   }
+
+  /**
     * Updates the height of the pendulum to the user
     * @param {String} id - a DOM id
   */

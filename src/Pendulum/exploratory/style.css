@@ -74,6 +74,15 @@ th, td {
   color: rgb(29, 150, 81);
 }
 
+#velocity-a {
+  color: rgb(63, 134, 192);
+}
+
+#velocity-b {
+  color: rgb(29, 150, 81);
+  
+}
+
 .chart-container {
   align-content: center;
   display: inline-block;
