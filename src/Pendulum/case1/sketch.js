@@ -206,6 +206,21 @@ Events.on(engine, 'beforeUpdate', function(event) {
 });
 
 /**
+  * Handles the event of clicking the modal button
+*/
+
+document.getElementById('modal-button').onclick = function() {
+  let modal = document.getElementById('modal-container');
+
+  if (modal.style.display === 'flex' || modal.style.display === '') {
+    modal.style.display = 'none';
+  }
+  else {
+    modal.style.display = 'flex';
+  }
+};
+
+/**
   * Listens for whether the current browser tab is active or not
 */
 
