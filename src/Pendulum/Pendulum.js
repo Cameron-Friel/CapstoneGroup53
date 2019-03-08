@@ -4,8 +4,11 @@
   * @class Pendulum
  * The Pendulum module is in charge of keeping tack of the pendulum bodies and properties within the world.
 */
+const DEG_TO_RAD = Math.PI / 180; 
 
 class Pendulum {
+
+
   constructor() {
     this._pendulumBody = null;
     this._pendulumAngle = null;
@@ -79,8 +82,8 @@ class Pendulum {
     * @returns {Int} height - the height of the pendulum
   */
 
-  calculatePenulumHeight(length, angle) {
-    return length * (1 - Math.cos(angle * Math.PI / 180));
+  calculatePendulumHeight(length, angle) {
+    return length * (1 - Math.cos(angle * DEG_TO_RAD));
   }
 
   /**

@@ -8,12 +8,14 @@ let noUiSlider = require('nouislider');
 const CANVAS_WIDTH = 800;
 const CANVAS_HEIGHT = 450;
 
-const PENDUMDULUM_HEIGHT_ID = 'pendulum-height';
-const SECOND_PENDUMDULUM_HEIGHT_ID = 'second-pendulum-height';
+const PENDULUM_HEIGHT_ID = 'pendulum-height';
+const SECOND_PENDULUM_HEIGHT_ID = 'second-pendulum-height';
 const VELOCITY_A_ID = 'velocity-a';
 const VELOCITY_B_ID = 'velocity-b';
 
 const PTM = 634.773; // converts pixels to meters for calculations
+const DEG_TO_RAD = Math.PI / 180;    // conversion factor from deg to rad
+
 
 // Input slider set up
 var lengthSlider = document.getElementById("length-slider");
@@ -188,15 +190,15 @@ function renderLoop() {
 function calcXCoord(length, angle, xProc) {
   if (Math.sign(angle) == -1) {
     var posAngle = Math.abs(angle);
-    return xProc - ((length * PTM) * Math.sin(posAngle * Math.PI / 180));
+    return xProc - ((length * PTM) * Math.sin(posAngle * DEG_TO_RAD));
   }
   else {
-    return xProc + ((length * PTM) * Math.sin(angle * Math.PI / 180));
+    return xProc + ((length * PTM) * Math.sin(angle * DEG_TO_RAD));
   }
 }
 
 function calcYCoord(length, angle, yProc) {
-  return (length * PTM) * Math.cos(angle * Math.PI / 180) + yProc;
+  return (length * PTM) * Math.cos(angle * DEG_TO_RAD) + yProc;
 }
 
 
@@ -229,11 +231,13 @@ function createWorld() {
 
   pendulum.pendulumBody = Bodies.circle(xCoordBody, yCoordBody, weightRadius, {
     mass: massVal,
-    frictionAir: 0,
+    frictionAir: 0.00000,
     friction: 0,
     interia: Infinity,
+    frictionStatic: 0.0,
     render: {
-      fillStyle: "rgb(97, 181, 255)"
+      fillStyle: "rgb(97, 181, 255)",
+      strokeStyle: "rgb(97, 181, 255)"
     }});
 
   let protractor1 = Bodies.circle(xCoordProtractor1, yCoordProtractor, 10, { isStatic: true, render: {fillStyle: 'grey'}});
@@ -244,13 +248,17 @@ function createWorld() {
     bodyA: protractor1,
     bodyB: pendulum.pendulumBody,
     length: 0,
+    stiffness: 1,
+    damping: 0.0,
     render: {
       strokeStyle: 'rgb(97, 181, 255)',
       lineWidth: 6
     }
   }));
 
-  pendulum.pendulumStringLength = pendulum.calculateStringLength(protractor1.position, pendulum.pendulumBody.position);
+  // TODO: this should be constant but yeah error here
+  // This is messing up the height 
+  pendulum.pendulumStringLength = lengthVal * PTM;
 
   // add first pendulum and protractor1
   World.add(engine.world, [pendulum.pendulumBody, protractor1]);
@@ -269,7 +277,8 @@ function createWorld() {
      friction: 0,
      restitution: restVal,   // matter should take the max rest val of 2 objects
      render: {
-      fillStyle: "rgb(64, 173, 111)"
+      fillStyle: "rgb(64, 173, 111)",
+      strokeStyle: "rgb(64, 173, 111)"
     }
     });
 
@@ -383,8 +392,8 @@ document.getElementById('reset-button').onclick = function() {
   State.displayRunningTime(engine);
   State.setSimulationRunning(false);
   pendulum.pendulumAngle = pendulum.calculateAngle(pendulum.pendulumString.bodies[0].position, pendulum.pendulumBody.position);
-  pendulum.pendulumHeight = pendulum.calculatePenulumHeight(pendulum.pendulumStringLength / PTM, pendulum.pendulumAngle);
-  pendulum.displayPendulumHeight(PENDUMDULUM_HEIGHT_ID);
+  pendulum.pendulumHeight = pendulum.calculatePenulumHeight(pendulum.pendulumStringLength / PTM, pendulum.pendulumAngle); // angle?
+  pendulum.displayPendulumHeight(PENDULUM_HEIGHT_ID);
   pendulum.displayVelocity(VELOCITY_A_ID);  
 
   // replace graph with sliders
@@ -397,7 +406,7 @@ document.getElementById('reset-button').onclick = function() {
   if (document.getElementById('num-weights').value == 2) {
     pendulum2.pendulumAngle = pendulum2.calculateAngle(pendulum2.pendulumString.bodies[0].position, pendulum2.pendulumBody.position);
     pendulum2.pendulumHeight = pendulum2.calculatePenulumHeight(pendulum2.pendulumStringLength / PTM, pendulum2.pendulumAngle);
-    pendulum2.displayPendulumHeight(SECOND_PENDUMDULUM_HEIGHT_ID);
+    pendulum2.displayPendulumHeight(SECOND_PENDULUM_HEIGHT_ID);
     pendulum2.displayVelocity(VELOCITY_B_ID);    
     
   }
@@ -420,10 +429,10 @@ Events.on(engine, 'beforeUpdate', function(event) {
   if (document.getElementById('num-weights').value == 2) {
     pendulum2.pendulumAngle = pendulum2.calculateAngle(pendulum2.pendulumString.bodies[0].position, pendulum2.pendulumBody.position);
     pendulum2.pendulumHeight = pendulum2.calculatePenulumHeight(pendulum2.pendulumStringLength / PTM, pendulum2.pendulumAngle);
-    pendulum2.displayPendulumHeight(SECOND_PENDUMDULUM_HEIGHT_ID);
+    pendulum2.displayPendulumHeight(SECOND_PENDULUM_HEIGHT_ID);
     pendulum2.displayVelocity(VELOCITY_B_ID);    
   }
-  pendulum.displayPendulumHeight(PENDUMDULUM_HEIGHT_ID);
+  pendulum.displayPendulumHeight(PENDULUM_HEIGHT_ID);
   pendulum.displayVelocity(VELOCITY_A_ID);
   State.displayRunningTime(engine);
 });
@@ -462,13 +471,13 @@ function refreshSimulation() {
   State.setSimulationRunning(false);
   pendulum.pendulumAngle = pendulum.calculateAngle(pendulum.pendulumString.bodies[0].position, pendulum.pendulumBody.position);
   pendulum.pendulumHeight = pendulum.calculatePenulumHeight(pendulum.pendulumStringLength / PTM, pendulum.pendulumAngle);
-  pendulum.displayPendulumHeight(PENDUMDULUM_HEIGHT_ID);
+  pendulum.displayPendulumHeight(PENDULUM_HEIGHT_ID);
   
 
   if (document.getElementById('num-weights').value == 2) {
     pendulum2.pendulumAngle = pendulum2.calculateAngle(pendulum2.pendulumString.bodies[0].position, pendulum2.pendulumBody.position);
     pendulum2.pendulumHeight = pendulum2.calculatePenulumHeight(pendulum2.pendulumStringLength / PTM, pendulum2.pendulumAngle);
-    pendulum2.displayPendulumHeight(SECOND_PENDUMDULUM_HEIGHT_ID);
+    pendulum2.displayPendulumHeight(SECOND_PENDULUM_HEIGHT_ID);
   }
 
   if (State.getIsPausedFlag() === false) {
