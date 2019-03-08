@@ -23,6 +23,8 @@ let engine = Engine.create();
 
 let pendulum = new Pendulum;
 
+let trail = [];
+
 let render = Render.create({
     element: document.getElementById('canvas'),
     engine: engine,
@@ -178,6 +180,7 @@ document.getElementById('reset-button').onclick = function() {
   pendulum.pendulumAngle = pendulum.calculateAngle(pendulum.pendulumString.bodies[0].position, pendulum.pendulumBody.position);
   pendulum.pendulumHeight = pendulum.calculatePenulumHeight(pendulum.pendulumStringLength / PTM, pendulum.pendulumAngle);
   pendulum.displayPendulumHeight(PENDUMDULUM_HEIGHT_ID);
+  trail = [];
 
   if (State.getIsPausedFlag() === false) {
     State.setIsPausedFlag(true);
@@ -202,6 +205,35 @@ Events.on(engine, 'beforeUpdate', function(event) {
     State.onPause(render);
     stopPlotInterval();
     State.setSimulationRunning(false);
+  }
+});
+
+/**
+  *
+*/
+
+Events.on(render, 'afterRender', function() {
+  if (State.getSimulationRunning() === true) {
+    let position = pendulum.pendulumBody.position;
+
+    trail.unshift({
+      x: position.x,
+      y: position.y
+    });
+  }
+
+  for (let i = 0; i < trail.length; i++) {
+    let point = {
+      x: trail[i].x,
+      y: trail[i].y
+    }
+
+    render.context.fillStyle = '#FF0000';
+    render.context.fillRect(point.x, point.y, 2, 2);
+  }
+
+  if (trail.length > 1000) {
+      trail.pop();
   }
 });
 
