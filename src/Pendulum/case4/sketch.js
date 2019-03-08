@@ -157,7 +157,7 @@ function stopPlotInterval() {
 var pauseBtn = document.getElementById('pause-button');
 
 pauseBtn.onclick = function() {
-  if (State.getSimulationRunning() === true) { // only allow pause and continue when the simulation is running
+  if (engine.timing.timestamp === 0) { 
     if (pauseBtn.value == "pause") {
       pauseBtn.innerText = "cont.";
       pauseBtn.value = "continue";

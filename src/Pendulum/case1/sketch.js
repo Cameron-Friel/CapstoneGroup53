@@ -154,7 +154,7 @@ pauseBtn.onclick = function() {
 */
 
 document.getElementById('start-button').onclick = function() {
-  if (State.getSimulationRunning() === false) { // make sure the simulation is not already running
+  if (engine.timing.timestamp === 0) { 
     State.setIsPausedFlag(false);
     State.onPause(render);
     State.setSimulationRunning(true);

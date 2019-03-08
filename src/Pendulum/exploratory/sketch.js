@@ -287,11 +287,11 @@ function calcYCoord(length, angle, yProc) {
 */
 
 function createWorld() {
-  World.add(engine.world, [  // x y w h 
-     Bodies.rectangle(400, 0, 800, 50, { isStatic: true, render: {fillStyle: 'grey'}}) ,   //top 
-     Bodies.rectangle(400, CANVAS_HEIGHT, 800, 50, { isStatic: true, render: {fillStyle: 'grey'}}) , // bottom 
+  World.add(engine.world, [  // x y w h
+     Bodies.rectangle(400, 0, 800, 50, { isStatic: true, render: {fillStyle: 'grey'}}) ,   //top
+     Bodies.rectangle(400, CANVAS_HEIGHT, 800, 50, { isStatic: true, render: {fillStyle: 'grey'}}) , // bottom
      Bodies.rectangle(800, 400, 50, 800, { isStatic: true, render: {fillStyle: 'grey'}}),
-     Bodies.rectangle(0, 400, 50, 800, { isStatic: true, render: {fillStyle: 'grey'}}) 
+     Bodies.rectangle(0, 400, 50, 800, { isStatic: true, render: {fillStyle: 'grey'}})
   ]);
   var xCoordProtractor = 400;
   var yCoordProtractor = 50;
@@ -427,7 +427,7 @@ pauseBtn.onclick = function() {
 */
 
 document.getElementById('start-button').onclick = function() {
-  if (State.getSimulationRunning() === false) { // make sure the simulation is not already running
+  if (engine.timing.timestamp === 0) { 
     State.setIsPausedFlag(false);
     State.onPause(render);
     State.setSimulationRunning(true);
