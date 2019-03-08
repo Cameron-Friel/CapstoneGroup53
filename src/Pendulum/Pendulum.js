@@ -82,7 +82,7 @@ class Pendulum {
     * @returns {Int} height - the height of the pendulum
   */
 
-  calculatePendulumHeight(length, angle) {
+  calculatePenulumHeight(length, angle) {
     return length * (1 - Math.cos(angle * DEG_TO_RAD));
   }
 

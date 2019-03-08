@@ -208,11 +208,11 @@ function calcYCoord(length, angle, yProc) {
 */
 
 function createWorld() {
-  World.add(engine.world, [  // x y w h
-     Bodies.rectangle(400, 0, 800, 50, { isStatic: true, render: {fillStyle: 'grey'}}) ,   //top
-     Bodies.rectangle(400, CANVAS_HEIGHT, 800, 50, { isStatic: true, render: {fillStyle: 'grey'}}) , // bottom
+  World.add(engine.world, [  // x y w h 
+     Bodies.rectangle(400, 0, 800, 50, { isStatic: true, render: {fillStyle: 'grey'}}) ,   //top 
+     Bodies.rectangle(400, CANVAS_HEIGHT, 800, 50, { isStatic: true, render: {fillStyle: 'grey'}}) , // bottom 
      Bodies.rectangle(800, 400, 50, 800, { isStatic: true, render: {fillStyle: 'grey'}}),
-     Bodies.rectangle(0, 400, 50, 800, { isStatic: true, render: {fillStyle: 'grey'}})
+     Bodies.rectangle(0, 400, 50, 800, { isStatic: true, render: {fillStyle: 'grey'}}) 
   ]);
   // both pendulums
   var lengthVal = parseFloat(lengthSlider.noUiSlider.get(), 10);
@@ -240,9 +240,12 @@ function createWorld() {
       strokeStyle: "rgb(97, 181, 255)"
     }});
 
-  let protractor1 = Bodies.circle(xCoordProtractor1, yCoordProtractor, 10, { isStatic: true, render: {fillStyle: 'grey'}});
-  let protractor2 = Bodies.circle(xCoordProtractor2, yCoordProtractor, 10, { isStatic: true, render: {fillStyle: 'grey'}});
-  
+  let protractor1 = Bodies.circle(xCoordProtractor1, yCoordProtractor, 10, { 
+    isStatic: true, 
+    render: {fillStyle: 'grey'}});
+  let protractor2 = Bodies.circle(xCoordProtractor2, yCoordProtractor, 10, { 
+    isStatic: true, 
+    render: {fillStyle: 'grey'}});
 
   pendulum.pendulumString = World.add(engine.world, Constraint.create({
     bodyA: protractor1,
@@ -295,7 +298,7 @@ function createWorld() {
         lineWidth: 6
       }
     }));
-    pendulum2.pendulumStringLength = pendulum2.calculateStringLength(protractor2.position, pendulum2.pendulumBody.position);
+    pendulum2.pendulumStringLength = lengthVal * PTM;
     
   }
 
@@ -421,13 +424,18 @@ document.getElementById('reset-button').onclick = function() {
   }
 };
 
+
+
 // Updates UI before each update of the simulation
 Events.on(engine, 'beforeUpdate', function(event) {
-  pendulum.pendulumAngle = pendulum.calculateAngle(pendulum.pendulumString.bodies[0].position, pendulum.pendulumBody.position);
+  var protPos1 = { x: 430, y: 50 };
+
+  pendulum.pendulumAngle = pendulum.calculateAngle(protPos1, pendulum.pendulumBody.position);
   pendulum.pendulumHeight = pendulum.calculatePenulumHeight(pendulum.pendulumStringLength / PTM, pendulum.pendulumAngle);
 
   if (document.getElementById('num-weights').value == 2) {
-    pendulum2.pendulumAngle = pendulum2.calculateAngle(pendulum2.pendulumString.bodies[0].position, pendulum2.pendulumBody.position);
+    var protPos2 = { x: 370, y: 50 };    
+    pendulum2.pendulumAngle = pendulum2.calculateAngle(protPos2, pendulum2.pendulumBody.position);
     pendulum2.pendulumHeight = pendulum2.calculatePenulumHeight(pendulum2.pendulumStringLength / PTM, pendulum2.pendulumAngle);
     pendulum2.displayPendulumHeight(SECOND_PENDULUM_HEIGHT_ID);
     pendulum2.displayVelocity(VELOCITY_B_ID);    
@@ -435,6 +443,7 @@ Events.on(engine, 'beforeUpdate', function(event) {
   pendulum.displayPendulumHeight(PENDULUM_HEIGHT_ID);
   pendulum.displayVelocity(VELOCITY_A_ID);
   State.displayRunningTime(engine);
+
 });
 
 /**
@@ -469,14 +478,20 @@ function refreshSimulation() {
   stopPlotInterval();
   State.displayRunningTime(engine);
   State.setSimulationRunning(false);
-  pendulum.pendulumAngle = pendulum.calculateAngle(pendulum.pendulumString.bodies[0].position, pendulum.pendulumBody.position);
-  pendulum.pendulumHeight = pendulum.calculatePenulumHeight(pendulum.pendulumStringLength / PTM, pendulum.pendulumAngle);
+
+  pendulum.pendulumAngle = pendulum.calculateAngle(
+    pendulum.pendulumString.bodies[0].position, pendulum.pendulumBody.position);
+
+  pendulum.pendulumHeight = pendulum.calculatePenulumHeight(
+    pendulum.pendulumStringLength / PTM, pendulum.pendulumAngle);
   pendulum.displayPendulumHeight(PENDULUM_HEIGHT_ID);
   
 
   if (document.getElementById('num-weights').value == 2) {
-    pendulum2.pendulumAngle = pendulum2.calculateAngle(pendulum2.pendulumString.bodies[0].position, pendulum2.pendulumBody.position);
-    pendulum2.pendulumHeight = pendulum2.calculatePenulumHeight(pendulum2.pendulumStringLength / PTM, pendulum2.pendulumAngle);
+    pendulum2.pendulumAngle = pendulum2.calculateAngle(
+      pendulum2.pendulumString.bodies[0].position, pendulum2.pendulumBody.position);
+    pendulum2.pendulumHeight = pendulum2.calculatePenulumHeight(
+      pendulum2.pendulumStringLength / PTM, pendulum2.pendulumAngle);
     pendulum2.displayPendulumHeight(SECOND_PENDULUM_HEIGHT_ID);
   }
 
