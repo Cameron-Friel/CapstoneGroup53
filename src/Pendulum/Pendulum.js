@@ -4,8 +4,11 @@
   * @class Pendulum
  * The Pendulum module is in charge of keeping tack of the pendulum bodies and properties within the world.
 */
+const DEG_TO_RAD = Math.PI / 180; 
 
 class Pendulum {
+
+
   constructor() {
     this._pendulumBody = null;
     this._pendulumAngle = null;
@@ -80,7 +83,7 @@ class Pendulum {
   */
 
   calculatePenulumHeight(length, angle) {
-    return length * (1 - Math.cos(angle * Math.PI / 180));
+    return length * (1 - Math.cos(angle * DEG_TO_RAD));
   }
 
   /**
@@ -90,6 +93,15 @@ class Pendulum {
   displayPendulumAngle() {
     document.getElementById('pendulum-angle').textContent = 'Angle: ' + this.pendulumAngle;
   }
+
+  /**
+   * Updates velocity of angle
+   * @param {String} id
+   */
+
+   displayVelocity(id) {
+      document.getElementById(id).textContent = this.pendulumBody.speed.toFixed(3) + 'm/s';
+   }
 
   /**
     * Updates the height of the pendulum to the user

@@ -8,10 +8,14 @@ let noUiSlider = require('nouislider');
 const CANVAS_WIDTH = 800;
 const CANVAS_HEIGHT = 450;
 
-const PENDUMDULUM_HEIGHT_ID = 'pendulum-height';
-const SECOND_PENDUMDULUM_HEIGHT_ID = 'second-pendulum-height';
+const PENDULUM_HEIGHT_ID = 'pendulum-height';
+const SECOND_PENDULUM_HEIGHT_ID = 'second-pendulum-height';
+const VELOCITY_A_ID = 'velocity-a';
+const VELOCITY_B_ID = 'velocity-b';
 
 const PTM = 634.773; // converts pixels to meters for calculations
+const DEG_TO_RAD = Math.PI / 180;    // conversion factor from deg to rad
+
 
 // Input slider set up
 var lengthSlider = document.getElementById("length-slider");
@@ -22,9 +26,12 @@ var mass2Slider = document.getElementById("mass-2-slider");
 var angle2Slider = document.getElementById("angle-2-slider");
 var corSlider = document.getElementById("cor-slider");
 
+var numWeightsDropdown = document.getElementById('num-weights');
+
+
 noUiSlider.create(lengthSlider, {
   start: [0.3],
-  step: 0.05,
+  step: 0.01,
   connect: true,
   tooltips: true,
   range: {
@@ -35,7 +42,7 @@ noUiSlider.create(lengthSlider, {
 
 noUiSlider.create(massSlider, {
   start: [20],
-  step: 5,
+  step: 1,
   connect: true,
   tooltips: true,
   range: {
@@ -57,7 +64,7 @@ noUiSlider.create(angleSlider, {
 
 noUiSlider.create(mass2Slider, {
   start: [20],
-  step: 5,
+  step: 1,
   connect: true,
   tooltips: true,
   range: {
@@ -89,104 +96,18 @@ noUiSlider.create(corSlider, {
 });
 
 // on start - disable the second set of sliders
-mass2Slider.setAttribute('disabled', true);
-angle2Slider.setAttribute('disabled', true);
-corSlider.setAttribute('disabled', true);
-
-// reset
-function refreshSimulation() {
-  World.clear(engine.world);
-  createWorld();
-  engine.timing.timestamp = 0;
-  Graph.resetGraphData(graphData);
-  stopPlotInterval();
-  State.displayRunningTime(engine);
-  State.setSimulationRunning(false);
-  pendulum.pendulumAngle = pendulum.calculateAngle(pendulum.pendulumString.bodies[0].position, pendulum.pendulumBody.position);
-  pendulum.pendulumHeight = pendulum.calculatePenulumHeight(pendulum.pendulumStringLength / PTM, pendulum.pendulumAngle);
-  pendulum.displayPendulumHeight(PENDUMDULUM_HEIGHT_ID);
-
-  if (document.getElementById('num-weights').value == 2) {
-    pendulum2.pendulumAngle = pendulum2.calculateAngle(pendulum2.pendulumString.bodies[0].position, pendulum2.pendulumBody.position);
-    pendulum2.pendulumHeight = pendulum2.calculatePenulumHeight(pendulum2.pendulumStringLength / PTM, pendulum2.pendulumAngle);
-    pendulum2.displayPendulumHeight(SECOND_PENDUMDULUM_HEIGHT_ID);
-  }
-
-  if (State.getIsPausedFlag() === false) {
-    State.setIsPausedFlag(true);
-    State.onPause(render);
-  }
-  else {
-    pauseBtn.value = "pause";
-    pauseBtn.innerText = "Pause" ;
-  }
+if(document.getElementById('num-weights').value == 1) {
+  mass2Slider.setAttribute('disabled', true);
+  angle2Slider.setAttribute('disabled', true);
+  corSlider.setAttribute('disabled', true);
 }
 
-// whenever length slider changed handler
-lengthSlider.noUiSlider.on('change', function () {
-  if(State.getSimulationRunning() == false) {
-    refreshSimulation();
-  }
-});
-
-massSlider.noUiSlider.on('change', function() {
-  if(State.getSimulationRunning() == false) {
-    refreshSimulation();
-  }
-});
-
-angleSlider.noUiSlider.on('change', function () {
-  if(State.getSimulationRunning() == false) {
-    var angleVal = parseInt(angleSlider.noUiSlider.get(), 10);
-    refreshSimulation();
-    pendulum.pendulumAngle = angleVal;
-  }
-});
-
-mass2Slider.noUiSlider.on('change', function() {
-  if(State.getSimulationRunning() == false) {
-    refreshSimulation();
-  }
-});
-
-angle2Slider.noUiSlider.on('change', function () {
-  if(State.getSimulationRunning() == false) {
-    var angleVal = parseInt(angleSlider.noUiSlider.get(), 10);
-    refreshSimulation();
-    pendulum.pendulumAngle = angleVal;
-  }
-});
-
-corSlider.noUiSlider.on('change', function () {
-  if(State.getSimulationRunning() == false) {
-    refreshSimulation();
-  }
-});
-
-/*
- * Changes the number of pendulums
-*/
-var numWeightsDropdown = document.getElementById('num-weights');
-numWeightsDropdown.onchange = function() {
-  refreshSimulation();
-
-  var numWeights = numWeightsDropdown.value;
-  if (numWeights == "1") {
-    // disable sliders
-    mass2Slider.setAttribute('disabled', true);
-    angle2Slider.setAttribute('disabled', true);
-    corSlider.setAttribute('disabled', true);
-  }
-  else if(numWeights == "2") {
-    // reenable sliders
-    mass2Slider.removeAttribute('disabled');
-    angle2Slider.removeAttribute('disabled');
-    corSlider.removeAttribute('disabled');
-  }
-};
 
 
 
+/**
+ * Creating pendulum world 
+ */
 
 let Engine = Matter.Engine;
 let Render = Matter.Render;
@@ -266,18 +187,18 @@ function renderLoop() {
 //   return 400 - ((length * PTM) * Math.sin(angle * Math.PI / 180));
 // }
 
-function calcXCoord(length, angle) {
+function calcXCoord(length, angle, xProc) {
   if (Math.sign(angle) == -1) {
     var posAngle = Math.abs(angle);
-    return 400 - ((length * PTM) * Math.sin(posAngle * Math.PI / 180));
+    return xProc - ((length * PTM) * Math.sin(posAngle * DEG_TO_RAD));
   }
   else {
-    return 400 + ((length * PTM) * Math.sin(angle * Math.PI / 180));
+    return xProc + ((length * PTM) * Math.sin(angle * DEG_TO_RAD));
   }
 }
 
 function calcYCoord(length, angle, yProc) {
-  return (length * PTM) * Math.cos(angle * Math.PI / 180) + yProc;
+  return (length * PTM) * Math.cos(angle * DEG_TO_RAD) + yProc;
 }
 
 
@@ -287,72 +208,89 @@ function calcYCoord(length, angle, yProc) {
 */
 
 function createWorld() {
-  World.add(engine.world, [  // x y w h
-     Bodies.rectangle(400, 0, 800, 50, { isStatic: true, render: {fillStyle: 'grey'}}) ,   //top
-     Bodies.rectangle(400, CANVAS_HEIGHT, 800, 50, { isStatic: true, render: {fillStyle: 'grey'}}) , // bottom
+  World.add(engine.world, [  // x y w h 
+     Bodies.rectangle(400, 0, 800, 50, { isStatic: true, render: {fillStyle: 'grey'}}) ,   //top 
+     Bodies.rectangle(400, CANVAS_HEIGHT, 800, 50, { isStatic: true, render: {fillStyle: 'grey'}}) , // bottom 
      Bodies.rectangle(800, 400, 50, 800, { isStatic: true, render: {fillStyle: 'grey'}}),
-     Bodies.rectangle(0, 400, 50, 800, { isStatic: true, render: {fillStyle: 'grey'}})
+     Bodies.rectangle(0, 400, 50, 800, { isStatic: true, render: {fillStyle: 'grey'}}) 
   ]);
-  var xCoordProtractor = 400;
-  var yCoordProtractor = 50;
-
+  // both pendulums
   var lengthVal = parseFloat(lengthSlider.noUiSlider.get(), 10);
+  var weightRadius = 30;
+
+  //protractors
+  var xCoordProtractor1 = CANVAS_WIDTH / 2 + weightRadius;
+  var xCoordProtractor2 = CANVAS_WIDTH / 2 - weightRadius;
+  var yCoordProtractor = 50;
 
   // first pendulum
   var massVal = parseInt(massSlider.noUiSlider.get(), 10) / 1000; // convert to kg
   var angleVal = parseInt(angleSlider.noUiSlider.get(), 10);
-  var xCoordBody = calcXCoord(lengthVal, angleVal);
+  var xCoordBody = calcXCoord(lengthVal, angleVal, xCoordProtractor1);
   var yCoordBody = calcYCoord(lengthVal, angleVal, yCoordProtractor);
 
-  pendulum.pendulumBody = Bodies.circle(xCoordBody, yCoordBody, 30, {
+  pendulum.pendulumBody = Bodies.circle(xCoordBody, yCoordBody, weightRadius, {
     mass: massVal,
-    frictionAir: 0,
+    frictionAir: 0.00000,
     friction: 0,
     interia: Infinity,
+    frictionStatic: 0.0,
     render: {
-      fillStyle: "rgb(97, 181, 255)"
+      fillStyle: "rgb(97, 181, 255)",
+      strokeStyle: "rgb(97, 181, 255)"
     }});
 
-  let protractor = Bodies.circle(xCoordProtractor, yCoordProtractor, 10, { isStatic: true, render: {fillStyle: 'grey'}});
+  let protractor1 = Bodies.circle(xCoordProtractor1, yCoordProtractor, 10, { 
+    isStatic: true, 
+    render: {fillStyle: 'grey'}});
+  let protractor2 = Bodies.circle(xCoordProtractor2, yCoordProtractor, 10, { 
+    isStatic: true, 
+    render: {fillStyle: 'grey'}});
 
   pendulum.pendulumString = World.add(engine.world, Constraint.create({
-    bodyA: protractor,
+    bodyA: protractor1,
     bodyB: pendulum.pendulumBody,
     length: 0,
+    stiffness: 1,
+    damping: 0.0,
     render: {
       strokeStyle: 'rgb(97, 181, 255)',
       lineWidth: 6
     }
   }));
 
-  pendulum.pendulumStringLength = pendulum.calculateStringLength(protractor.position, pendulum.pendulumBody.position);
+  // TODO: this should be constant but yeah error here
+  // This is messing up the height 
+  pendulum.pendulumStringLength = lengthVal * PTM;
+
+  // add first pendulum and protractor1
+  World.add(engine.world, [pendulum.pendulumBody, protractor1]);
 
   // second pendulum
   var massVal2 = parseInt(mass2Slider.noUiSlider.get(), 10) / 1000; // convert to kg
   var angleVal2 = parseInt(angle2Slider.noUiSlider.get(), 10);
-  var xCoordBody2 = calcXCoord(lengthVal, angleVal2);
+  var xCoordBody2 = calcXCoord(lengthVal, angleVal2, xCoordProtractor2);
   var yCoordBody2 = calcYCoord(lengthVal, angleVal2, yCoordProtractor);
   var restVal = parseFloat(corSlider.noUiSlider.get());
 
-  pendulum2.pendulumBody = Bodies.circle(xCoordBody2, yCoordBody2, 30, {
+  pendulum2.pendulumBody = Bodies.circle(xCoordBody2, yCoordBody2, weightRadius, {
      mass: massVal2,
      frictionAir: 0,
      interia: Infinity,
      friction: 0,
      restitution: restVal,   // matter should take the max rest val of 2 objects
      render: {
-      fillStyle: "rgb(64, 173, 111)"
+      fillStyle: "rgb(64, 173, 111)",
+      strokeStyle: "rgb(64, 173, 111)"
     }
     });
 
-  // add first pendulum and protractor
-  World.add(engine.world, [pendulum.pendulumBody, protractor]);
 
   // add the second pendulum if selected in the dropdown
   if(numWeightsDropdown.value == "2") {
-    World.add(engine.world, [pendulum2.pendulumBody]);
+    World.add(engine.world, [pendulum2.pendulumBody, protractor2]);
     pendulum2.pendulumString = World.add(engine.world, Constraint.create({
-      bodyA: protractor,
+      bodyA: protractor2,
       bodyB: pendulum2.pendulumBody,
       length: 0,
       render: {
@@ -360,6 +298,8 @@ function createWorld() {
         lineWidth: 6
       }
     }));
+    pendulum2.pendulumStringLength = lengthVal * PTM;
+    
   }
 
 }
@@ -455,8 +395,9 @@ document.getElementById('reset-button').onclick = function() {
   State.displayRunningTime(engine);
   State.setSimulationRunning(false);
   pendulum.pendulumAngle = pendulum.calculateAngle(pendulum.pendulumString.bodies[0].position, pendulum.pendulumBody.position);
-  pendulum.pendulumHeight = pendulum.calculatePenulumHeight(pendulum.pendulumStringLength / PTM, pendulum.pendulumAngle);
-  pendulum.displayPendulumHeight(PENDUMDULUM_HEIGHT_ID);
+  pendulum.pendulumHeight = pendulum.calculatePenulumHeight(pendulum.pendulumStringLength / PTM, pendulum.pendulumAngle); // angle?
+  pendulum.displayPendulumHeight(PENDULUM_HEIGHT_ID);
+  pendulum.displayVelocity(VELOCITY_A_ID);  
 
   // replace graph with sliders
   var sliders = document.getElementById("input-table");
@@ -468,7 +409,9 @@ document.getElementById('reset-button').onclick = function() {
   if (document.getElementById('num-weights').value == 2) {
     pendulum2.pendulumAngle = pendulum2.calculateAngle(pendulum2.pendulumString.bodies[0].position, pendulum2.pendulumBody.position);
     pendulum2.pendulumHeight = pendulum2.calculatePenulumHeight(pendulum2.pendulumStringLength / PTM, pendulum2.pendulumAngle);
-    pendulum2.displayPendulumHeight(SECOND_PENDUMDULUM_HEIGHT_ID);
+    pendulum2.displayPendulumHeight(SECOND_PENDULUM_HEIGHT_ID);
+    pendulum2.displayVelocity(VELOCITY_B_ID);    
+    
   }
 
   if (State.getIsPausedFlag() === false) {
@@ -481,18 +424,26 @@ document.getElementById('reset-button').onclick = function() {
   }
 };
 
+
+
 // Updates UI before each update of the simulation
 Events.on(engine, 'beforeUpdate', function(event) {
-  pendulum.pendulumAngle = pendulum.calculateAngle(pendulum.pendulumString.bodies[0].position, pendulum.pendulumBody.position);
+  var protPos1 = { x: 430, y: 50 };
+
+  pendulum.pendulumAngle = pendulum.calculateAngle(protPos1, pendulum.pendulumBody.position);
   pendulum.pendulumHeight = pendulum.calculatePenulumHeight(pendulum.pendulumStringLength / PTM, pendulum.pendulumAngle);
 
   if (document.getElementById('num-weights').value == 2) {
-    pendulum2.pendulumAngle = pendulum2.calculateAngle(pendulum2.pendulumString.bodies[0].position, pendulum2.pendulumBody.position);
+    var protPos2 = { x: 370, y: 50 };    
+    pendulum2.pendulumAngle = pendulum2.calculateAngle(protPos2, pendulum2.pendulumBody.position);
     pendulum2.pendulumHeight = pendulum2.calculatePenulumHeight(pendulum2.pendulumStringLength / PTM, pendulum2.pendulumAngle);
-    pendulum2.displayPendulumHeight(SECOND_PENDUMDULUM_HEIGHT_ID);
+    pendulum2.displayPendulumHeight(SECOND_PENDULUM_HEIGHT_ID);
+    pendulum2.displayVelocity(VELOCITY_B_ID);    
   }
-  pendulum.displayPendulumHeight(PENDUMDULUM_HEIGHT_ID);
+  pendulum.displayPendulumHeight(PENDULUM_HEIGHT_ID);
+  pendulum.displayVelocity(VELOCITY_A_ID);
   State.displayRunningTime(engine);
+
 });
 
 /**
@@ -509,3 +460,109 @@ document.addEventListener('visibilitychange', function() {
     stopPlotInterval();
   }
 });
+
+
+/**
+ * Slider listeners
+ */
+
+
+/**
+ * Called whenever slider value is changed 
+ */
+function refreshSimulation() {
+  World.clear(engine.world);
+  createWorld();
+  engine.timing.timestamp = 0;
+  Graph.resetGraphData(graphData);
+  stopPlotInterval();
+  State.displayRunningTime(engine);
+  State.setSimulationRunning(false);
+
+  pendulum.pendulumAngle = pendulum.calculateAngle(
+    pendulum.pendulumString.bodies[0].position, pendulum.pendulumBody.position);
+
+  pendulum.pendulumHeight = pendulum.calculatePenulumHeight(
+    pendulum.pendulumStringLength / PTM, pendulum.pendulumAngle);
+  pendulum.displayPendulumHeight(PENDULUM_HEIGHT_ID);
+  
+
+  if (document.getElementById('num-weights').value == 2) {
+    pendulum2.pendulumAngle = pendulum2.calculateAngle(
+      pendulum2.pendulumString.bodies[0].position, pendulum2.pendulumBody.position);
+    pendulum2.pendulumHeight = pendulum2.calculatePenulumHeight(
+      pendulum2.pendulumStringLength / PTM, pendulum2.pendulumAngle);
+    pendulum2.displayPendulumHeight(SECOND_PENDULUM_HEIGHT_ID);
+  }
+
+  if (State.getIsPausedFlag() === false) {
+    State.setIsPausedFlag(true);
+    State.onPause(render);
+  }
+  else {
+    pauseBtn.value = "pause";
+    pauseBtn.innerText = "Pause" ;
+  }
+}
+
+// whenever length slider changed handler
+lengthSlider.noUiSlider.on('update', function () {
+  if(State.getSimulationRunning() == false) {
+    refreshSimulation();
+  }
+});
+
+massSlider.noUiSlider.on('update', function() {
+  if(State.getSimulationRunning() == false) {
+    refreshSimulation();
+  }
+});
+
+angleSlider.noUiSlider.on('update', function () {
+  if(State.getSimulationRunning() == false) {
+    var angleVal = parseInt(angleSlider.noUiSlider.get(), 10);
+    refreshSimulation();
+    pendulum.pendulumAngle = angleVal;
+  }
+});
+
+mass2Slider.noUiSlider.on('update', function() {
+  if(State.getSimulationRunning() == false) {
+    refreshSimulation();
+  }
+});
+
+angle2Slider.noUiSlider.on('update', function () {
+  if(State.getSimulationRunning() == false) {
+    var angleVal = parseInt(angleSlider.noUiSlider.get(), 10);
+    refreshSimulation();
+    pendulum.pendulumAngle = angleVal;
+  }
+});
+
+corSlider.noUiSlider.on('update', function () {
+  if(State.getSimulationRunning() == false) {
+    refreshSimulation();
+  }
+});
+
+/*
+ * Changes the number of pendulums
+*/
+numWeightsDropdown.onchange = function() {
+  refreshSimulation();
+
+  var numWeights = numWeightsDropdown.value;
+  if (numWeights == "1") {
+    // disable sliders
+    mass2Slider.setAttribute('disabled', true);
+    angle2Slider.setAttribute('disabled', true);
+    corSlider.setAttribute('disabled', true);
+  }
+  else if(numWeights == "2") {
+    // reenable sliders
+    mass2Slider.removeAttribute('disabled');
+    angle2Slider.removeAttribute('disabled');
+    corSlider.removeAttribute('disabled');
+  }
+};
