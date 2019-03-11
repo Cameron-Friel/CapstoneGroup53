@@ -31,6 +31,14 @@ let Graph = (function() {
               display: true
             }
           }],
+          yAxes: [{
+            type: 'linear',
+            position: 'left',
+            scaleLabel: {
+              labelString: 'Height (m)',
+              display: true
+            }
+          }],
         }
       }
     });
