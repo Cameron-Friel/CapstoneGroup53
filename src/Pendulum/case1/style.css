@@ -173,15 +173,9 @@ th, td {
 
   .table-container {
     position: relative;
-    display: block;
+    display: flex;
     float: right;
     top: 2px;
-    left: -50%;
-  }
-
-  .table-container > table {
-    position: relative;
-    left: 50%;
   }
 
   .button-group {
