@@ -270,18 +270,25 @@ document.getElementById('reset-button').onclick = function() {
   }
 };
 
+
 // Updates UI before each update of the simulation
 Events.on(engine, 'beforeUpdate', function(event) {
-  pendulum.pendulumAngle = pendulum.calculateAngle(PROT_POS_1, pendulum.pendulumBody.position);
-  pendulum.pendulumHeight = pendulum.calculatePenulumHeight(pendulum.pendulumStringLength / PTM, pendulum.pendulumAngle);
   restingPendulum.pendulumAngle = pendulum.calculateAngle(PROT_POS_2, restingPendulum.pendulumBody.position);
   restingPendulum.pendulumHeight = pendulum.calculatePenulumHeight(restingPendulum.pendulumStringLength / PTM, restingPendulum.pendulumAngle);
-  pendulum.displayPendulumHeight(PENDUMDULUM_HEIGHT_ID);
-  restingPendulum.displayPendulumHeight(RESTING_PENDUMDULUM_HEIGHT_ID);
-  State.displayRunningTime(engine);
 
+  if (restingPendulum.pendulumHeight < 0.255){
+    pendulum.pendulumAngle = pendulum.calculateAngle(PROT_POS_1, pendulum.pendulumBody.position);
+    pendulum.pendulumHeight = pendulum.calculatePenulumHeight(pendulum.pendulumStringLength / PTM, pendulum.pendulumAngle);
+    
+    pendulum.displayPendulumHeight(PENDUMDULUM_HEIGHT_ID);
+    restingPendulum.displayPendulumHeight(RESTING_PENDUMDULUM_HEIGHT_ID);
+    State.displayRunningTime(engine);
+  }
+});
+
+//update UI after each update 
+Events.on(engine, 'afterUpdate', function(event) {
   // Stop when speed is below 0.2
-  // if (restingPendulum.pendulumBody.speed <= 0.2 && restingPendulum.pendulumBody.speed !== 0){
   if (restingPendulum.pendulumHeight >= 0.255){
     State.setIsPausedFlag(true);
     State.onPause(render);
