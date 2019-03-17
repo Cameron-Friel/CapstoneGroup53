@@ -80,7 +80,7 @@ th, td {
 
 #velocity-b {
   color: rgb(29, 150, 81);
-  
+
 }
 
 .chart-container {
@@ -248,11 +248,6 @@ th, td {
     position: relative;
     display: flex;
     float: right;
-  }
-
-  .table-container > table {
-    position: relative;
-    left: 50%;
   }
 
   .button-group {
