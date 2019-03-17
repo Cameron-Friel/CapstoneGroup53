@@ -300,13 +300,13 @@ Events.on(engine, 'beforeUpdate', function(event) {
   * Listens for whether the current browser tab is active or not
 */
 
-document.addEventListener('visibilitychange', function() {
-  if (!document.hidden) {
-    runPlotInterval();
-    State.setIsPausedFlag(false);
-  }
-  else {
-    stopPlotInterval();
-    State.setIsPausedFlag(true);
-  }
-});
+// document.addEventListener('visibilitychange', function() {
+//   if (!document.hidden) {
+//     runPlotInterval();
+//     State.setIsPausedFlag(false);
+//   }
+//   else {
+//     stopPlotInterval();
+//     State.setIsPausedFlag(true);
+//   }
+// });

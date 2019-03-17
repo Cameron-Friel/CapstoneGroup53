@@ -181,8 +181,6 @@ function createWorld() {
      render: {fillStyle: 'red'} 
     });
 
-  console.log(restingPendulum.pendulumBody.position);
-
   restingPendulum.pendulumString = World.add(engine.world, Constraint.create({
       bodyA: protractor2,
       bodyB: restingPendulum.pendulumBody,
@@ -284,17 +282,23 @@ document.getElementById('reset-button').onclick = function() {
 
 // Updates UI before each update of the simulation
 Events.on(engine, 'beforeUpdate', function(event) {
-
-  pendulum.pendulumAngle = pendulum.calculateAngle(PROT_POS_1, pendulum.pendulumBody.position);
-  pendulum.pendulumHeight = pendulum.calculatePenulumHeight(pendulum.pendulumStringLength / PTM, pendulum.pendulumAngle);
   restingPendulum.pendulumAngle = pendulum.calculateAngle(PROT_POS_2, restingPendulum.pendulumBody.position);
   restingPendulum.pendulumHeight = pendulum.calculatePenulumHeight(restingPendulum.pendulumStringLength / PTM, restingPendulum.pendulumAngle);
-  pendulum.displayPendulumHeight(PENDUMDULUM_HEIGHT_ID);
-  restingPendulum.displayPendulumHeight(RESTING_PENDUMDULUM_HEIGHT_ID);
-  State.displayRunningTime(engine);
 
+  if (restingPendulum.pendulumHeight < 0.068){
+    pendulum.pendulumAngle = pendulum.calculateAngle(PROT_POS_1, pendulum.pendulumBody.position);
+    pendulum.pendulumHeight = pendulum.calculatePenulumHeight(pendulum.pendulumStringLength / PTM, pendulum.pendulumAngle);
+    
+    pendulum.displayPendulumHeight(PENDUMDULUM_HEIGHT_ID);
+    restingPendulum.displayPendulumHeight(RESTING_PENDUMDULUM_HEIGHT_ID);
+    State.displayRunningTime(engine);
+  }
+});
+
+//update UI after each update 
+Events.on(engine, 'afterUpdate', function(event) {
   // Stop when speed is below 0.2
-  if (pendulum.pendulumBody.speed <= 0.4 && pendulum.pendulumBody.speed !== 0){
+  if (restingPendulum.pendulumHeight > 0.068){
     State.setIsPausedFlag(true);
     State.onPause(render);
     stopPlotInterval();
@@ -306,13 +310,13 @@ Events.on(engine, 'beforeUpdate', function(event) {
   * Listens for whether the current browser tab is active or not
 */
 
-document.addEventListener('visibilitychange', function() {
-  if (!document.hidden) {
-    if (State.getIsPausedFlag() === false) {
-      runPlotInterval();
-    }
-  }
-  else {
-    stopPlotInterval();
-  }
-});
+// document.addEventListener('visibilitychange', function() {
+//   if (!document.hidden) {
+//     if (State.getIsPausedFlag() === false) {
+//       runPlotInterval();
+//     }
+//   }
+//   else {
+//     stopPlotInterval();
+//   }
+// });
