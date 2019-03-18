@@ -12,9 +12,9 @@ const RESTING_PENDUMDULUM_HEIGHT_ID = 'resting-pendulum-height';
 
 const PTM = 634.773; // converts pixels to meters for calculations
 const DEG_TO_RAD = Math.PI / 180; //conversion factor
-const P_RAD = 30; //pendulum radius 
-const PROT_POS_1 = {x: CANVAS_WIDTH / 2 - P_RAD, y: 50}; 
-const PROT_POS_2 = {x: CANVAS_WIDTH / 2 + P_RAD, y: 50}; 
+const P_RAD = 30; //pendulum radius
+const PROT_POS_1 = {x: CANVAS_WIDTH / 2 - P_RAD, y: 50};
+const PROT_POS_2 = {x: CANVAS_WIDTH / 2 + P_RAD, y: 50};
 
 let Engine = Matter.Engine;
 let Render = Matter.Render;
@@ -99,7 +99,7 @@ function renderLoop() {
  * @param {Int} protractorNum   // ((1/2) Which protractor? )
  */
 function calcInitialX(angle, protractorNum) {
-  const ARM_LENGTH = 0.509 * PTM; // arm length in pixels 
+  const ARM_LENGTH = 0.509 * PTM; // arm length in pixels
   if(protractorNum == 1) {
     var xL = PROT_POS_1.x - (ARM_LENGTH * Math.sin(angle * DEG_TO_RAD));
     return xL;
@@ -115,13 +115,13 @@ function calcInitialX(angle, protractorNum) {
 
 /**
  * Returns initial Y coordinate
- * @param {Int} angle 
+ * @param {Int} angle
  */
 function calcInitialY(angle) {
-  const ARM_LENGTH = 0.509 * PTM; // arm length in pixels 
-  var protractorY = PROT_POS_1.y; // both have the same y 
+  const ARM_LENGTH = 0.509 * PTM; // arm length in pixels
+  var protractorY = PROT_POS_1.y; // both have the same y
   var yCoord = protractorY + (ARM_LENGTH * Math.cos(angle* DEG_TO_RAD));
-  return yCoord; 
+  return yCoord;
 }
 
 
@@ -137,23 +137,23 @@ function createWorld() {
      Bodies.rectangle(0, 300, 50, 600, { isStatic: true, render: {fillStyle: 'grey'}})
   ]);
 
-  let protractor1 = Bodies.circle(PROT_POS_1.x, PROT_POS_1.y, 10, { 
-    isStatic: true, 
+  let protractor1 = Bodies.circle(PROT_POS_1.x, PROT_POS_1.y, 10, {
+    isStatic: true,
     render: {fillStyle: 'grey'}});
 
-  let protractor2 = Bodies.circle(PROT_POS_2.x, PROT_POS_2.y, 10, { 
-    isStatic: true, 
+  let protractor2 = Bodies.circle(PROT_POS_2.x, PROT_POS_2.y, 10, {
+    isStatic: true,
     render: {fillStyle: 'grey'}});
 
-    // left pendulum 
+    // left pendulum
   var x1 = calcInitialX(30, 1);
   var y1 = calcInitialY(30);
 
-  leftPendulum.pendulumBody = Bodies.circle(x1, y1, P_RAD, { 
-      mass: 0.04, 
-      frictionAir: 0, 
-      interia: Infinity, 
-      render: {fillStyle: 'blue'} 
+  leftPendulum.pendulumBody = Bodies.circle(x1, y1, P_RAD, {
+      mass: 0.04,
+      frictionAir: 0,
+      interia: Infinity,
+      render: {fillStyle: 'blue'}
     });
   // 161.55 279.821
 
@@ -169,15 +169,15 @@ function createWorld() {
 
   leftPendulum.pendulumStringLength = leftPendulum.calculateStringLength(protractor1.position, leftPendulum.pendulumBody.position);
 
-  //right pendulum 
+  //right pendulum
   var x2 = calcInitialX(30, 2);
   var y2 = calcInitialY(30);
 
-  rightPendulum.pendulumBody = Bodies.circle(x2, y2, P_RAD, { 
-    mass: 0.04, 
-    frictionAir: 0, 
-    interia: Infinity, 
-    render: {fillStyle: 'red'}  
+  rightPendulum.pendulumBody = Bodies.circle(x2, y2, P_RAD, {
+    mass: 0.04,
+    frictionAir: 0,
+    interia: Infinity,
+    render: {fillStyle: 'red'}
   });
 
   rightPendulum.pendulumString = World.add(engine.world, Constraint.create({
@@ -219,7 +219,7 @@ function stopPlotInterval() {
 var pauseBtn = document.getElementById('pause-button');
 
 pauseBtn.onclick = function() {
-  if (engine.timing.timestamp === 0) { 
+  if (State.getSimulationRunning() === true) { // only allow pause and continue when the simulation is running
     if (pauseBtn.value == "pause") {
       pauseBtn.innerText = "cont.";
       pauseBtn.value = "continue";
@@ -241,7 +241,7 @@ pauseBtn.onclick = function() {
 */
 
 document.getElementById('start-button').onclick = function() {
-  if (State.getSimulationRunning() === false) { // make sure the simulation is not already running
+  if (engine.timing.timestamp === 0) {
     State.setIsPausedFlag(false);
     State.onPause(render);
     State.setSimulationRunning(true);
