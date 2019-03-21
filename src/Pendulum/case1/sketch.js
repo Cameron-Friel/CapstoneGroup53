@@ -46,7 +46,31 @@ let plotInterval = null;
        x: 0,
        y: 0.255
      }]
-  }]
+  }],
+  xAxes: [{
+    type: 'linear',
+    position: 'bottom',
+    ticks: {
+      min: 0,
+      max: 2000,
+    },
+    scaleLabel: {
+      labelString: 'Time (ms)',
+      display: true
+    }
+  }],
+  yAxes: [{
+    type: 'linear',
+    position: 'left',
+    ticks: {
+      min: 0,
+      max: 0.30,
+    },
+    scaleLabel: {
+      labelString: 'Height (m)',
+      display: true
+    }
+  }],
  };
 
 
@@ -154,7 +178,7 @@ pauseBtn.onclick = function() {
 */
 
 document.getElementById('start-button').onclick = function() {
-  if (engine.timing.timestamp === 0) { 
+  if (engine.timing.timestamp === 0) {
     State.setIsPausedFlag(false);
     State.onPause(render);
     State.setSimulationRunning(true);

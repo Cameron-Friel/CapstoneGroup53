@@ -23,22 +23,8 @@ let Graph = (function() {
         maintainAspectRatio: false,
         showLines: true,
         scales: {
-          xAxes: [{
-            type: 'linear',
-            position: 'bottom',
-            scaleLabel: {
-              labelString: 'Time (ms)',
-              display: true
-            }
-          }],
-          yAxes: [{
-            type: 'linear',
-            position: 'left',
-            scaleLabel: {
-              labelString: 'Height (m)',
-              display: true
-            }
-          }],
+          xAxes: tempData.xAxes,
+          yAxes: tempData.yAxes,
         }
       }
     });

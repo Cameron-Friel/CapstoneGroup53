@@ -12,9 +12,9 @@ const RESTING_PENDUMDULUM_HEIGHT_ID = 'resting-pendulum-height';
 
 const PTM = 634.773; // converts pixels to meters for calculations
 const DEG_TO_RAD = Math.PI / 180; //conversion factor
-const P_RAD = 30; 
-const PROT_POS_1 = {x: CANVAS_WIDTH / 2 - P_RAD, y: 50}; 
-const PROT_POS_2 = {x: CANVAS_WIDTH / 2 + P_RAD, y: 50}; 
+const P_RAD = 30;
+const PROT_POS_1 = {x: CANVAS_WIDTH / 2 - P_RAD, y: 50};
+const PROT_POS_2 = {x: CANVAS_WIDTH / 2 + P_RAD, y: 50};
 
 let Engine = Matter.Engine;
 let Render = Matter.Render;
@@ -62,7 +62,31 @@ let plotInterval2 = null;
       x: 0,
       y: 0
     }]
-  }]
+  }],
+  xAxes: [{
+    type: 'linear',
+    position: 'bottom',
+    ticks: {
+      min: 0,
+      max: 2000,
+    },
+    scaleLabel: {
+      labelString: 'Time (ms)',
+      display: true
+    }
+  }],
+  yAxes: [{
+    type: 'linear',
+    position: 'left',
+    ticks: {
+      min: 0,
+      max: 0.30,
+    },
+    scaleLabel: {
+      labelString: 'Height (m)',
+      display: true
+    }
+  }],
  };
 
 
@@ -92,7 +116,7 @@ function renderLoop() {
   }
 }
 
- 
+
 
 /**
  * Returns the initial X coordinate
@@ -100,7 +124,7 @@ function renderLoop() {
  * @param {Int} protractorNum   // ((1/2) Which protractor? )
  */
 function calcInitialX(angle, protractorNum) {
-  const ARM_LENGTH = 0.509 * PTM; // arm length in pixels 
+  const ARM_LENGTH = 0.509 * PTM; // arm length in pixels
   if(protractorNum == 1) {
     var xL = PROT_POS_1.x - (ARM_LENGTH * Math.sin(angle * DEG_TO_RAD));
     return xL;
@@ -116,13 +140,13 @@ function calcInitialX(angle, protractorNum) {
 
 /**
  * Returns initial Y coordinate
- * @param {Int} angle 
+ * @param {Int} angle
  */
 function calcInitialY(angle) {
-  const ARM_LENGTH = 0.509 * PTM; // arm length in pixels 
-  var protractorY = PROT_POS_1.y; // both have the same y 
+  const ARM_LENGTH = 0.509 * PTM; // arm length in pixels
+  var protractorY = PROT_POS_1.y; // both have the same y
   var yCoord = protractorY + (ARM_LENGTH * Math.cos(angle* DEG_TO_RAD));
-  return yCoord; 
+  return yCoord;
 }
 
 
@@ -139,16 +163,16 @@ function createWorld() {
      Bodies.rectangle(0, 300, 50, 600, { isStatic: true, render: {fillStyle: 'grey'}})
   ]);
 
-  // protractors 
-  let protractor1 = Bodies.circle(PROT_POS_1.x, PROT_POS_1.y, 10, { 
-    isStatic: true, 
+  // protractors
+  let protractor1 = Bodies.circle(PROT_POS_1.x, PROT_POS_1.y, 10, {
+    isStatic: true,
     render: {fillStyle: 'grey'}});
 
-  let protractor2 = Bodies.circle(PROT_POS_2.x, PROT_POS_2.y, 10, { 
-    isStatic: true, 
+  let protractor2 = Bodies.circle(PROT_POS_2.x, PROT_POS_2.y, 10, {
+    isStatic: true,
     render: {fillStyle: 'grey'}});
 
-  // left pendulum 
+  // left pendulum
   var x1 = calcInitialX(60, 1);
   var y1 = calcInitialY(60);
 
@@ -166,7 +190,7 @@ function createWorld() {
 
   pendulum.pendulumStringLength = pendulum.calculateStringLength(protractor1.position, pendulum.pendulumBody.position);
 
-  // right pendulum 
+  // right pendulum
   restingPendulum.pendulumBody = Bodies.circle(PROT_POS_2.x, pendulum.pendulumStringLength + 50, 30, { mass: 0.04, frictionAir: 0, interia: Infinity, restitution: 1, render: {fillStyle: 'red'} });
 
   restingPendulum.pendulumString = World.add(engine.world, Constraint.create({
@@ -232,7 +256,7 @@ pauseBtn.onclick = function() {
 */
 
 document.getElementById('start-button').onclick = function() {
-  if (engine.timing.timestamp === 0) { 
+  if (engine.timing.timestamp === 0) {
     State.setIsPausedFlag(false);
     State.onPause(render);
     State.setSimulationRunning(true);
@@ -279,14 +303,14 @@ Events.on(engine, 'beforeUpdate', function(event) {
   if (restingPendulum.pendulumHeight < 0.255){
     pendulum.pendulumAngle = pendulum.calculateAngle(PROT_POS_1, pendulum.pendulumBody.position);
     pendulum.pendulumHeight = pendulum.calculatePenulumHeight(pendulum.pendulumStringLength / PTM, pendulum.pendulumAngle);
-    
+
     pendulum.displayPendulumHeight(PENDUMDULUM_HEIGHT_ID);
     restingPendulum.displayPendulumHeight(RESTING_PENDUMDULUM_HEIGHT_ID);
     State.displayRunningTime(engine);
   }
 });
 
-//update UI after each update 
+//update UI after each update
 Events.on(engine, 'afterUpdate', function(event) {
   // Stop when speed is below 0.2
   if (restingPendulum.pendulumHeight >= 0.255){
