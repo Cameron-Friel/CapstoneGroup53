@@ -111,6 +111,24 @@ th, td {
   background-color: rgb(134, 49, 49);
 }
 
+
+/* Initial values */
+table.values-table {
+  flex: 1;
+  width: 20%;
+  font-size: 13px;
+  margin: auto;
+  margin-top: 79px;
+  border: 1px solid #dedede;
+  border-collapse: collapse;
+}
+
+#initial-values > td {
+  border: 2px solid #dedede;
+  margin: 2px;
+  padding: 4px;
+}
+
 /* Laptop screens 1176 */
 /* Only the chart is messed up at this width */
 @media screen and (max-width : 1176px) {

@@ -114,6 +114,23 @@ th, td {
   background-color: rgb(134, 49, 49);
 }
 
+
+table.values-table {
+  width: 80%;
+  font-size: 13px;
+  margin: auto;
+  margin-top: 79px;
+  border: 1px solid #dedede;
+  border-collapse: collapse;
+}
+
+tr.pendulum-1-init > td {
+  border: 2px solid #dedede;
+  margin: 2px;
+  padding: 4px;
+}
+
+
 /* Laptop screens 1176 */
 /* Only the chart is messed up at this width */
 @media screen and (max-width : 1176px) {
