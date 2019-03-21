@@ -46,7 +46,7 @@ let plotInterval2 = null;
 
  let graphData = {
    datasets: [{
-     label: 'Change in height a',
+     label: 'Height a',
      borderColor: 'rgba(0, 0, 255, 0.1)',
      backgroundColor: 'rgba(0, 0, 255, 0.1)',
      data: [{
@@ -55,7 +55,7 @@ let plotInterval2 = null;
      }]
   },
   {
-    label: 'Change in height b',
+    label: 'Height b',
     borderColor: 'rgba(255, 0, 0, 0.1)',
     backgroundColor: 'rgba(255, 0, 0, 0.1)',
     data: [{
