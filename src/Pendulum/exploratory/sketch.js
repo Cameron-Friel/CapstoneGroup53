@@ -150,7 +150,23 @@ let graphData = {
    backgroundColor: "rgba(64, 173, 111, 0.3)",
    data: [{
    }]
- }]
+ }],
+ xAxes: [{
+   type: 'linear',
+   position: 'bottom',
+   scaleLabel: {
+     labelString: 'Time (ms)',
+     display: true
+   }
+ }],
+ yAxes: [{
+   type: 'linear',
+   position: 'left',
+   scaleLabel: {
+     labelString: 'Height (m)',
+     display: true
+   }
+ }],
 };
 
 

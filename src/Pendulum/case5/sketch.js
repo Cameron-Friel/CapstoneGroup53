@@ -62,7 +62,31 @@ let plotInterval2 = null;
       x: 0,
       y: 0
     }]
-  }]
+  }],
+  xAxes: [{
+    type: 'linear',
+    position: 'bottom',
+    ticks: {
+      min: 0,
+      max: 2000,
+    },
+    scaleLabel: {
+      labelString: 'Time (ms)',
+      display: true
+    }
+  }],
+  yAxes: [{
+    type: 'linear',
+    position: 'left',
+    ticks: {
+      min: 0,
+      max: 0.30,
+    },
+    scaleLabel: {
+      labelString: 'Height (m)',
+      display: true
+    }
+  }],
  };
 
 
