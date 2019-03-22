@@ -39,7 +39,7 @@ let plotInterval = null;
 
  let graphData = {
    datasets: [{
-     label: 'Change in height',
+     label: 'Height',
      borderColor: 'rgba(255, 0, 0, 0.1)',
      backgroundColor: 'rgba(255, 0, 0, 0.1)',
      data: [{
@@ -154,7 +154,7 @@ pauseBtn.onclick = function() {
 */
 
 document.getElementById('start-button').onclick = function() {
-  if (engine.timing.timestamp === 0) { 
+  if (engine.timing.timestamp === 0) {
     State.setIsPausedFlag(false);
     State.onPause(render);
     State.setSimulationRunning(true);
