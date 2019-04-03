@@ -182,10 +182,44 @@ th, td {
   background-color:  rgb(252, 124, 124)
 }
 
+#cor-slider  .noUi-connects {
+  background-color:  rgb(252, 124, 124)
+}
+
+
+/* Values table  */
+table.values-table {
+  width: 80%;
+  font-size: 13px;
+  margin: auto;
+  margin-top: 36px;
+}
+
+tr.pendulum-1-init {
+  border: 1px solid black;
+  margin: 2px;
+  padding: 2px;
+  background-color: rgb(184, 222, 255);
+}
+
+tr.pendulum-2-init {
+  border: 1px solid black;
+  margin: 2px;
+  padding: 2px;
+  background-color:  rgb(111, 226, 161);
+}
+
+tr.both-pendulums-init {
+  background-color:  rgb(255, 189, 189);
+}
+
+
+
 /* control visibility  */
 .hide-container {
   display: none;
 }
+
 
 /* Laptop screens 1176 */
 /* Only the chart is messed up at this width */

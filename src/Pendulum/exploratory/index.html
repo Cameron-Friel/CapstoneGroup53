@@ -77,17 +77,51 @@
         </table>
 
             
-        <!-- Chart -->
+        <div>
+          <!-- Chart -->
           <div id="chart-container" class="chart-container hide-container">
             <canvas id="chart"></canvas>
-        </div>
+          </div>
 
-        <div>
+          <!-- Intial values table  -->
+          <table id='initial-values' class='values-table hide-container'>
+            <tbody>
+              <tr><th>Starting values</th></tr>
+              <tr class='both-pendulums-init'>
+                <td>Length(m)</td>
+                <td id="length-initial-1">0</td>
+              </tr>
+              <tr class='pendulum-1-init'>
+                <td>Mass(g)</td>
+                <td id="mass-initial-1">0</td>
+              </tr>
+              <tr class='pendulum-1-init'>
+                <td>Angle(deg)</td>
+                <td id="angle-initial-1">0</td>
+              </tr>
+
+              <!-- Second pendulum -->
+              <tr class="pendulum-2-init hide-container">
+                <td>Mass(g)</td>
+                <td id="mass-initial-2">0</td>
+              </tr>
+              <tr class="pendulum-2-init hide-container">
+                <td>Angle(deg)</td>
+                <td id="angle-initial-2" >0</td>
+              </tr>
+              <tr class="pendulum-2-init both-pendulums-init hide-container">
+                <td>Coef of Rest</td>
+                <td id="coef-init">0</td>
+              </tr>
+            </tbody>
+          </table>         
+        </div>
+        <!-- <div>
 
 
           
 
-        </div>
+        </div> -->
       <!-- </div> -->
     </div>   <!-- end container -->
 

@@ -320,6 +320,26 @@ function createWorld() {
 
 }
 
+function updateInitialValuesTable() {
+  var lengthVal = parseFloat(lengthSlider.noUiSlider.get(), 10);
+  var massVal1 = parseInt(massSlider.noUiSlider.get(), 10); // convert to kg
+  var angleVal1 = parseInt(angleSlider.noUiSlider.get(), 10);
+
+  // for two pendulums
+  var massVal2 = parseInt(mass2Slider.noUiSlider.get(), 10); // convert to kg
+  var angleVal2 = parseInt(angle2Slider.noUiSlider.get(), 10);
+  var restVal = parseFloat(corSlider.noUiSlider.get());
+
+  document.getElementById("length-initial-1").textContent = lengthVal;
+  document.getElementById("mass-initial-1").textContent = massVal1;
+  document.getElementById("angle-initial-1").textContent = angleVal1;
+  
+  document.getElementById("mass-initial-2").textContent = massVal2;
+  document.getElementById("angle-initial-2").textContent = angleVal2;
+  document.getElementById("coef-init").textContent = restVal;
+
+}
+
 /**
  * add a second pendulum to the world
  * TODO: implement this function to build on top of createWorld
@@ -397,6 +417,23 @@ document.getElementById('start-button').onclick = function() {
 
     var graph = document.getElementById("chart-container");
     graph.classList.remove('hide-container');
+
+    var initialVals = document.getElementById("initial-values");
+    initialVals.classList.remove("hide-container");
+
+    var secondPendulum = document.getElementsByClassName("pendulum-2-init");
+    if (document.getElementById('num-weights').value == 2) {
+      for(var i=0; i< secondPendulum.length; i++) {
+        secondPendulum[i].classList.remove("hide-container");
+      }
+    }
+    else {
+      for(var i=0; i< secondPendulum.length; i++) {
+        secondPendulum[i].classList.add("hide-container");
+      }
+    }
+
+    updateInitialValuesTable();
   }
 };
 
@@ -423,6 +460,9 @@ document.getElementById('reset-button').onclick = function() {
 
   var graph = document.getElementById("chart-container");
   graph.classList.add('hide-container');
+
+  var initialVals = document.getElementById("initial-values");
+  initialVals.classList.add('hide-container');
 
   if (document.getElementById('num-weights').value == 2) {
     pendulum2.pendulumAngle = pendulum2.calculateAngle(pendulum2.pendulumString.bodies[0].position, pendulum2.pendulumBody.position);
