@@ -60,6 +60,7 @@ th, td {
   min-width: 230px;
   max-width: 600px;
   position: relative;
+  margin: auto;
 }
 
 .chart-container {
@@ -69,6 +70,7 @@ th, td {
   top: 50px;
   height:40vh;
   width:25vw;
+  margin-bottom: 70px;
 }
 
 .control-btns {
@@ -119,7 +121,6 @@ table.values-table {
   width: 80%;
   font-size: 13px;
   margin: auto;
-  margin-top: 79px;
   border: 1px solid #dedede;
   border-collapse: collapse;
 }
