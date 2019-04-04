@@ -57,6 +57,7 @@ th, td {
   min-width: 230px;
   max-width: 600px;
   position: relative;
+  margin: auto;
 }
 
 .chart-container {

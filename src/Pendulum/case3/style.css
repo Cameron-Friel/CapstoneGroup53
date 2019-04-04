@@ -57,6 +57,7 @@ th, td {
   min-width: 230px;
   max-width: 600px;
   position: relative;
+  margin: auto;
 }
 
 .chart-container {
@@ -152,8 +153,6 @@ tr.both-pendulums-init > td {
   .chart-container {
     width: 70vw;
   }
-
-
 }
 
 
