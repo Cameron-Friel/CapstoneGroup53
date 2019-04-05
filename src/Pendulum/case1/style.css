@@ -61,7 +61,9 @@ th, td {
   max-width: 600px;
   position: relative;
   margin: auto;
+  align-items: flex-start;
 }
+
 
 .chart-container {
   align-content: center;
