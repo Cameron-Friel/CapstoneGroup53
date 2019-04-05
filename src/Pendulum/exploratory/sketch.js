@@ -611,16 +611,28 @@ numWeightsDropdown.onchange = function() {
   refreshSimulation();
 
   var numWeights = numWeightsDropdown.value;
+  let height2Info = document.getElementById('height-2-container');
+  let velocity2Info = document.getElementById('velocity-2-container');
+
   if (numWeights == "1") {
     // disable sliders
     mass2Slider.setAttribute('disabled', true);
     angle2Slider.setAttribute('disabled', true);
     corSlider.setAttribute('disabled', true);
+
+    //remove second weight info
+    height2Info.classList.add('hide-container');
+    velocity2Info.classList.add('hide-container');
   }
   else if(numWeights == "2") {
     // reenable sliders
     mass2Slider.removeAttribute('disabled');
     angle2Slider.removeAttribute('disabled');
     corSlider.removeAttribute('disabled');
+
+    //add second weight info
+    height2Info.classList.remove('hide-container');
+    velocity2Info.classList.remove('hide-container');
+
   }
 };
