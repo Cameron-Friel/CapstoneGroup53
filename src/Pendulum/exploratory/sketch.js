@@ -537,8 +537,11 @@ function refreshSimulation() {
   State.displayRunningTime(engine);
   State.setSimulationRunning(false);
 
+  var protPos1 = { x: 430, y: 50 };
+  var protPos2 = { x: 370, y: 50 };
+
   pendulum.pendulumAngle = pendulum.calculateAngle(
-    pendulum.pendulumString.bodies[0].position, pendulum.pendulumBody.position);
+    protPos1, pendulum.pendulumBody.position);
 
   pendulum.pendulumHeight = pendulum.calculatePenulumHeight(
     pendulum.pendulumStringLength / PTM, pendulum.pendulumAngle);
@@ -547,7 +550,7 @@ function refreshSimulation() {
 
   if (document.getElementById('num-weights').value == 2) {
     pendulum2.pendulumAngle = pendulum2.calculateAngle(
-      pendulum2.pendulumString.bodies[0].position, pendulum2.pendulumBody.position);
+      protPos2, pendulum2.pendulumBody.position);
     pendulum2.pendulumHeight = pendulum2.calculatePenulumHeight(
       pendulum2.pendulumStringLength / PTM, pendulum2.pendulumAngle);
     pendulum2.displayPendulumHeight(SECOND_PENDULUM_HEIGHT_ID);
@@ -611,16 +614,28 @@ numWeightsDropdown.onchange = function() {
   refreshSimulation();
 
   var numWeights = numWeightsDropdown.value;
+  let height2Info = document.getElementById('height-2-container');
+  let velocity2Info = document.getElementById('velocity-2-container');
+
   if (numWeights == "1") {
     // disable sliders
     mass2Slider.setAttribute('disabled', true);
     angle2Slider.setAttribute('disabled', true);
     corSlider.setAttribute('disabled', true);
+
+    //remove second weight info
+    height2Info.classList.add('hide-container');
+    velocity2Info.classList.add('hide-container');
   }
   else if(numWeights == "2") {
     // reenable sliders
     mass2Slider.removeAttribute('disabled');
     angle2Slider.removeAttribute('disabled');
     corSlider.removeAttribute('disabled');
+
+    //add second weight info
+    height2Info.classList.remove('hide-container');
+    velocity2Info.classList.remove('hide-container');
+
   }
 };

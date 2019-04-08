@@ -60,6 +60,14 @@ th, td {
   margin: auto;
 }
 
+#pendulum-height {
+  color: blue;
+}
+
+#resting-pendulum-height {
+  color: red;
+}
+
 .chart-container {
   align-content: center;
   display: inline-block;
@@ -187,7 +195,7 @@ tr.both-pendulums-init > td {
 /* Tablet  */
 @media screen and (max-width : 768px) and (min-width: 486px) {
   #live-update-table {
-    width: 340px;
+    width: 90%;
   }
 }
 
@@ -205,7 +213,6 @@ tr.both-pendulums-init > td {
   .table-container {
     position: relative;
     display: flex;
-    float: right;
     top: 2px;
   }
 
