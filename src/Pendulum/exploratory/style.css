@@ -168,7 +168,17 @@ th, td {
   margin-bottom: 10px
 }
 
-#num-weights{
+#graph-option-row {
+  margin-bottom: 10px
+}
+
+#num-weights {
+  font-size: 15px;
+  padding: 5px;
+  margin: 10px;
+}
+
+#graph-options {
   font-size: 15px;
   padding: 5px;
   margin: 10px;

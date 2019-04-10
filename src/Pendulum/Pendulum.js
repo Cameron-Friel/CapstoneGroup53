@@ -4,7 +4,7 @@
   * @class Pendulum
  * The Pendulum module is in charge of keeping tack of the pendulum bodies and properties within the world.
 */
-const DEG_TO_RAD = Math.PI / 180; 
+const DEG_TO_RAD = Math.PI / 180;
 
 class Pendulum {
 
@@ -146,6 +146,15 @@ class Pendulum {
 
   get pendulumHeight() {
     return this._pendulumHeight;
+  }
+
+  /**
+    * Returns the velocity of the pendulum
+    * @returns {Int}
+  */
+
+  get pendulumVelocity() {
+    return this._pendulumBody.speed;
   }
 
   /**

@@ -27,6 +27,7 @@ var angle2Slider = document.getElementById("angle-2-slider");
 var corSlider = document.getElementById("cor-slider");
 
 var numWeightsDropdown = document.getElementById('num-weights');
+let graphOptionDropdown = document.getElementById('graph-options');
 
 
 noUiSlider.create(lengthSlider, {
@@ -102,9 +103,6 @@ if(document.getElementById('num-weights').value == 1) {
   corSlider.setAttribute('disabled', true);
 }
 
-
-
-
 /**
  * Creating pendulum world
  */
@@ -136,7 +134,7 @@ let ctx = document.getElementById("chart").getContext('2d');
 
 let plotInterval = null;
 
-let graphData = {
+let heightGraphData = {
   datasets: [{
     label: 'Height a',
     borderColor: "rgba(97, 181, 255, 0.5)",
@@ -169,6 +167,73 @@ let graphData = {
  }],
 };
 
+let angleGraphData = {
+  datasets: [{
+    label: 'Angle a',
+    borderColor: "rgba(97, 181, 255, 0.5)",
+    backgroundColor: "rgba(97, 181, 255, 0.3)",
+    data: [{
+    }]
+ },
+ {
+   label: 'Angle b',
+   borderColor: "rgba(64, 173, 111, 0.5)",
+   backgroundColor: "rgba(64, 173, 111, 0.3)",
+   data: [{
+   }]
+ }],
+ xAxes: [{
+   type: 'linear',
+   position: 'bottom',
+   scaleLabel: {
+     labelString: 'Time (ms)',
+     display: true
+   }
+ }],
+ yAxes: [{
+   type: 'linear',
+   position: 'left',
+   scaleLabel: {
+     labelString: 'Angle (theta)',
+     display: true
+   }
+ }],
+};
+
+let velocityGraphData = {
+  datasets: [{
+    label: 'Velocity a',
+    borderColor: "rgba(97, 181, 255, 0.5)",
+    backgroundColor: "rgba(97, 181, 255, 0.3)",
+    data: [{
+    }]
+ },
+ {
+   label: 'Velocity b',
+   borderColor: "rgba(64, 173, 111, 0.5)",
+   backgroundColor: "rgba(64, 173, 111, 0.3)",
+   data: [{
+   }]
+ }],
+ xAxes: [{
+   type: 'linear',
+   position: 'bottom',
+   scaleLabel: {
+     labelString: 'Time (ms)',
+     display: true
+   }
+ }],
+ yAxes: [{
+   type: 'linear',
+   position: 'left',
+   scaleLabel: {
+     labelString: 'Velocity (m/s)',
+     display: true
+   }
+ }],
+};
+
+let graphData = heightGraphData;
 
 /**
   * Create world
@@ -333,7 +398,7 @@ function updateInitialValuesTable() {
   document.getElementById("length-initial-1").textContent = lengthVal;
   document.getElementById("mass-initial-1").textContent = massVal1;
   document.getElementById("angle-initial-1").textContent = angleVal1;
-  
+
   document.getElementById("mass-initial-2").textContent = massVal2;
   document.getElementById("angle-initial-2").textContent = angleVal2;
   document.getElementById("coef-init").textContent = restVal;
@@ -361,12 +426,32 @@ function addSecondPendulum() {
 */
 
 function runPlotInterval() {
-  plotInterval = setInterval(function() {
-    Graph.addGraphData({ x: engine.timing.timestamp.toFixed(3), y: pendulum.pendulumHeight.toFixed(3) }, 0);
-    if (document.getElementById('num-weights').value == 2) {
-      Graph.addGraphData({ x: engine.timing.timestamp.toFixed(3), y: pendulum2.pendulumHeight.toFixed(3) }, 1);
-    }
-  }, 100);
+  let graphOption = graphOptionDropdown.value;
+
+  if (graphOption === 'Height') {
+    plotInterval = setInterval(function() {
+      Graph.addGraphData({ x: engine.timing.timestamp.toFixed(3), y: pendulum.pendulumHeight.toFixed(3) }, 0);
+      if (document.getElementById('num-weights').value == 2) {
+        Graph.addGraphData({ x: engine.timing.timestamp.toFixed(3), y: pendulum2.pendulumHeight.toFixed(3) }, 1);
+      }
+    }, 100);
+  }
+  else if (graphOption === 'Angle') {
+    plotInterval = setInterval(function() {
+      Graph.addGraphData({ x: engine.timing.timestamp.toFixed(3), y: pendulum.pendulumAngle.toFixed(3) }, 0);
+      if (document.getElementById('num-weights').value == 2) {
+        Graph.addGraphData({ x: engine.timing.timestamp.toFixed(3), y: pendulum2.pendulumAngle.toFixed(3) }, 1);
+      }
+    }, 100);
+  }
+  else if (graphOption === 'Velocity') {
+    plotInterval = setInterval(function() {
+      Graph.addGraphData({ x: engine.timing.timestamp.toFixed(3), y: pendulum.pendulumVelocity.toFixed(3) }, 0);
+      if (document.getElementById('num-weights').value == 2) {
+        Graph.addGraphData({ x: engine.timing.timestamp.toFixed(3), y: pendulum2.pendulumVelocity.toFixed(3) }, 1);
+      }
+    }, 100);
+  }
 }
 
 /**
@@ -639,3 +724,19 @@ numWeightsDropdown.onchange = function() {
 
   }
 };
+
+graphOptionDropdown.onchange = function() {
+  let graphOption = graphOptionDropdown.value;
+
+  if (graphOption === 'Height') {
+    graphData = heightGraphData;
+  }
+  else if (graphOption === 'Angle') {
+    graphData = angleGraphData;
+  }
+  else if (graphOption === 'Velocity') {
+    graphData = velocityGraphData;
+  }
+
+  Graph.resetGraphData(graphData);
+}

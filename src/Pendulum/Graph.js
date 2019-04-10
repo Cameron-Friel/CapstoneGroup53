@@ -50,6 +50,8 @@ let Graph = (function() {
     let tempData = JSON.parse(JSON.stringify(data));
 
     _graph.config.data = tempData;
+    _graph.options.scales.xAxes[0].scaleLabel.labelString = tempData.xAxes[0].scaleLabel.labelString;
+    _graph.options.scales.yAxes[0].scaleLabel.labelString = tempData.yAxes[0].scaleLabel.labelString;
     _graph.update();
   },
 };
