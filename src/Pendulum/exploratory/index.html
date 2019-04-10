@@ -15,8 +15,8 @@
             <button class="dropbtn">?</button>
             <div class="dropdown-content">
               <a>Move sliders to the right to control starting values of the pendulum. Pick between 1 or 2 weights.
-                Press start to run the simulation and see graph. 
-                Air resistance is in the system. 
+                Press start to run the simulation and see graph.
+                Air resistance is in the system.
               </a>
 
             </div>
@@ -35,7 +35,7 @@
             <div class='main-text'>Height of a: <span id='pendulum-height'>0.255m</span></div>
             <div id='height-2-container' class='main-text hide-container'>Height of b: <span id='second-pendulum-height'>0.000m</span></div>
             <div class='main-text '>Velocity a: <span id='velocity-a'>0.000m/s</span></div>
-            <div id='velocity-2-container' class='main-text hide-container'>Velocity b: <span id='velocity-b'>0.000m/s</span></div>            
+            <div id='velocity-2-container' class='main-text hide-container'>Velocity b: <span id='velocity-b'>0.000m/s</span></div>
           </div>
         </div>
 
@@ -57,6 +57,16 @@
               <select id="num-weights">
                 <option value="1">1</option>
                 <option value="2">2</option>
+              </select>
+            </td>
+          </tr>
+          <tr id="graph-option-row">
+            <td class='input-label'>Graph Option</td>
+            <td>
+              <select id="graph-options">
+                <option value="Height">Height</option>
+                <option value="Angle">Angle</option>
+                <option value="Velocity">Velocity</option>
               </select>
             </td>
           </tr>
@@ -87,7 +97,7 @@
           </tr>
         </table>
 
-            
+
         <div>
           <!-- Chart -->
           <div id="chart-container" class="chart-container hide-container">
@@ -125,12 +135,12 @@
                 <td id="coef-init">0</td>
               </tr>
             </tbody>
-          </table>         
+          </table>
         </div>
         <!-- <div>
 
 
-          
+
 
         </div> -->
       <!-- </div> -->
