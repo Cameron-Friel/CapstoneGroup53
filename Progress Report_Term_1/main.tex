@@ -1,0 +1,136 @@
+\documentclass[onecolumn, draftclsnofoot,10pt, compsoc]{IEEEtran}
+\usepackage{graphicx}
+\usepackage{url}
+\usepackage{setspace}
+\usepackage{float}
+
+\usepackage{geometry}
+\geometry{textheight=9.5in, textwidth=7in}
+
+% 1. Fill in these details
+\def \CapstoneTeamName{Education Simulations}
+\def \CapstoneTeamNumber{53}
+\def \GroupMemberOne{Cameron Friel}
+\def \GroupMemberTwo{Kelli Ann Ulep}
+\def \GroupMemberThree{Samuel Wilson}
+\def \CapstoneProjectName{Interactive 2D Simulations to Support Inquiry-Based Learning in Mechanical Engineering}
+\def \CapstoneSponsorCompany{Oregon State University, School of Chemical, Biological, and Environmental Engineering}
+\def \CapstoneSponsorPersonOne{Milo Koretsky}
+\def \CapstoneSponsorPersonTwo{Tom Ekstedt}
+
+
+% 2. Uncomment the appropriate line below so that the document type works
+\def \DocType{		%Problem Statement
+				%Requirements Document
+				%Technology Review
+				%Design Document
+				Progress Report
+				}
+			
+\newcommand{\NameSigPair}[1]{\par
+\makebox[2.75in][r]{#1} \hfil 	\makebox[3.25in]{\makebox[2.25in]{\hrulefill} \hfill		\makebox[.75in]{\hrulefill}}
+\par\vspace{-12pt} \textit{\tiny\noindent
+\makebox[2.75in]{} \hfil		\makebox[3.25in]{\makebox[2.25in][r]{Signature} \hfill	\makebox[.75in][r]{Date}}}}
+% 3. If the document is not to be signed, uncomment the RENEWcommand below
+\renewcommand{\NameSigPair}[1]{#1}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\begin{titlepage}
+    \pagenumbering{gobble}
+    \begin{singlespace}
+    	\includegraphics[height=4cm]{coe_v_spot1}
+        \hfill 
+        % 4. If you have a logo, use this includegraphics command to put it on the coversheet.
+        %\includegraphics[height=4cm]{CompanyLogo}   
+        \par\vspace{.2in}
+        \centering
+        \scshape{
+            \huge CS Capstone \DocType \par
+            {\large\today}\par
+            \vspace{.5in}
+            \textbf{\Huge\CapstoneProjectName}\par
+            \vfill
+            {\large Prepared for}\par
+            \Huge \CapstoneSponsorCompany\par
+            \vspace{5pt}
+            {\Large
+                \NameSigPair{\CapstoneSponsorPersonOne}\par
+                \NameSigPair{\CapstoneSponsorPersonTwo}\par
+            }
+            {\large Prepared by }\par
+            Group\CapstoneTeamNumber\par
+            % 5. comment out the line below this one if you do not wish to name your team
+            \CapstoneTeamName\par 
+            \vspace{5pt}
+            {\Large
+                \NameSigPair{\GroupMemberOne}\par
+                \NameSigPair{\GroupMemberTwo}\par
+                \NameSigPair{\GroupMemberThree}\par
+            }
+            \vspace{20pt}
+        }
+        \begin{abstract}
+        This document covers a brief overview of the purpose of the Interact 2D Simulations to Support Inquiry-Based Learning in Mechanical Engineering project. Additionally, it includes a week by week summary of what was accomplished by the group each week. Finally, there is a retrospective table which lists the positive actions that happened each week in the positives column. There is another column labeled deltas which encompasses the problems that occurred in a given week followed by the actions column, which goes over what was done to solve the problems in the given week. 
+
+        \end{abstract}     
+    \end{singlespace}
+\end{titlepage}
+\newpage
+\pagenumbering{arabic}
+\tableofcontents
+% 7. uncomment this (if applicable). Consider adding a page break.
+%\listoffigures
+%\listoftables
+\clearpage
+
+%For the report, create a document that:
+%briefly recaps the project purposes and goals,
+%describes where you are currently on the project,
+%describes any problems that have impeded your progress, with any solutions you have,
+%includes particularly interesting pieces of code (if coding is involved), and
+%retrospective* of the past 10 weeks.
+
+%The document should include a detailed, week-by-week summary of activities, problems, solutions, and the like (consider using your blogs to inform this report). The report should not include more than a summary of any bigger documents you produced. 
+
+% 8. now you write!
+\section{Introduction}
+This document includes a week by week summary of the tasks we accomplished. It also includes a brief summary of the importance of the project. The last section includes the positives that happened each week as well as the areas of conflict that occurred each week.
+
+\section{Summary of Project}
+This project involves solving the problem of some universities lacking resources to visually show physical and mechanical interactions for Mechanical Engineering concepts in the classroom. This impedes the learning process for Mechanical Engineers by forcing them to take an auditory approach to learning when the subject matter is very difficult to understand in the first place. This project is built on the research that shows that students can achieve a better understanding of difficult concepts by learning through simulated environments that they can interact with. By implementing two dimensional simulations based on these concepts, students will be able to visually interpret the concepts in the course. The solution being implemented is to create two dimensional simulations using primarily client side JavaScript. The student will be able to modify certain values like the mass of an object or the angle that an object is dropped within a simulation in order to understand how interactions that occur in the real world are rationalized.  
+
+\section{Weeks}
+
+\subsection{Week 4}
+We got together as a group work on our first collaborative assignment, the Problem Statement. We met with our clients Thursday and discussed our back stories and got more information about what the project's purpose was and some of the features they would like to see included in the project. We set Thursday at 3:30 pm to be the designated meeting time with the client. In addition to this, we started discussing solutions to the problem and decided we would want to use a 2D physics engine in the web to speed up development time and avoid reinventing the wheel. Our proposed solutions at this time are Matter.js and Godot. 
+
+\subsection{Week 5}
+At the start of the week we created a public Git Hub repository and added our TA so that he can view our progress throughout the term. As a group, we went into office hours to take a look at some student examples of the Requirements Document to get a better idea of what our paper should look out. From this, we have decided that Cameron will write the introduction section, Kelli will write the requirements section, and Sam will make the time line for the project. Our weekly TA meeting was used to go over the requirements for the Tech Review. After the meeting, we got as a group to brain storm the 9 technologies we would want to write about. 
+
+\subsection{Week 6}
+This week we had nothing to report back to the client, so a meeting was not scheduled. We completed the Requirements Document and emailed a copy of it to the client to look over and critique. We scheduled a meeting next week on Thursday to hear his feedback on the Requirements Document and other miscellaneous things that come up. During the TA meeting, Richard gave us his feedback on the Requirements document and told us to include a Glossary of definitions.   
+
+\subsection{Week 7}
+We started looking at new technologies and thinking about implementation. We decided to look at game engines and  JavaScript libraries.
+We had another meeting with our client and asked for more clarifications. Our client stated we were near completion for our requirements document. We just needed to include the possibility of completing the second simulation of a spool.
+We plan to meet with our client again 2 weeks from now as there is not much to report until then. By then we should have a basic mock-up of the simulations for greater ease of clarifying requirements. 
+
+\subsection{Week 8}
+This week was fairly uneventful, with all of our projects being completed the previous weekend. We also did not meet with the client this week; we stayed in contact through email.
+We started working on the initial user interface design to show to the client next week and started working on the first draft of the design document. 
+
+\subsection{Week 9}
+We met with our client and presented him with several mock ups for the UI of the simulations. There was additional discussion on the other viewpoints, which were the Game Engine, Graphing, and Hosting. At the end of the meeting we planned to have a group meeting with the other two groups our client is working with to share what each of our projects are about and how we plan to implement each of them. 
+
+
+\subsection{Week 10}
+We had a end of a term meeting with our client and the other groups. We showed our client our most recently updated mock up and updated them on their progress. We updated the design document and the requirements document to include more detail. We have begun working on the progress report and the slide show. We uploaded all of the documents we created to a Box file storage, so that the client can review the documents.
+
+% go week by week
+
+
+\section{Retrospective}
+\input{retrospective.tex}
+
+\end{document}
