@@ -1,50 +1,30 @@
-export PATH := /usr/local/apps/tex_live/current/bin/x86_64-linux:$(PATH)
-CFLAGS = -Wall -g
-LATEX	= latex -shell-escape
-BIBTEX	= bibtex
-DVIPS	= dvips
-DVIPDF  = dvipdft
-XDVI	= xdvi -gamma 4
-GH		= gv
+# LaTeX Makefile
+FILE=main
 
-EXAMPLES = $(wildcard *.c)
-SRC	:= $(shell egrep -l '^[^%]*\\begin\{document\}' *.tex)
-TRG	= $(SRC:%.tex=%.dvi)
-PSF	= $(SRC:%.tex=%.ps)
-PDF	= $(SRC:%.tex=%.pdf)
+all: $(FILE).pdf
 
-all: pdf
-
-pdf: $(PDF)
-
-ps: $(PSF)
-
-$(TRG): %.dvi: %.tex  $(EXAMPLES)
-	#one way of including source code is to use pygments
-	#pygmentize -f latex -o __${EXAMPLES}.tex ${EXAMPLES}
-	#requires that you \include{pygments.tex} in your preamble
-
-	$(LATEX) $<
-	#$(BIBTEX) $(<:%.tex=%)
-	$(LATEX) $<
-	$(LATEX) $<
-	#remove the pygmentized output to avoid cluttering up the directory
-	#rm __${EXAMPLES}.tex
-
-
-$(PSF):%.ps: %.dvi
-	$(DVIPS) -R -Poutline -t letter $< -o $@
-
-$(PDF): %.pdf: %.ps
-	ps2pdf $<
-
-show: $(TRG)
-	@for i in $(TRG) ; do $(XDVI) $$i & done
-
-showps: $(PSF)
-	@for i in $(PSF) ; do $(GH) $$i & done
+.PHONY: clean
 
 clean:
-	rm -f *.pdf *.ps *.dvi *.out *.log *.aux *.bbl *.blg *.pyg *.o *.toc
+	rm -rf *.blg 
+	rm -rf *.out 
+	rm -rf *.bbl 
+	rm -rf *.log
+	rm -rf *.ind
+	rm -rf *.ilg
+	rm -rf *.lot
+	rm -rf *.lof
+	rm -rf *.ind
+	rm -rf *.idx
+	rm -rf *.aux
+	rm -rf *.toc
+	rm -f ${FILE}.pdf
 
-.PHONY: all show clean ps pdf showps
+#*.bib *.sty
+$(FILE).pdf: *.tex 
+	pdflatex -shell-escape $(FILE).tex
+	pdflatex -shell-escape $(FILE).tex
+	makeindex $(FILE)
+	#bibtex $(FILE)
+	pdflatex -shell-escape $(FILE).tex
+	pdflatex -shell-escape $(FILE).tex

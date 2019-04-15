@@ -22,9 +22,9 @@ clean:
 
 #*.bib *.sty
 $(FILE).pdf: *.tex 
-	pdflatex -shell-escape $(FILE).tex
-	pdflatex -shell-escape $(FILE).tex
+	pdflatex --shell-escape $(FILE).tex
+	pdflatex --shell-escape $(FILE).tex
 	makeindex $(FILE)
 	#bibtex $(FILE)
-	pdflatex -shell-escape $(FILE).tex
-	pdflatex -shell-escape $(FILE).tex
+	pdflatex --shell-escape $(FILE).tex
+	pdflatex --shell-escape $(FILE).tex
