@@ -203,7 +203,16 @@ For the pendulum animation, the motion will be based on the following equation:
 \end{equation}
  where g = gravity, L = pendulum arm length, $\theta$ = angle in deg \newline
 The angular acceleration of the pendulum is a constant of gravity divided by the length of the pendulum arm, multiplied by the sine of an angle. The velocity and position is changed over time.
+%probably talk about friction/wind resistance
+To account for air resistance or friction in the system, the angular velocity can be reduced by a constant each animation frame. 
+\begin{equation}
+   \theta' * k
+\end{equation}
+Where k is a constant between 0 and 1 where 0 is a stationary pendulum, and 1 is no air resistance. 
 %https://www.khanacademy.org/computing/computer-programming/programming-natural-simulations/programming-oscillations/a/trig-and-forces-the-pendulum2
+% don't know if they want "real" physics if they want damping but there's an even more complicated equation for that for box2d if they want. And can use forces to animate. 
+%https://imranedu.wordpress.com/2015/01/07/how-to-simulate-realistic-air-friction-in-box2d-starling-version/
+
 Defold includes a Box2D physics engine to simulate the physical interactions between two pendulums - for the cases that there are more than 1 weight in the pendulum system. The animation shall use the \textit{collision object} feature. 
 
 %statement of what the entity does. The function attribute
@@ -233,7 +242,7 @@ The normal mode components with their description are as such:
     \item Start/Pause Button - Starts the simulation or pauses it 
     \item Reset Button - Resets the simulation
     \item Graph of angle vs. time 
-    \item Live measurement updates - Updates the angle of each weight and the time every 0.5 seconds of the simulation
+    \item Live measurement updates  - Updates the angle and height of each weight, velocity, and the time every 0.1 seconds of the simulation
     \item Starting measurements  - Length (m), weight (g), angle (degrees), height of weight off the ground (m), and coefficient of restitution 
 \end{itemize}
 
@@ -260,7 +269,7 @@ The exploratory mode components are
   \item Start/Pause Button - Starts the simulation or pauses it 
     \item Reset Button - Resets the simulation
     \item Graph of angle vs. time 
-    \item Live measurement updates  - Updates the angle of each weight and the time every 0.5 seconds of the simulation
+    \item Live measurement updates  - Updates the angle and height of each weight, velocity, and the time every 0.1 seconds of the simulation
     \item Option to choose between 1 weight or 2 weights
     \item Starting parameter input sliders for the angle (degrees), length (m), weight (g), and coefficient of restitution.
 \end{itemize}
