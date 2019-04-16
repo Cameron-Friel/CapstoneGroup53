@@ -1,15 +1,34 @@
 ## Interactive 2D Simulations for Inquiry-Based Learning Capstone Team 53
 
-### `Alpha build`
-The simulations for the alpha build can be found at ``web.engr.oregonstate.edu/~wilsosam``.
+### `Beta build`
+The simulations for the beta build can be found at ``web.engr.oregonstate.edu/~wilsosam``.
 
 ## Build Instructions
 
-To get started `clone` the repository and then run `npm install` to install all the dependencies in the project. Make sure you have node installed by entering in `node --version`.
+To get started `clone` the repository and then run `npm install` to install all the dependencies in the project. 
+Make sure you have node installed by entering in `node --version`.
 
 ### `Building with Gulp`
 
-This project utilizes Gulp to help automate build tasks. In order to install gulp enter `npm install -g gulp-cli`. Once installed, you can enter in `gulp` to create a build folder in the root of the project. Alternatively, you can enter `gulp build --case [folder name]` into the command line in order to build a single case into the build folder located in the root of the project. You can then navigate to the generated build folder and enter `start index.html` into the command line in one of the case folders to view a specific case in the browser. 
+This project utilizes Gulp to help automate build tasks. In order to install gulp enter 
+```
+npm install -g gulp-cli
+```
+Once installed, to generate a build folder in the root of the project enter into the command line
+```
+gulp
+``` 
+This should generate folders case1-case5 and exploratory in the generated build folder. 
+You can then navigate to one of the case folders in the generated build folder (i.e. /build/case1) and enter `start index.html` into the command line to view a specific case in the browser. 
+
+Alternatively, in order to build a single case into the build folder located in the root of the project, use the command:
+```
+gulp build --case [folder name]
+``` 
+For example: `gulp build --case case2`. 
+
+### `Browserify`
+Alternatively, use browserify to manually generate the needed JavaScript file. Navigate to a specific case folder at /src/Pendulum/<case_folder_name> and use `browserify sketch.js -o bundle.js`. After bundle.js is generated, use `start index.html`.
 
 ## Access to Modules
 
