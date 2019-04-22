@@ -138,18 +138,21 @@ table.values-table {
 
 tr.pendulum-1-init > td {
   border: 2px solid #dedede;
+  background-color: #5669fc6b;
   margin: 2px;
   padding: 4px;
 }
 
 tr.pendulum-2-init > td {
   border: 2px solid #dedede;
+  background-color:  #fc565866;
   margin: 2px;
   padding: 4px;
 }
 
 tr.both-pendulums-init > td {
   border: 2px solid #dedede;
+  background-color: #bf70db5c;
   margin: 2px;
   padding: 4px;
 }
