@@ -202,7 +202,7 @@ function createWorld() {
     mass: 0.04,
     frictionAir: 0,
     interia: Infinity,
-     render: {fillStyle: '#FC5658'}
+     render: {fillStyle: '#FC5658'} // Light red
     });
 
   restingPendulum.pendulumString = World.add(engine.world, Constraint.create({

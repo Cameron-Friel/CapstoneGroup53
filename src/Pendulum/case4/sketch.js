@@ -177,7 +177,7 @@ function createWorld() {
       mass: 0.04,
       frictionAir: 0,
       interia: Infinity,
-      render: {fillStyle: 'blue'}
+      render: {fillStyle: '#5669FC'} // Light blue
     });
   // 161.55 279.821
 
@@ -186,7 +186,7 @@ function createWorld() {
     bodyB: leftPendulum.pendulumBody,
     length: 0,
     render: {
-      strokeStyle: 'blue',
+      strokeStyle: '#5669FC',
       lineWidth: 6
     }
   }));
@@ -201,7 +201,7 @@ function createWorld() {
     mass: 0.04,
     frictionAir: 0,
     interia: Infinity,
-    render: {fillStyle: 'red'}
+    render: {fillStyle: '#FC5658'} // Light red
   });
 
   rightPendulum.pendulumString = World.add(engine.world, Constraint.create({
@@ -209,7 +209,7 @@ function createWorld() {
       bodyB: rightPendulum.pendulumBody,
       length: 0,
       render: {
-        strokeStyle: 'red',
+        strokeStyle: '#FC5658',
         lineWidth: 6
       }
     }));

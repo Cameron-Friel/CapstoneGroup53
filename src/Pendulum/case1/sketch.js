@@ -113,7 +113,7 @@ function createWorld() {
      Bodies.rectangle(0, 300, 50, 600, { isStatic: true, render: {fillStyle: 'grey'} })
   ]);
 
-  pendulum.pendulumBody = Bodies.circle(100, 170, 30, { mass: 0.680389, frictionAir: 0, interia: Infinity, render: {fillStyle: 'red'} });
+  pendulum.pendulumBody = Bodies.circle(100, 170, 30, { mass: 0.680389, frictionAir: 0, interia: Infinity, render: {fillStyle: '#FC5658'} }); // Light red
 
   let protractor = Bodies.circle(400, 50, 10, { isStatic: true, render: {fillStyle: 'grey'}});
 
@@ -124,7 +124,7 @@ function createWorld() {
     bodyB: pendulum.pendulumBody,
     length: 0,
     render: {
-      strokeStyle: 'red',
+      strokeStyle: '#FC5658',
       lineWidth: 6
     }
   }));

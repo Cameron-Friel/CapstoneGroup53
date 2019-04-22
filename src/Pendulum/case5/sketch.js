@@ -176,14 +176,14 @@ function createWorld() {
   var x1 = calcInitialX(60, 1);
   var y1 = calcInitialY(60);
 
-  pendulum.pendulumBody = Bodies.circle(x1, y1, P_RAD, { mass: 0.04, frictionAir: 0, interia: Infinity, restitution: 1, render: {fillStyle: 'blue'} });
+  pendulum.pendulumBody = Bodies.circle(x1, y1, P_RAD, { mass: 0.04, frictionAir: 0, interia: Infinity, restitution: 1, render: {fillStyle: '#5669FC'} }); // Light blue
 
   pendulum.pendulumString = World.add(engine.world, Constraint.create({
     bodyA: protractor1,
     bodyB: pendulum.pendulumBody,
     length: 0,
     render: {
-      strokeStyle: 'blue',
+      strokeStyle: '#5669FC',
       lineWidth: 6
     }
   }));
@@ -191,14 +191,14 @@ function createWorld() {
   pendulum.pendulumStringLength = pendulum.calculateStringLength(protractor1.position, pendulum.pendulumBody.position);
 
   // right pendulum
-  restingPendulum.pendulumBody = Bodies.circle(PROT_POS_2.x, pendulum.pendulumStringLength + 50, 30, { mass: 0.04, frictionAir: 0, interia: Infinity, restitution: 1, render: {fillStyle: 'red'} });
+  restingPendulum.pendulumBody = Bodies.circle(PROT_POS_2.x, pendulum.pendulumStringLength + 50, 30, { mass: 0.04, frictionAir: 0, interia: Infinity, restitution: 1, render: {fillStyle: '#FC5658'} }); // Light red
 
   restingPendulum.pendulumString = World.add(engine.world, Constraint.create({
       bodyA: protractor2,
       bodyB: restingPendulum.pendulumBody,
       length: 0,
       render: {
-        strokeStyle: 'red',
+        strokeStyle: '#FC5658',
         lineWidth: 6
       }
     }));
