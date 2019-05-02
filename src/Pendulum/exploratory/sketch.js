@@ -534,7 +534,11 @@ document.getElementById('reset-button').onclick = function() {
   stopPlotInterval();
   State.displayRunningTime(engine);
   State.setSimulationRunning(false);
-  pendulum.pendulumAngle = pendulum.calculateAngle(pendulum.pendulumString.bodies[0].position, pendulum.pendulumBody.position);
+
+  const PROT_POS_1 = {x: CANVAS_WIDTH / 2 + 30, y: 50}; // 30 is the pendulum radius
+  const PROT_POS_2 = {x: CANVAS_WIDTH / 2 - 30, y: 50};
+
+  pendulum.pendulumAngle = pendulum.calculateAngle(PROT_POS_1, pendulum.pendulumBody.position);
   pendulum.pendulumHeight = pendulum.calculatePenulumHeight(pendulum.pendulumStringLength / PTM, pendulum.pendulumAngle); // angle?
   pendulum.displayPendulumHeight(PENDULUM_HEIGHT_ID);
   pendulum.displayVelocity(VELOCITY_A_ID);
@@ -550,7 +554,7 @@ document.getElementById('reset-button').onclick = function() {
   initialVals.classList.add('hide-container');
 
   if (document.getElementById('num-weights').value == 2) {
-    pendulum2.pendulumAngle = pendulum2.calculateAngle(pendulum2.pendulumString.bodies[0].position, pendulum2.pendulumBody.position);
+    pendulum2.pendulumAngle = pendulum2.calculateAngle(PROT_POS_2, pendulum2.pendulumBody.position);
     pendulum2.pendulumHeight = pendulum2.calculatePenulumHeight(pendulum2.pendulumStringLength / PTM, pendulum2.pendulumAngle);
     pendulum2.displayPendulumHeight(SECOND_PENDULUM_HEIGHT_ID);
     pendulum2.displayVelocity(VELOCITY_B_ID);
