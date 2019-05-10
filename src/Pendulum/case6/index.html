@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang='en' dir='ltr'>
+  <head>
+    <meta charset='utf-8'>
+    <link rel='stylesheet' href='style.css'>
+    <title>Case 6 Pendulum</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  </head>
+  <body>
+    <h1>Case 6</h1>
+    <div class='container'>
+      <!-- Animation canvas  -->
+      <div>
+        <div id='canvas'></div>
+      </div>
+
+      <!-- Live Updates -->
+      <div>
+        <div class = 'table-container'>
+          <div id='live-update-table'>
+            <div>
+              <div class='main-text static'>t<sub>0</sub>: <span>0.000s</span></div>
+              <div class='main-text'>t: <span id='running-time'>0.000s</span></div>
+            </div>
+            <div>
+              <div class='main-text static'>Height<sub>a0</sub>: <span>0.068m</span></div>
+              <div class='main-text'>Height<sub>a</sub>: <span id='pendulum-height'>0.068m</span></div>
+            </div>
+            <div>
+              <div class='main-text static'>Height<sub>b0</sub>: <span>0.068m</span></div>
+              <div class='main-text'>Height<sub>b</sub>: <span id='resting-pendulum-height'>0.068m</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Buttons -->
+        <div class="button-group">
+          <Button class="control-btns" id="start-button" class='main-text'>Start</Button>
+          <Button class="control-btns" id='pause-button' class='main-text' value='pause'>Pause</Button>
+          <Button class="control-btns" id='reset-button' class='main-text'>Reset</Button>
+        </div>
+
+        <!-- Chart -->
+        <div class="chart-container">
+          <canvas id="chart"></canvas>
+        </div>
+
+
+        <!-- Intial values table  -->
+        <table id='initial-values' class='values-table'>
+          <tbody>
+            <tr class='both-pendulums-init'>
+              <td>Length</td>
+              <td id="length-initial-1">0.509 m</td>
+            </tr>
+            <tr class='pendulum-1-init'>
+              <td>Mass</td>
+              <td id="mass-initial-1">0.680 kg</td>
+            </tr>
+            <tr class='pendulum-1-init'>
+              <td>Angle</td>
+              <td id="angle-initial-1">-30 deg</td>
+            </tr>
+
+            <!-- Second pendulum -->
+            <tr class="pendulum-2-init">
+              <td>Mass</td>
+              <td id="mass-initial-2">0.680 kg</td>
+            </tr>
+            <tr class="pendulum-2-init">
+              <td>Angle</td>
+              <td id="angle-initial-2" >30 deg</td>
+            </tr>
+            <tr class="both-pendulums-init">
+              <td>Coef of Rest</td>
+              <td id="coef-init">0.7</td>
+            </tr>
+          </tbody>
+        </table>
+
+      </div>
+    </div>
+  </body>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.12.0/matter.js'></script>
+  <script src='./bundle.js'></script>
+
+</html>
