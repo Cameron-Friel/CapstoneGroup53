@@ -12,7 +12,7 @@ const RESTING_PENDUMDULUM_HEIGHT_ID = 'resting-pendulum-height';
 
 const PTM = 634.773; // converts pixels to meters for calculations
 const DEG_TO_RAD = Math.PI / 180; //conversion factor
-const P_RAD = 30; //pendulum radius
+const P_RAD = 30;
 const PROT_POS_1 = {x: CANVAS_WIDTH / 2 - P_RAD, y: 50};
 const PROT_POS_2 = {x: CANVAS_WIDTH / 2 + P_RAD, y: 50};
 
@@ -26,8 +26,8 @@ let Events = Matter.Events;
 
 let engine = Engine.create();
 
-let leftPendulum = new Pendulum;
-let rightPendulum = new Pendulum;
+let pendulum = new Pendulum;
+let restingPendulum = new Pendulum;
 
 let render = Render.create({
     element: document.getElementById('canvas'),
@@ -45,13 +45,13 @@ let plotInterval = null;
 let plotInterval2 = null;
 
  let graphData = {
-   datasets: [{
+   datasets:  [{
      label: 'Height a',
      borderColor: 'rgba(0, 0, 255, 0.1)',
      backgroundColor: 'rgba(0, 0, 255, 0.1)',
      data: [{
        x: 0,
-       y: 0.068
+       y: 0.255
      }]
   },
   {
@@ -60,7 +60,7 @@ let plotInterval2 = null;
     backgroundColor: 'rgba(255, 0, 0, 0.1)',
     data: [{
       x: 0,
-      y: 0.068
+      y: 0
     }]
   }],
   xAxes: [{
@@ -68,7 +68,7 @@ let plotInterval2 = null;
     position: 'bottom',
     ticks: {
       min: 0,
-      max: 1600,
+      max: 2000,
     },
     scaleLabel: {
       labelString: 'Time (ms)',
@@ -80,7 +80,7 @@ let plotInterval2 = null;
     position: 'left',
     ticks: {
       min: 0,
-      max: 0.10,
+      max: 0.30,
     },
     scaleLabel: {
       labelString: 'Height (m)',
@@ -117,6 +117,7 @@ function renderLoop() {
 }
 
 
+
 /**
  * Returns the initial X coordinate
  * @param {Int} angle           // angle to calculate in degrees
@@ -149,6 +150,7 @@ function calcInitialY(angle) {
 }
 
 
+
 /*
   * Sets up initial bodies of the world
 */
@@ -161,6 +163,7 @@ function createWorld() {
      Bodies.rectangle(0, 300, 50, 600, { isStatic: true, render: {fillStyle: 'grey'}})
   ]);
 
+  // protractors
   let protractor1 = Bodies.circle(PROT_POS_1.x, PROT_POS_1.y, 10, {
     isStatic: true,
     render: {fillStyle: 'grey'}});
@@ -169,22 +172,15 @@ function createWorld() {
     isStatic: true,
     render: {fillStyle: 'grey'}});
 
-    // left pendulum
-  var x1 = calcInitialX(30, 1);
-  var y1 = calcInitialY(30);
+  // left pendulum
+  var x1 = calcInitialX(60, 1);
+  var y1 = calcInitialY(60);
 
-  leftPendulum.pendulumBody = Bodies.circle(x1, y1, P_RAD, {
-      mass: 0.04,
-      frictionAir: 0,
-      interia: Infinity,
-      restitution: 0.7,
-      render: {fillStyle: '#5669FC'} // Light blue
-    });
-  // 161.55 279.821
+  pendulum.pendulumBody = Bodies.circle(x1, y1, P_RAD, { mass: 0.04, frictionAir: 0, interia: Infinity, restitution: 1, render: {fillStyle: '#5669FC'} }); // Light blue
 
-  leftPendulum.pendulumString = World.add(engine.world, Constraint.create({
+  pendulum.pendulumString = World.add(engine.world, Constraint.create({
     bodyA: protractor1,
-    bodyB: leftPendulum.pendulumBody,
+    bodyB: pendulum.pendulumBody,
     length: 0,
     render: {
       strokeStyle: '#5669FC',
@@ -192,31 +188,24 @@ function createWorld() {
     }
   }));
 
-  leftPendulum.pendulumStringLength = leftPendulum.calculateStringLength(protractor1.position, leftPendulum.pendulumBody.position);
+  pendulum.pendulumStringLength = pendulum.calculateStringLength(protractor1.position, pendulum.pendulumBody.position);
 
-  //right pendulum
-  var x2 = calcInitialX(30, 2);
-  var y2 = calcInitialY(30);
+  // right pendulum
+  restingPendulum.pendulumBody = Bodies.circle(PROT_POS_2.x, pendulum.pendulumStringLength + 50, 30, { mass: 0.04, frictionAir: 0, interia: Infinity, restitution: 1, render: {fillStyle: '#FC5658'} }); // Light red
 
-  rightPendulum.pendulumBody = Bodies.circle(x2, y2, P_RAD, {
-    mass: 0.04,
-    frictionAir: 0,
-    interia: Infinity,
-    render: {fillStyle: '#FC5658'} // Light red
-  });
-
-  rightPendulum.pendulumString = World.add(engine.world, Constraint.create({
+  restingPendulum.pendulumString = World.add(engine.world, Constraint.create({
       bodyA: protractor2,
-      bodyB: rightPendulum.pendulumBody,
+      bodyB: restingPendulum.pendulumBody,
       length: 0,
-      restitution: 0.7,
       render: {
         strokeStyle: '#FC5658',
         lineWidth: 6
       }
     }));
 
-    World.add(engine.world, [leftPendulum.pendulumBody, rightPendulum.pendulumBody, protractor1, protractor2]);
+    restingPendulum.pendulumStringLength = pendulum.calculateStringLength(protractor2.position, restingPendulum.pendulumBody.position);
+
+    World.add(engine.world, [pendulum.pendulumBody, restingPendulum.pendulumBody, protractor1, protractor2]);
 }
 
 /**
@@ -225,8 +214,8 @@ function createWorld() {
 
 function runPlotInterval() {
   plotInterval = setInterval(function() {
-    Graph.addGraphData({ x: engine.timing.timestamp.toFixed(3), y: leftPendulum.pendulumHeight.toFixed(3) }, 0);
-    Graph.addGraphData({ x: engine.timing.timestamp.toFixed(3), y: rightPendulum.pendulumHeight.toFixed(3) }, 1);
+    Graph.addGraphData({ x: engine.timing.timestamp.toFixed(3), y: pendulum.pendulumHeight.toFixed(3) }, 0);
+    Graph.addGraphData({ x: engine.timing.timestamp.toFixed(3), y: restingPendulum.pendulumHeight.toFixed(3) }, 1);
   }, 100);
 }
 
@@ -271,8 +260,7 @@ document.getElementById('start-button').onclick = function() {
     State.setIsPausedFlag(false);
     State.onPause(render);
     State.setSimulationRunning(true);
-    Body.applyForce(leftPendulum.pendulumBody, {x: leftPendulum.pendulumBody.position.x, y: leftPendulum.pendulumBody.position.y}, {x: 0.0003, y: 0});
-    Body.applyForce(rightPendulum.pendulumBody, {x: rightPendulum.pendulumBody.position.x, y: rightPendulum.pendulumBody.position.y}, {x: -0.0003, y: 0});
+    Body.applyForce(pendulum.pendulumBody, {x: pendulum.pendulumBody.position.x, y: pendulum.pendulumBody.position.y}, {x: 0.00112, y: 0});
     runPlotInterval();
   }
 };
@@ -289,12 +277,12 @@ document.getElementById('reset-button').onclick = function() {
   stopPlotInterval();
   State.displayRunningTime(engine);
   State.setSimulationRunning(false);
-  leftPendulum.pendulumAngle = leftPendulum.calculateAngle(PROT_POS_1, leftPendulum.pendulumBody.position);
-  leftPendulum.pendulumHeight = leftPendulum.calculatePenulumHeight(leftPendulum.pendulumStringLength / PTM, leftPendulum.pendulumAngle);
-  rightPendulum.pendulumAngle = leftPendulum.calculateAngle(PROT_POS_2, rightPendulum.pendulumBody.position);
-  rightPendulum.pendulumHeight = leftPendulum.calculatePenulumHeight(rightPendulum.pendulumStringLength / PTM, rightPendulum.pendulumAngle);
-  leftPendulum.displayPendulumHeight(PENDUMDULUM_HEIGHT_ID);
-  rightPendulum.displayPendulumHeight(RESTING_PENDUMDULUM_HEIGHT_ID);
+  pendulum.pendulumAngle = pendulum.calculateAngle(PROT_POS_1, pendulum.pendulumBody.position);
+  pendulum.pendulumHeight = pendulum.calculatePenulumHeight(pendulum.pendulumStringLength / PTM, pendulum.pendulumAngle);
+  restingPendulum.pendulumAngle = pendulum.calculateAngle(PROT_POS_2, restingPendulum.pendulumBody.position);
+  restingPendulum.pendulumHeight = pendulum.calculatePenulumHeight(restingPendulum.pendulumStringLength / PTM, restingPendulum.pendulumAngle);
+  pendulum.displayPendulumHeight(PENDUMDULUM_HEIGHT_ID);
+  restingPendulum.displayPendulumHeight(RESTING_PENDUMDULUM_HEIGHT_ID);
 
   if (State.getIsPausedFlag() === false) {
     State.setIsPausedFlag(true);
@@ -306,18 +294,26 @@ document.getElementById('reset-button').onclick = function() {
   }
 };
 
+
 // Updates UI before each update of the simulation
 Events.on(engine, 'beforeUpdate', function(event) {
-  leftPendulum.pendulumAngle = leftPendulum.calculateAngle(PROT_POS_1, leftPendulum.pendulumBody.position);
-  leftPendulum.pendulumHeight = leftPendulum.calculatePenulumHeight(leftPendulum.pendulumStringLength / PTM, leftPendulum.pendulumAngle);
-  rightPendulum.pendulumAngle = leftPendulum.calculateAngle(PROT_POS_2, rightPendulum.pendulumBody.position);
-  rightPendulum.pendulumHeight = leftPendulum.calculatePenulumHeight(rightPendulum.pendulumStringLength / PTM, rightPendulum.pendulumAngle);
-  leftPendulum.displayPendulumHeight(PENDUMDULUM_HEIGHT_ID);
-  rightPendulum.displayPendulumHeight(RESTING_PENDUMDULUM_HEIGHT_ID);
-  State.displayRunningTime(engine);
+  restingPendulum.pendulumAngle = pendulum.calculateAngle(PROT_POS_2, restingPendulum.pendulumBody.position);
+  restingPendulum.pendulumHeight = pendulum.calculatePenulumHeight(restingPendulum.pendulumStringLength / PTM, restingPendulum.pendulumAngle);
 
+  if (restingPendulum.pendulumHeight < 0.255){
+    pendulum.pendulumAngle = pendulum.calculateAngle(PROT_POS_1, pendulum.pendulumBody.position);
+    pendulum.pendulumHeight = pendulum.calculatePenulumHeight(pendulum.pendulumStringLength / PTM, pendulum.pendulumAngle);
+
+    pendulum.displayPendulumHeight(PENDUMDULUM_HEIGHT_ID);
+    restingPendulum.displayPendulumHeight(RESTING_PENDUMDULUM_HEIGHT_ID);
+    State.displayRunningTime(engine);
+  }
+});
+
+//update UI after each update
+Events.on(engine, 'afterUpdate', function(event) {
   // Stop when speed is below 0.2
-  if (leftPendulum.pendulumBody.speed <= 0.4 && leftPendulum.pendulumBody.speed !== 0.0){
+  if (restingPendulum.pendulumHeight >= 0.255){
     State.setIsPausedFlag(true);
     State.onPause(render);
     stopPlotInterval();
