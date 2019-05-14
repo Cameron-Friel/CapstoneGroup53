@@ -5,7 +5,7 @@ let fs = require('fs');
 let browserify = require('browserify');
 let source = require('vinyl-source-stream');
 
-let folders = ['case1', 'case2', 'case3', 'case4', 'case5', 'exploratory'];
+let folders = ['case1', 'case2', 'case3', 'case4', 'case5', 'case6', 'exploratory'];
 
 /**
   * Minifies all js files in the build folder
