@@ -321,6 +321,16 @@ Events.on(engine, 'afterUpdate', function(event) {
   }
 });
 
+Events.on(render, 'afterRender', function() {
+  let pendulumA = pendulum.pendulumBody.position;
+  let pendulumB = restingPendulum.pendulumBody.position;
+
+  render.context.fillStyle = 'white';
+  render.context.font = "20px Lucida Console";
+  render.context.fillText('a', pendulumA.x - 5, pendulumA.y + 5);
+  render.context.fillText('b', pendulumB.x - 5, pendulumB.y + 5);
+});
+
 /**
   * Listens for whether the current browser tab is active or not
 */

@@ -382,7 +382,6 @@ function createWorld() {
     pendulum2.pendulumStringLength = lengthVal * PTM;
 
   }
-
 }
 
 function updateInitialValuesTable() {
@@ -591,6 +590,19 @@ Events.on(engine, 'beforeUpdate', function(event) {
   pendulum.displayVelocity(VELOCITY_A_ID);
   State.displayRunningTime(engine);
 
+});
+
+Events.on(render, 'afterRender', function() {
+  let pendulumA = pendulum.pendulumBody.position;
+  let pendulumB = pendulum2.pendulumBody.position;
+
+  render.context.fillStyle = 'white';
+  render.context.font = "20px Lucida Console";
+  render.context.fillText('a', pendulumA.x - 5, pendulumA.y + 5);
+
+  if (numWeightsDropdown.value === '2') {
+    render.context.fillText('b', pendulumB.x - 5, pendulumB.y + 5);
+  }
 });
 
 /**
