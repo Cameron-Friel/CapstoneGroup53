@@ -317,9 +317,10 @@ Events.on(engine, 'afterUpdate', function(event) {
     State.setIsPausedFlag(true);
     State.onPause(render);
     stopPlotInterval();
-    State.setSimulationRunning(false);
     restingPendulum.pendulumHeight = 0.255;
     restingPendulum.displayPendulumHeight(RESTING_PENDUMDULUM_HEIGHT_ID);
+    Graph.addGraphData({ x: engine.timing.timestamp.toFixed(3), y: restingPendulum.pendulumHeight.toFixed(4) }, 1);
+    State.setSimulationRunning(false);
   }
 
 });
