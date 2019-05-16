@@ -114,6 +114,8 @@ let Bodies = Matter.Bodies;
 let Body = Matter.Body;
 let Constraint = Matter.Constraint;
 let Events = Matter.Events;
+let Mouse = Matter.Mouse;
+let MouseConstraint = Matter.MouseConstraint;
 
 let engine = Engine.create();
 
@@ -383,6 +385,24 @@ function createWorld() {
 
   }
 
+  // add mouse control
+    var mouse = Mouse.create(render.canvas),
+        mouseConstraint = MouseConstraint.create(engine, {
+            mouse: mouse,
+            constraint: {
+                // allow bodies on mouse to rotate
+                angularStiffness: 0,
+                render: {
+                    visible: false
+                }
+            }
+        });
+
+    World.add(engine.world, mouseConstraint);
+
+    // keep the mouse in sync with rendering
+    render.mouse = mouse;
+
 }
 
 function updateInitialValuesTable() {
@@ -591,6 +611,19 @@ Events.on(engine, 'beforeUpdate', function(event) {
   pendulum.displayVelocity(VELOCITY_A_ID);
   State.displayRunningTime(engine);
 
+});
+
+Events.on(render, 'afterRender', function() {
+  let pendulumA = pendulum.pendulumBody.position;
+  let pendulumB = pendulum2.pendulumBody.position;
+
+  render.context.fillStyle = 'white';
+  render.context.font = "20px Lucida Console";
+  render.context.fillText('a', pendulumA.x - 5, pendulumA.y + 5);
+
+  if (numWeightsDropdown.value === '2') {
+    render.context.fillText('b', pendulumB.x - 5, pendulumB.y + 5);
+  }  
 });
 
 /**
