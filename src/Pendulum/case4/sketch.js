@@ -287,6 +287,8 @@ document.getElementById('reset-button').onclick = function() {
   stopPlotInterval();
   State.displayRunningTime(engine);
   State.setSimulationRunning(false);
+
+  /* reset to starting values */ 
   leftPendulum.pendulumAngle = leftPendulum.calculateAngle(PROT_POS_1, leftPendulum.pendulumBody.position);
   leftPendulum.pendulumHeight = leftPendulum.calculatePenulumHeight(leftPendulum.pendulumStringLength / PTM, leftPendulum.pendulumAngle);
   rightPendulum.pendulumAngle = leftPendulum.calculateAngle(PROT_POS_2, rightPendulum.pendulumBody.position);

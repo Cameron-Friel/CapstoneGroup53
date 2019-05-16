@@ -215,7 +215,7 @@ function createWorld() {
 function runPlotInterval() {
   plotInterval = setInterval(function() {
     Graph.addGraphData({ x: engine.timing.timestamp.toFixed(3), y: pendulum.pendulumHeight.toFixed(3) }, 0);
-    Graph.addGraphData({ x: engine.timing.timestamp.toFixed(3), y: restingPendulum.pendulumHeight.toFixed(3) }, 1);
+    Graph.addGraphData({ x: engine.timing.timestamp.toFixed(3), y: restingPendulum.pendulumHeight.toFixed(4) }, 1);
   }, 100);
 }
 
@@ -277,9 +277,9 @@ document.getElementById('reset-button').onclick = function() {
   stopPlotInterval();
   State.displayRunningTime(engine);
   State.setSimulationRunning(false);
-  pendulum.pendulumAngle = pendulum.calculateAngle(PROT_POS_1, pendulum.pendulumBody.position);
-  pendulum.pendulumHeight = pendulum.calculatePenulumHeight(pendulum.pendulumStringLength / PTM, pendulum.pendulumAngle);
-  restingPendulum.pendulumAngle = pendulum.calculateAngle(PROT_POS_2, restingPendulum.pendulumBody.position);
+  pendulum.pendulumAngle = 60;
+  pendulum.pendulumHeight = 0.255;
+  restingPendulum.pendulumAngle = 0;
   restingPendulum.pendulumHeight = pendulum.calculatePenulumHeight(restingPendulum.pendulumStringLength / PTM, restingPendulum.pendulumAngle);
   pendulum.displayPendulumHeight(PENDUMDULUM_HEIGHT_ID);
   restingPendulum.displayPendulumHeight(RESTING_PENDUMDULUM_HEIGHT_ID);
@@ -300,7 +300,7 @@ Events.on(engine, 'beforeUpdate', function(event) {
   restingPendulum.pendulumAngle = pendulum.calculateAngle(PROT_POS_2, restingPendulum.pendulumBody.position);
   restingPendulum.pendulumHeight = pendulum.calculatePenulumHeight(restingPendulum.pendulumStringLength / PTM, restingPendulum.pendulumAngle);
 
-  if (restingPendulum.pendulumHeight < 0.255){
+  if (restingPendulum.pendulumHeight < 0.256){
     pendulum.pendulumAngle = pendulum.calculateAngle(PROT_POS_1, pendulum.pendulumBody.position);
     pendulum.pendulumHeight = pendulum.calculatePenulumHeight(pendulum.pendulumStringLength / PTM, pendulum.pendulumAngle);
 
@@ -318,7 +318,10 @@ Events.on(engine, 'afterUpdate', function(event) {
     State.onPause(render);
     stopPlotInterval();
     State.setSimulationRunning(false);
+    restingPendulum.pendulumHeight = 0.255;
+    restingPendulum.displayPendulumHeight(RESTING_PENDUMDULUM_HEIGHT_ID);
   }
+
 });
 
 Events.on(render, 'afterRender', function() {
