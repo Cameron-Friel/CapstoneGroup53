@@ -1,0 +1,975 @@
+\documentclass[onecolumn, draftclsnofoot,10pt, compsoc]{IEEEtran}
+\usepackage{graphicx}
+\usepackage{url}
+\usepackage{setspace}
+\usepackage{pdfpages}
+\usepackage{float}
+% \usepackage{cite}
+% \usepackage{biblatex}
+\usepackage{geometry}
+% \usepackage{subfiles}
+% \usepackage{tocloft}
+\usepackage{listings}
+\usepackage{hyperref}
+
+\lstset{language=C}
+\geometry{textheight=9.5in, textwidth=7in}
+
+\lstdefinelanguage{JavaScript}{
+  keywords={typeof, new, true, false, catch, function, return, null, catch, switch, var, if, in, while, do, else, case, break},
+  keywordstyle=\color{blue}\bfseries,
+  ndkeywords={class, export, boolean, throw, implements, import, this},
+  ndkeywordstyle=\color{darkgray}\bfseries,
+  identifierstyle=\color{black},
+  sensitive=false,
+  comment=[l]{//},
+  morecomment=[s]{/*}{*/},
+  commentstyle=\color{purple}\ttfamily,
+  stringstyle=\color{red}\ttfamily,
+  morestring=[b]',
+  morestring=[b]"
+}
+
+\lstset{
+   language=JavaScript,
+   backgroundcolor=\color{lightgray},
+   extendedchars=true,
+   basicstyle=\footnotesize\ttfamily,
+   showstringspaces=false,
+   showspaces=false,
+   numbers=left,
+   numberstyle=\footnotesize,
+   numbersep=9pt,
+   tabsize=2,
+   breaklines=true,
+   showtabs=false,
+   captionpos=b
+}
+
+% \addbibresource{test_bibentry.bib}
+\makeindex
+
+% 1. Fill in these details
+\def \CapstoneTeamName{Education Simulations}
+\def \CapstoneTeamNumber{53}
+\def \GroupMemberOne{Cameron Friel}
+\def \GroupMemberTwo{Kelli Ann Ulep}
+\def \GroupMemberThree{Samuel Wilson}
+\def \CapstoneProjectName{Interactive 2D simulations to support Inquiry-Based Learning in Mechanical Engineering}
+\def \CapstoneSponsorCompany{Oregon State University, School of Chemical, Biological, and Environmental Engineering}
+\def \CapstoneSponsorPersonOne{Milo Koretsky}
+\def \CapstoneSponsorPersonTwo{Tom Ekstedt}
+
+
+% 2. Uncomment the appropriate line below so that the document type works
+\def \DocType{		%Problem Statement
+				Requirements Document
+				%Technology Review
+				%Design Document
+				%Progress Report
+				}
+			
+\newcommand{\NameSigPair}[1]{\par
+\makebox[2.75in][r]{#1} \hfil 	\makebox[3.25in]{\makebox[2.25in]{\hrulefill} \hfill		\makebox[.75in]{\hrulefill}}
+\par\vspace{-12pt} \textit{\tiny\noindent
+\makebox[2.75in]{} \hfil		\makebox[3.25in]{\makebox[2.25in][r]{Signature} \hfill	\makebox[.75in][r]{Date}}}}
+% 3. If the document is not to be signed, uncomment the RENEWcommand below
+\renewcommand{\NameSigPair}[1]{#1}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\begin{titlepage}
+    \pagenumbering{gobble}
+    \begin{singlespace}
+    	\includegraphics[height=4cm]{coe_v_spot1.png}
+        \hfill 
+        % 4. If you have a logo, use this includegraphics command to put it on the coversheet.
+        %\includegraphics[height=4cm]{CompanyLogo}   
+        \par\vspace{.2in}
+        \centering
+        \scshape{
+            \huge CS Capstone Final Report \par
+            {\large\today}\par
+            \vspace{.5in}
+            \textbf{\Huge\CapstoneProjectName}\par
+            \vfill
+            {\large Prepared for}\par
+            \Huge \CapstoneSponsorCompany\par
+            \vspace{5pt}
+            {\Large
+                % \includegraphics[trim=-5cm .5cm 0cm 0cm]{Signature.PNG}
+                \NameSigPair{\CapstoneSponsorPersonOne}\par
+                \NameSigPair{\CapstoneSponsorPersonTwo}\par
+            }
+            {\large Prepared by }\par
+            Group\CapstoneTeamNumber\par
+            % 5. comment out the line below this one if you do not wish to name your team
+            \CapstoneTeamName\par 
+            \vspace{5pt}
+            {\Large
+                \NameSigPair{\GroupMemberOne}\par
+                \NameSigPair{\GroupMemberTwo}\par
+                \NameSigPair{\GroupMemberThree}\par
+            }
+            \vspace{20pt}
+        }
+        \begin{abstract}
+        % 6. Fill in your abstract    
+This project involves solving the problem of some universities lacking resources to visually show physical and mechanical interactions for Mechanical Engineering concepts.
+This project is built on the research that shows that students can achieve a better understanding of difficult concepts by learning through interactive simulated environments.
+By implementing 2D simulations based on these concepts, students will be able to visually interpret the concepts in the course.
+The goal of this document is to document the design for these 2D simulations, explaining the implementations of the features which shall be expected for this project.
+        \end{abstract}     
+    \end{singlespace}
+\end{titlepage}
+
+% \setcounter{tocdepth}{3}
+\tableofcontents
+\pagenumbering{arabic}
+% \listoffigures
+% \listoftables
+
+
+
+\newpage
+%Project introduction (see subfiles/project_intro.tex)
+\section{Project Introduction}  
+\input{subfiles/project_intro.tex}
+
+% this was kind of messing up the overall page numbering but we can change back to this later if we figure it out 
+% %Requirements Document
+% \input{subfiles/requirements_doc.tex} 
+
+%Requirements Document
+\includepdf[pages=-,        %include all pages in pdf  
+    % add to table of contents command
+    %   {page, <section/subsection>, 1/2, <name>, <label>}
+    addtotoc={1,section,1,Requirements,requirements,
+            3,subsection,2,Introduction,intro-req, 
+            3,subsection,2,Overall Description,2-req, 
+            4,subsection,2,Overall Specific Requirements,3-req,
+            5,subsection,2,Gantt Chart,gantt-req}, 
+    scale=0.95,
+    pagecommand={\thispagestyle{plain}}
+    ]{pdfs/Requirements_v2.pdf}
+
+\subsection{New Gantt Chart}
+\includegraphics[width=\textwidth]{NewGantt.png}
+% %Design Document 
+% \input{subfiles/design_doc.tex}
+
+%Design Document
+\includepdf[pages=-,
+    addtotoc={1,section,1,Design Document,design,
+        3,subsection,2,Revision Table,1-design, 
+        3,subsection,2,Overview,2-design, 
+        4,subsection,2,Glossary,2-design, 
+        4,subsection,2,Design Viewpoints,3-design}, 
+    scale=0.95,
+    pagecommand={\thispagestyle{plain}}
+    ]{pdfs/Design_Document_v2.pdf}
+
+
+% Tech Review
+
+
+% \printbibliography %i printed it at the bottom of the document.
+\newpage
+
+
+% \section{Tech Reviews}
+%\addcontentsline{toc}{section}{TITLE}
+%\addcontentsline{toc}{section}{TITLE}
+%\addcontentsline{toc}{section}{TITLE}
+
+%kelli techrv
+% \subfile{subfiles/kelli_techrv}
+\includepdf[pages=-,
+    addtotoc={1, section, 1, Technology Reviews, tv,
+    1,subsection,1,Kelli Ulep - Tech Review,tv_k}, 
+    scale=0.95,
+    pagecommand={\thispagestyle{plain}}
+    ]{pdfs/Tech_review_kelli.pdf}
+
+%Cameron techrv 
+% \subfile{subfiles/cameron_techrv}
+\includepdf[pages=-,
+    addtotoc={
+    1,subsection,1,Cameron Friel - Tech Review,tv_c}, 
+    scale=0.95,
+    pagecommand={\thispagestyle{plain}}
+    ]{pdfs/Cameron_Tech_Review_Group53.pdf}
+
+%samuel techrv
+% \subfile{subfiles/samuel_techrv}
+\includepdf[pages=-,
+    addtotoc={
+    1,subsection,1,Samuel Wilson - Tech Review,tv_s}, 
+    scale=0.95,
+    pagecommand={\thispagestyle{plain}}
+    ]{pdfs/Tech_Review_Samuel_Wilson_group53.pdf}
+
+\newpage
+% Weekly Blog Posts
+\section{Blog Posts}
+
+%Cameron's blog posts
+\input{subfiles/cameron_blogposts.tex}
+
+%Kelli blog posts 
+\input{subfiles/kelli_blogposts.tex}
+
+%Samuel blog posts 
+\input{subfiles/samuel_blogposts.tex}
+
+\newpage
+% Final Poster
+\includepdf[pages=-,
+    scale=1,
+    addtotoc={1,section,1,Final Poster,poster},
+    angle=90
+    ]{group53_expo_poster.pdf}
+\newpage
+
+
+% Project Documentation
+\section{Project Documentation}
+\input{subfiles/project_documentation.tex}
+
+
+% Recommended Technical Resources
+\section{Recommended Technical Resources}
+The sites having the documentation for each of the libraries are helpful in understanding the project.
+\begin{enumerate}
+    \item Matter.js - \url{http://brm.io/matter-js/docs/}
+    \item Matter.js introduction - 
+        \url{https://blog.alexandergottlieb.com/matter-js-the-missing-tutorial-70aafc06b167}
+    \item Chart.js - https://www.chartjs.org/docs/latest/
+    \item noUiSlider - \url{https://refreshless.com/nouislider/}
+\end{enumerate}
+
+The demos on the Matter.js site are also very helpful in demonstrating the feature set that the library offers.
+
+
+% Conclusions and Reflections (1 for each member) 
+\section{Conclusions and Reflections}
+    
+%Kelli's reflection
+\input{subfiles/kelli_reflection.tex}
+
+%Cameron's reflection
+\input{subfiles/cameron_reflection.tex}
+
+%Samuel's reflection
+\input{subfiles/samuel_reflection.tex}
+\newpage
+
+% Appendix 1: Essential Code Listings
+\section{Appendix 1}
+This is a typical sketch file used to add a simulation to a web page. This is taken from the first simulation. 
+
+\begin{lstlisting}[language=JavaScript]
+'use strict';
+
+let State = require('../State.js');
+let Pendulum = require('../Pendulum.js');
+let Graph = require('../Graph.js');
+
+const CANVAS_WIDTH = 800;
+const CANVAS_HEIGHT = 600;
+
+const PENDUMDULUM_HEIGHT_ID = 'pendulum-height';
+
+const PTM = 634.773; // converts pixels to meters for calculations
+
+let Engine = Matter.Engine;
+let Render = Matter.Render;
+let World = Matter.World;
+let Bodies = Matter.Bodies;
+let Body = Matter.Body;
+let Constraint = Matter.Constraint;
+let Events = Matter.Events;
+
+let engine = Engine.create();
+
+let pendulum = new Pendulum;
+
+let render = Render.create({
+    element: document.getElementById('canvas'),
+    engine: engine,
+    options: {
+        width: CANVAS_WIDTH,
+        height: CANVAS_HEIGHT,
+        wireframes: false
+    }
+ });
+
+let ctx = document.getElementById("chart").getContext('2d');
+
+let plotInterval = null;
+
+ let graphData = {
+   datasets: [{
+     label: 'Height',
+     borderColor: 'rgba(255, 0, 0, 0.1)',
+     backgroundColor: 'rgba(255, 0, 0, 0.1)',
+     data: [{
+       x: 0,
+       y: 0.255
+     }]
+  }],
+  xAxes: [{
+    type: 'linear',
+    position: 'bottom',
+    ticks: {
+      min: 0,
+      max: 2000,
+    },
+    scaleLabel: {
+      labelString: 'Time (ms)',
+      display: true
+    }
+  }],
+  yAxes: [{
+    type: 'linear',
+    position: 'left',
+    ticks: {
+      min: 0,
+      max: 0.30,
+    },
+    scaleLabel: {
+      labelString: 'Height (m)',
+      display: true
+    }
+  }],
+ };
+
+
+/**
+  * Create world
+*/
+
+createWorld(); // add bodies to canvas
+
+Render.run(render); // allow for the rendering of frames of the world
+
+renderLoop(); // renders frames to the canvas
+
+Graph.createGraph(ctx, graphData); // add graph
+
+/*
+  * Renders frames to send to the canvas
+*/
+
+function renderLoop() {
+
+  if (State.getIsPausedFlag()) { // the world is paused
+    requestAnimationFrame(renderLoop); // render next frame
+  }
+  else {
+    Engine.update(engine, 1000 / 60); // update at 60 FPS
+    requestAnimationFrame(renderLoop); // render next frame
+  }
+}
+
+/*
+  * Sets up initial bodies of the world
+*/
+
+function createWorld() {
+  World.add(engine.world, [
+     Bodies.rectangle(400, 0, 800, 50, { isStatic: true, render: {fillStyle: 'grey'} }),
+     Bodies.rectangle(400, 600, 800, 50, { isStatic: true, render: {fillStyle: 'grey'} }),
+     Bodies.rectangle(800, 300, 50, 600, { isStatic: true, render: {fillStyle: 'grey'} }),
+     Bodies.rectangle(0, 300, 50, 600, { isStatic: true, render: {fillStyle: 'grey'} })
+  ]);
+
+  pendulum.pendulumBody = Bodies.circle(100, 170, 30, { mass: 0.680389, frictionAir: 0, interia: Infinity, render: {fillStyle: '#FC5658'} }); // Light red
+
+  let protractor = Bodies.circle(400, 50, 10, { isStatic: true, render: {fillStyle: 'grey'}});
+
+  World.add(engine.world, [pendulum.pendulumBody, protractor]);
+
+  pendulum.pendulumString = World.add(engine.world, Constraint.create({
+    bodyA: protractor,
+    bodyB: pendulum.pendulumBody,
+    length: 0,
+    render: {
+      strokeStyle: '#FC5658',
+      lineWidth: 6
+    }
+  }));
+
+  pendulum.pendulumStringLength = pendulum.calculateStringLength(protractor.position, pendulum.pendulumBody.position);
+}
+
+/**
+  * Sends a request to plot a coordinate every 100ms
+*/
+
+function runPlotInterval() {
+  plotInterval = setInterval(function() {
+    Graph.addGraphData({ x: engine.timing.timestamp.toFixed(3), y: pendulum.pendulumHeight.toFixed(3) },0);
+  }, 100);
+}
+
+/**
+  * Stops the plot interval from running
+*/
+
+function stopPlotInterval() {
+  clearInterval(plotInterval);
+}
+
+/*
+  * Pauses or unpauses the world from rendering
+*/
+var pauseBtn = document.getElementById('pause-button');
+
+pauseBtn.onclick = function() {
+  if (State.getSimulationRunning() === true) { // only allow pause and continue when the simulation is running
+    if (pauseBtn.value == "pause") {
+      pauseBtn.innerText = "cont.";
+      pauseBtn.value = "continue";
+      stopPlotInterval();
+    }
+    else {
+      pauseBtn.value = "pause";
+      pauseBtn.innerText = "Pause";
+      runPlotInterval();
+    }
+
+    State.setIsPausedFlag(!State.getIsPausedFlag());
+    State.onPause(render);
+  }
+};
+
+/*
+  * Starts running the simulation
+*/
+
+document.getElementById('start-button').onclick = function() {
+  if (engine.timing.timestamp === 0) {
+    State.setIsPausedFlag(false);
+    State.onPause(render);
+    State.setSimulationRunning(true);
+    Body.applyForce(pendulum.pendulumBody, {x: pendulum.pendulumBody.position.x, y: pendulum.pendulumBody.position.y}, {x: 0.028, y: 0});
+    runPlotInterval();
+  }
+};
+
+/*
+  * Resets the world to its starting state
+*/
+
+document.getElementById('reset-button').onclick = function() {
+  World.clear(engine.world);
+  createWorld();
+  engine.timing.timestamp = 0;
+  Graph.resetGraphData(graphData);
+  stopPlotInterval();
+  State.displayRunningTime(engine);
+  State.setSimulationRunning(false);
+  pendulum.pendulumAngle = pendulum.calculateAngle(pendulum.pendulumString.bodies[0].position, pendulum.pendulumBody.position);
+  pendulum.pendulumHeight = pendulum.calculatePenulumHeight(pendulum.pendulumStringLength / PTM, pendulum.pendulumAngle);
+  pendulum.displayPendulumHeight(PENDUMDULUM_HEIGHT_ID);
+
+  if (State.getIsPausedFlag() === false) {
+    State.setIsPausedFlag(true);
+    State.onPause(render);
+  }
+  else {
+    pauseBtn.value = "pause";
+    pauseBtn.innerText = "Pause" ;
+  }
+};
+
+// Updates UI before each update of the simulation
+Events.on(engine, 'beforeUpdate', function(event) {
+  pendulum.pendulumAngle = pendulum.calculateAngle(pendulum.pendulumString.bodies[0].position, pendulum.pendulumBody.position);
+  pendulum.pendulumHeight = pendulum.calculatePenulumHeight(pendulum.pendulumStringLength / PTM, pendulum.pendulumAngle);
+  pendulum.displayPendulumHeight(PENDUMDULUM_HEIGHT_ID);
+  State.displayRunningTime(engine);
+
+  // Stop when speed is below 0.2
+  if (pendulum.pendulumBody.speed <= 0.2 && pendulum.pendulumBody.speed !== 0){
+    State.setIsPausedFlag(true);
+    State.onPause(render);
+    stopPlotInterval();
+    State.setSimulationRunning(false);
+  }
+});
+
+/**
+  * Listens for whether the current browser tab is active or not
+*/
+
+document.addEventListener('visibilitychange', function() {
+  if (!document.hidden) {
+    if (State.getIsPausedFlag() === false) {
+      runPlotInterval();
+    }
+  }
+  else {
+    stopPlotInterval();
+  }
+});
+\end{lstlisting}
+
+This is the State module that handles the current state of a simulation based on user feedback.
+
+\begin{lstlisting}[language=JavaScript]
+'use strict';
+
+let State = (function() {
+  let Render = Matter.Render;
+  let _simulationRunning = false;
+  let _isPausedFlag = true;
+
+  return {
+    /**
+      * Updates the value of _isPausedFlag
+      * @param {boolean} bool - the value to set the _isPausedFlag
+    */
+
+    setIsPausedFlag: function(bool) {
+      _isPausedFlag = bool;
+    },
+
+    /**
+      * Returns whether the world is paused or not
+      * @returns {State} _isPausedFlag
+    */
+
+    getIsPausedFlag: function() {
+      return _isPausedFlag;
+    },
+
+    /**
+      * Updates the value of _simulationRunning
+      * @param {boolean} bool - the value to set _simulationRunning to
+    */
+
+    setSimulationRunning: function(bool) {
+      _simulationRunning = bool;
+    },
+
+    /**
+      * Returns whether the simulation is running or not
+      * @returns {bool} _simulationRunning
+    */
+
+    getSimulationRunning: function() {
+      return _simulationRunning;
+    },
+
+    /**
+      * Determines whether to continue rendering the world or not
+      * @param {Render} render - displays the world
+    */
+
+    onPause: function(render) {
+      if (_isPausedFlag) { // the world is paused
+        Render.stop(render);
+      }
+      else {
+        Render.run(render);
+      }
+    },
+
+    /**
+      * Displays to the user the current running time of the simulation
+    */
+
+    displayRunningTime: function(engine) {
+      let currentTime = (engine.timing.timestamp / 1000).toFixed(3);
+
+      if (currentTime > 60) { // more than a minute has gone by
+        let quotient = Math.floor(currentTime / 60); // minutes
+        let remainder = (currentTime % 60).toFixed(3); // seconds
+
+        document.getElementById('running-time').textContent = quotient + 'm ' + remainder + 's';
+      }
+      else {
+        document.getElementById('running-time').textContent = currentTime + 's';
+      }
+    },
+  };
+})();
+
+module.exports = State;
+\end{lstlisting}
+
+This is the graph module that handles the state of the graph of a simulation.
+
+\begin{lstlisting}[language=JavaScript]
+'use strict';
+
+let Graph = (function() {
+  let _graph = {};
+
+  return {
+    /**
+      * Creates a new graph
+      * @param {} reference - The reference to the html page
+      * @param {} data - The graph data
+    */
+
+    createGraph: function(reference, data) {
+      let tempData = JSON.parse(JSON.stringify(data));
+
+      _graph = new Chart(reference, {
+      type: 'line',
+      data: {
+        datasets: tempData.datasets,
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        showLines: true,
+        scales: {
+          xAxes: tempData.xAxes,
+          yAxes: tempData.yAxes,
+        }
+      }
+    });
+  },
+
+  /**
+    * Adds points to the graph
+    * @param {} data - The graph data
+  */
+
+  addGraphData: function(data, dataset) {
+    _graph.data.datasets[dataset].data.push(data);
+
+    _graph.update();
+  },
+
+  /**
+    * Resets the chart data back to an empty state
+    * @param {} newData - The graph data
+  */
+
+  resetGraphData: function(data) {
+    let tempData = JSON.parse(JSON.stringify(data));
+
+    _graph.config.data = tempData;
+    _graph.options.scales.xAxes[0].scaleLabel.labelString = tempData.xAxes[0].scaleLabel.labelString;
+    _graph.options.scales.yAxes[0].scaleLabel.labelString = tempData.yAxes[0].scaleLabel.labelString;
+    _graph.update();
+  },
+};
+})();
+
+module.exports = Graph;
+\end{lstlisting}
+
+This is the pendulum module that handles the state of a pendulum within a simulation.
+
+\begin{lstlisting}[language=JavaScript]
+'use strict';
+
+/**
+  * @class Pendulum
+ * The Pendulum module is in charge of keeping tack of the pendulum bodies and properties within the world.
+*/
+const DEG_TO_RAD = Math.PI / 180;
+
+class Pendulum {
+
+
+  constructor() {
+    this._pendulumBody = null;
+    this._pendulumAngle = null;
+    this._pendulumHeight = null;
+    this._pendulumString = null;
+  }
+
+  /**
+    * Sets the body of the pendulum
+  */
+
+  set pendulumBody(body) {
+    this._pendulumBody = body;
+  }
+
+  /**
+    * Returns the body of the pendulum
+    * @returns {Bodies} _pendulumBody
+  */
+
+  get pendulumBody() {
+    return this._pendulumBody;
+  }
+
+  /**
+    * Sets the body of the string
+    * @returns {Bodies} _pendulumString
+  */
+
+  set pendulumString(string) {
+    this._pendulumString = string;
+  }
+
+  /**
+    * Returns the body of the string
+    * @returns {Body} _pendulumString
+  */
+
+  get pendulumString() {
+    return this._pendulumString;
+  }
+
+  /**
+    * Calculates the arctangent of a line given two coordinates
+    * @param {Int} firstPoint - the first coordinate given as (x, y) as its datamembers
+    * @param {Int} secondPoint - the second coordinate given as (x, y) as its datamembers
+    * @returns {Int} angle - the angle of the line
+  */
+
+  calculateAngle(firstPoint, secondPoint) {
+    let angle = Math.round(Math.abs(Math.atan2(firstPoint.y - secondPoint.y, firstPoint.x - secondPoint.x) * 180 / Math.PI));
+
+    return Math.abs(angle - 90);
+  }
+
+  /**
+    * Calculates the length of the pendulum's string
+    * @param {Vector} firstPoint - the first coordinate given as (x, y) as its datamembers
+    * @param {Vector} secondPoint - the second coordinate given as (x, y) as its datamembers
+    * @returns {Int} length
+  */
+
+  calculateStringLength(firstPoint, secondPoint) {
+    return Math.hypot(firstPoint.x - secondPoint.x, firstPoint.y - secondPoint.y);
+  }
+
+  /**
+    * Calculates the height of the pendulum in meters
+    * @param {Int} length - the length of the pendulum
+    * @param {Int} angle - the angle of the pendulum
+    * @returns {Int} height - the height of the pendulum
+  */
+
+  calculatePenulumHeight(length, angle) {
+    return length * (1 - Math.cos(angle * DEG_TO_RAD));
+  }
+
+  /**
+    * Updates the angle of the pendulum to the user
+  */
+
+  displayPendulumAngle() {
+    document.getElementById('pendulum-angle').textContent = 'Angle: ' + this.pendulumAngle;
+  }
+
+  /**
+   * Updates velocity of angle
+   * @param {String} id
+   */
+
+   displayVelocity(id) {
+      document.getElementById(id).textContent = this.pendulumBody.speed.toFixed(3) + 'm/s';
+   }
+
+  /**
+    * Updates the height of the pendulum to the user
+    * @param {String} id - a DOM id
+  */
+
+  displayPendulumHeight(id) {
+    document.getElementById(id).textContent = this.pendulumHeight.toFixed(3) + 'm';
+  }
+
+  /**
+    * Updates the value of _pendulumAngle
+    * @param {Int} angle - the current angle of the pendulum
+  */
+
+  set pendulumAngle(angle) {
+    this._pendulumAngle = angle;
+  }
+
+  /**
+    * Returns the angle of the pendulum
+    * @returns {Int} _pendulumAngle
+  */
+
+  get pendulumAngle() {
+    return this._pendulumAngle;
+  }
+
+  /**
+    * Updates the value of _pendulumHeight
+    * @param {Int} height - the current height of the pendulum from the bottom of the canvas
+  */
+
+  set pendulumHeight(height) {
+    this._pendulumHeight = height;
+  }
+
+  /**
+    * Returns the height of the pendulum measured from the bottom of the canvas to the bottom of the pendulum
+    * @returns {Int} _pendulumHeight
+  */
+
+  get pendulumHeight() {
+    return this._pendulumHeight;
+  }
+
+  /**
+    * Returns the velocity of the pendulum
+    * @returns {Int}
+  */
+
+  get pendulumVelocity() {
+    return this._pendulumBody.speed;
+  }
+
+  /**
+    * Updates the value of the length of the string
+    * @param {Int} length - the length of the string
+  */
+
+  set pendulumStringLength(length) {
+    this.pendulumString.length = length;
+  }
+
+  /**
+    * Returns the length of the pendulum's string
+    * @returns {Int}
+  */
+
+  get pendulumStringLength() {
+    return this.pendulumString.length;
+  }
+
+  get mass() {
+    return this.pendulumBody.mass;
+  }
+}
+
+module.exports = Pendulum;
+\end{lstlisting}
+
+This is the gulp file used to automate build tasks in the project. In order to add a new folder to build just add the folder's name to the array named "folders".
+
+\begin{lstlisting}[language=JavaScript]
+let gulp = require('gulp');
+let terser = require('gulp-terser');
+let clean = require('gulp-clean');
+let fs = require('fs');
+let browserify = require('browserify');
+let source = require('vinyl-source-stream');
+
+let folders = ['case1', 'case2', 'case3', 'case4', 'case5', 'case6', 'exploratory'];
+
+/**
+  * Minifies all js files in the build folder
+*/
+
+gulp.task('minify', () => {
+  return new Promise((resolve, reject) => {
+    try {
+      for (let i = 0; i < folders.length; i++) {
+        fs.access(`./build/${folders[i]}`, (error) => {
+          if (error) {
+            console.log(`${folders[i]} folder does not exist. Skipping...`);
+          }
+          else {
+            gulp.src(`./build/${folders[i]}/*.js`).pipe(terser()).pipe(gulp.dest(`./build/${folders[i]}`), {mode: 0777});
+          }
+        });
+      }
+
+      resolve();
+    }
+    catch (error) {
+      console.log('Script could not be run: ' + error);
+      reject();
+    }
+  });
+});
+
+/**
+  * Builds all pendulum cases to the build folder
+*/
+
+gulp.task('build-all', () => {
+  return new Promise((resolve, reject) => {
+    try {
+      for (let i = 0; i < folders.length; i++) {
+        browserify(`./src/Pendulum/${folders[i]}/Sketch.js`).bundle().pipe(source('bundle.js')).pipe(gulp.dest(`./build/${folders[i]}`), {mode: 0777});
+        gulp.src(`./src/Pendulum/${folders[i]}/**/*.css`).pipe(gulp.dest(`./build/${folders[i]}`), {mode: 0777});
+        gulp.src(`./src/Pendulum/${folders[i]}/**/*.html`).pipe(gulp.dest(`./build/${folders[i]}`), {mode: 0777});
+      }
+
+      resolve();
+    }
+    catch (error) {
+      console.log('Script could not be run: ' + error);
+      reject();
+    }
+  });
+});
+
+/**
+  * Builds a single pendulum case to the build folder
+  * Takes a command line argument --case [case] where case is a folder name
+*/
+
+gulp.task('build', () => {
+  return new Promise((resolve, reject) => {
+    try {
+      if (process.argv.indexOf('--case') !== -1) {
+        let folder = process.argv[process.argv.indexOf('--case') + 1];
+
+        browserify(`./src/Pendulum/${folder}/Sketch.js`).bundle().pipe(source('bundle.js')).pipe(gulp.dest('./build'), {mode: 0777});
+        gulp.src(`./src/Pendulum/${folder}/**/*.css`).pipe(gulp.dest('./build'), {mode: 0777});
+        gulp.src(`./src/Pendulum/${folder}/**/*.html`).pipe(gulp.dest('./build'), {mode: 0777});
+      }
+      else {
+        console.log('Error: The folder to build was not specified. Enter the command gulp build --case [Your Case].');
+      }
+
+      resolve();
+    }
+    catch (error) {
+      console.log('Script could not be run: ' + error);
+      reject();
+    }
+  });
+});
+
+/**
+  * Cleans the build directory
+*/
+
+gulp.task('clean', () => {
+  return new Promise((resolve, reject) => {
+    try {
+      fs.access('./build', (error) => {
+        if (error) {
+          console.log('Error: ./build does not exist.');
+        }
+        else {
+          gulp.src('./build', {read: false}).pipe(clean(), {mode: 0777});
+        }
+      });
+
+      resolve();
+    }
+    catch (error) {
+      console.log('Script could not be run: ' + error);
+      reject();
+    }
+  });
+});
+
+gulp.task('default', gulp.series('build-all'));
+\end{lstlisting}
+
+% Appendix 2: Photos, etc.
+
+\end{document}

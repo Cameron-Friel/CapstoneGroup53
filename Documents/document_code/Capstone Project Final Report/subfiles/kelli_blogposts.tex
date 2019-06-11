@@ -1,0 +1,130 @@
+\subsection{Kelli's Weekly Blog Posts - Fall Term}
+\subsubsection{Week 4}
+We compiled all of our problem statements together successfully and met our TA. We met our client for the second time, and he gave us more specific requirements about the project. He also gave us more specific requirements from the co-creator of the exercises we're incorporating our simulations into. We established a weekly meeting time. 
+
+We plan to create initial designs or mock ups for the simulations so the client can easily comment on it. It will be easier than planning through words what features or buttons there should be. 
+
+We should come up with a more definite time to show the client our design. But first we need to play with some of tools we can use to see what is generally feasible.
+
+\subsubsection{Week 5}
+Our team has a git hub. We are working on the tech review and the requirements document. The requirements document is straight forward since our client is pretty clear in what he wants. The technologies we needed for the tech review were hard to think of as a lot of the possible libraries encompasses many of the website's components. 
+
+\subsubsection{Week 6}
+We finished the requirements document draft. We need to work on revising it so some of the statements are not so vague. 
+
+We scheduled a meeting with our client for next week Thursday and sent him a copy of our first draft so he could possibly look over it.
+
+Now we are working on the Technology review. We are all discovering various ways to implement the web page. There are many different physics libraries/engines so we need to be able to pick the most convenient and easy to learn library. It needs to also be robust. 
+
+\subsubsection{Week 7}
+We started looking at new technologies and thinking about implementation. We had another meeting with our client and asked for more clarifications. 
+
+We plan to meet with him again 2 weeks from now. By then we should have a basic mock-up of the simulations. 
+
+\subsubsection{Week 8}
+We met up again to discuss the design document. We are a bit confused on how to split it up for our project because if we base it off the tech review it does not really cover all the aspects as nicely. Our group should find time to meet a little. I started working a little on the initial UI design. 
+
+We plan to meet the client again on Tuesday to talk more about the design. 
+
+\subsubsection{Week 9}
+We created a mock-up of the UI and discussed it with our client on Tuesday. We began splitting up the components into the design document.
+
+Our client gave suggestions for the UI and we will implement them into the mock up and give another verification. Since next week is dead week, we will mostly communicate with our client via email and then have a group client meeting on Friday. He said we are close to being done for the requirements. 
+
+I looked into trying to figure out the IDE one of our team members suggested to use for this project. It was easy to use, but it involves a scripting language instead of javascript. So it involves some learning into incorporating it into a web page. 
+
+%winter term blog posts
+
+\subsection{Kelli's Weekly Blog Posts - Winter Term}
+
+\subsubsection{Week 1}
+We had a meeting with our client. We as a team should find a set time to meet each week. We are being pretty open right now. We've just made some progress in starting animations.
+
+\subsubsection{Week 2}
+We met up on Tuesday to discuss how we should split up the work. We decided to go a different direction in implementation and use the Matter.js library instead of Defold. We split up the assignments by user interface, animation, and graphs. We decided last week to meet our client next week Friday to possibly also meet with Dr.Self. He expects at least one working simulation done with basic animation. We still must figure out how to work the servers to have it sync with Concept Warehouse. 
+
+There's a plan to meet on Friday to work on our pitches and see what we all did. 
+
+\subsubsection{Week 3}
+We have been working on the early stages of the web development. We've created issues on git hub for easier tracking, so far I'm working on the UI, Cameron on the animation, and Sam on the graph. So far, we have 1 case, where there is a pendulum that just swings back and forth with a very barebones UI. We had a meeting with our client as he commented on our progress and mockups - what changes we had to make. 
+
+We've run into a couple of bugs, where the buttons weren't working correctly but we're addressing them pretty quickly. 
+
+We plan to meet in 2-3 weeks, but aim to have at least one case due by next week Friday as to give ourselves a deadline. 
+
+\subsubsection{Week 4}
+We've been working on finishing up our first simulation. We have created issues on github. So far we aimed to finish our first two simulations by this week, and we're all working out some of the bugs. We're also fixing up some of the revisions our client suggested.
+
+I decided to try Bulma instead of Bootstrap as a styling library as Bootstrap was not working out somehow. 
+
+We plan to meet with our client next week, hopefully with at least 2 simulations completed. We should also start working on exploratory mode since it seems the  more complicated of them.
+
+\subsubsection{Week 5}
+We are finishing up the first simulation, and fixing bugs here and there. Case 1 is decent, there is just a few issues left to finish. 
+
+I started looking into exploratory mode. Previous libraries I thought would be ok didn't incorporate well into the project, so I used the noUiSlider library for range input. Also some of the css libraries (Bulma, Bootstrap) did not work as expected either. So far the site looks acceptable. 
+
+The client will meet with all the groups next week to see our current progress. We should have a demo by then.
+
+\subsubsection{Week 6}
+We finished the basic functionality of all the simulations and exploratory mode : simulation, graph, live update table, buttons, and a way to get input. 
+
+There are just bug fixes here and there. The main bug we are having is that the physics library we use is always accounting for air resistance in our model, and our client wants a perfect system. There is an option to remove air resistance in the physics library, but it is not working so we'd probably have to fix the bug ourselves. We also currently are counteracting it by apply a small force to the system to get the correct expected answer.
+
+We plan to work on fixing the layout, fixing our live update table, and applying some nice to have features like different graphs to choose from. 
+
+\subsubsection{Week 7}
+We have the basic functionality down, we are still working on some minor features: making sure the math is right is the most important. We are also doing more to polish the layout. 
+
+We are having more trouble than we anticipated with the air resistance for exploratory mode. It is the most obvious of the 6 stages that it is not a perfect physical system. 
+
+We plan to meet with our client next week to update them with our progress. 
+
+\subsubsection{Week 8}
+We emailed our alpha version to our client -Dr.Self, who is not our main point of communication but is part of the project. We scheduled a meeting with out client for next Thursday. 
+Our group is still having issues with the air resistance, but I found a hack-like way to reduce it at least for our pendulum case. It involves changing the library's source code. It may introduce more unforseen bugs if we incorporate it into our project, so we're holding off in incorporating it. 
+Right now we're still working along on fixing minor bugs and adding some features - the layout for exploratory mode, the live update table.
+
+\subsubsection{Week 9}
+We met with the client this week to show him our small improvements. Our other client also got back to us for some feedback on the alpha. Our biggest issue is still the air resistance in exploratory mode. We explained our options to our client -
+
+1) include a input range slider to control air resistance, and show the user that the air resistance cannot be 0
+
+2) Try to incorporate a way to minimize it as much as possible - there is no right formula or way to do this, but we can reduce it a good amount by hardcoding a table of values. This option is more hack-like. 
+
+Our client also provided more feedback - minor issues like wording, layout. We also changed the display of two pendulums to hit so that they are inline with each other. 
+
+We plan to meet again during finals week. 
+
+\subsubsection{Week 10}
+We've been working on putting the finishing touches on our project. We will probably be looking more into the air resistance issue next term too. 
+
+Right now we're trying to verify if the math is all correct since our client told us to make the weights collide inline with each other and now the calculations we initially had seems questionable. The method the engine uses causes the physics system to lose energy. We also started adding a help-modal and some extra information. 
+
+We plan to next week to finish up the progress video. 
+
+%spring term blog posts
+\subsection{Kelli's Weekly Blog Posts -Spring Term}
+\subsubsection{Week 1}
+We added finishing touches to our webpages. The last major thing we have to do is add a selection of graphs for exploratory mode. It's a nice-to-have instead of a requirement. We will email our client with more updates by early next week. There are some things that have been broken (the static graph and some word choices) with new features and we are working on fixing them before then. 
+\subsubsection{Week 2}
+We finished adding the new graphs and the static tables our client asked for. In two weeks we will meet with our client again.There are still some options we are trying to choose from - whether or not we had the pivot point to be the same or not. 
+
+There's also very small bugs left to fix. 
+\subsubsection{Week 3}
+We turned in our code freeze, and emailed our final questions to Dr.Self. We will have a meeting with Tom tomorrow to discuss our final parts of our project. We finished fixing small things from our last meeting, and finished fixing our design document. 
+\subsubsection{Week 4}
+We finished up the poster and at the same time changed the color scheme of the simulations to be less saturated and bright. We also color coded the table. 
+
+We are still waiting on our final feedback from Dr.Self for some small details - which pivot point to use, what colors to change. We plan to have a group meeting next week with our client again. 
+\subsubsection{Week 5}
+We submitted our poster for printing on time, and are currently making the final finishing touches on our project. We just had a group meeting with all of Milo's other capstone groups and they gave us more feedback on our project.
+
+One of our problems is that one of our weights is not perfectly sticking together. Another thing is a professor wanted another case similar to case 4 of our simulations but with a coefficient of restitution of 0.7 so they bounce back. We also do not think we could get to the next spool simulation but we could try. 
+\subsubsection{Week 6}
+We had a meeting with our client to talk about some of the final steps for our project. We are to comment our code for documentation which he said would be sufficient. 
+
+We added some fixes like the wrong height calculation for exploratory mode, and we added a new case which is similar to case4 but with e=0.7. We will also investigate some of the finishing details like adding tool tips to the buttons. Professor Self has given us some feedback, and we will investigate further. We are only left with nice-to-have features. We have also been looking into improving how the weights stick together in case2 and case3 since it isn't perfectly e=0. 
+
+We sent a snapshot of our code to Tom so he could sync it with the concept warehouse servers. 
+
