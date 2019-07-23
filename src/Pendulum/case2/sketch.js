@@ -287,8 +287,10 @@ document.getElementById('reset-button').onclick = function() {
   stopPlotInterval();
   State.displayRunningTime(engine);
   State.setSimulationRunning(false);
-  pendulum.pendulumAngle = pendulum.calculateAngle(PROT_POS_1, pendulum.pendulumBody.position);
-  pendulum.pendulumHeight = pendulum.calculatePenulumHeight(pendulum.pendulumStringLength / PTM, pendulum.pendulumAngle);
+
+  /* reset live update table to starting values */ 
+  pendulum.pendulumAngle = 60;
+  pendulum.pendulumHeight = 0.255;
   restingPendulum.pendulumAngle = pendulum.calculateAngle(PROT_POS_2, restingPendulum.pendulumBody.position);
   restingPendulum.pendulumHeight = pendulum.calculatePenulumHeight(restingPendulum.pendulumStringLength / PTM, restingPendulum.pendulumAngle);
   pendulum.displayPendulumHeight(PENDUMDULUM_HEIGHT_ID);
